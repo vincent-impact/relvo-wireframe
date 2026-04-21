@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relvo — SUB-0142 Retard livraison sauce blanche</title>
+<style>
+  :root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f7f7f5;
+    --bg-tertiary: #eeecea;
+    --text-primary: #1a1a1a;
+    --text-secondary: #6b6b6b;
+    --text-tertiary: #9a9a9a;
+    --border: #e4e2de;
+    --border-light: #eeecea;
+    --radius: 8px;
+    --radius-lg: 12px;
+    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+    --blue-50: #E6F1FB; --blue-100: #B5D4F4; --blue-200: #85B7EB; --blue-600: #185FA5; --blue-800: #0C447C; --blue-900: #042C53;
+    --green-50: #EAF3DE; --green-200: #97C459; --green-600: #3B6D11; --green-800: #27500A;
+    --red-50: #FCEBEB; --red-200: #F09595; --red-600: #A32D2D; --red-800: #791F1F;
+    --amber-50: #FAEEDA; --amber-100: #FAC775; --amber-200: #EF9F27; --amber-600: #854F0B; --amber-800: #633806;
+    --pink-50: #FBEAF0; --pink-200: #ED93B1; --pink-600: #993556; --pink-800: #72243E;
+    --purple-50: #EEEDFE; --purple-100: #CECBF6; --purple-200: #AFA9EC; --purple-600: #534AB7; --purple-800: #3C3489;
+    --gray-50: #F1EFE8; --gray-200: #B4B2A9; --gray-600: #5F5E5A; --gray-800: #444441;
+    --teal-50: #E1F5EE; --teal-200: #5DCAA5; --teal-600: #0F6E56; --teal-800: #085041;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    font-size: 14px;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+
+  .app { display: flex; height: 100vh; overflow: hidden; }
+
+  /* ═══ SIDEBAR ═══ */
+  .sidebar {
+    width: 240px; background: var(--bg-secondary); border-right: 1px solid var(--border);
+    display: flex; flex-direction: column; padding: 20px 14px; flex-shrink: 0;
+  }
+  .logo { font-size: 20px; font-weight: 600; letter-spacing: -0.5px; padding: 4px 10px; margin-bottom: 28px; }
+  .nav-group-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-tertiary); padding: 20px 10px 6px; font-weight: 500; }
+  .nav-item { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: var(--radius); color: var(--text-secondary); font-size: 14px; cursor: pointer; transition: background 0.15s; margin-bottom: 2px; text-decoration: none; }
+  .nav-item:hover { background: var(--bg-tertiary); }
+  .nav-item.active { background: var(--bg-primary); color: var(--text-primary); font-weight: 500; box-shadow: 0 0 0 1px var(--border); }
+  .nav-icon { width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .nav-icon svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .nav-badge { margin-left: auto; font-size: 11px; font-weight: 500; background: var(--red-50); color: var(--red-600); padding: 1px 7px; border-radius: 10px; }
+  .sidebar-footer { margin-top: auto; border-top: 1px solid var(--border); padding-top: 16px; display: flex; align-items: center; gap: 10px; padding-left: 10px; }
+  .user-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--blue-50); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: var(--blue-800); flex-shrink: 0; }
+  .user-info { flex: 1; min-width: 0; }
+  .user-name { font-size: 13px; font-weight: 500; }
+  .user-role { font-size: 11px; color: var(--text-tertiary); }
+
+  /* ═══ MAIN ═══ */
+  .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; background: var(--bg-primary); min-width: 0; }
+
+  /* ═══ SUBJECT HEADER ═══ */
+  .subject-header {
+    padding: 20px 32px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .sh-breadcrumb {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--text-tertiary); margin-bottom: 12px;
+  }
+
+  .sh-breadcrumb a { color: var(--blue-600); text-decoration: none; font-weight: 500; }
+  .sh-breadcrumb a:hover { text-decoration: underline; }
+
+  .sh-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+
+  .sh-left { flex: 1; min-width: 0; }
+
+  .sh-title-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
+  .sh-ref { font-size: 13px; color: var(--text-tertiary); font-family: monospace; font-weight: 500; }
+  .sh-title { font-size: 20px; font-weight: 600; line-height: 1.3; }
+
+  .sh-badges { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+  .badge { font-size: 11px; padding: 3px 10px; border-radius: 12px; font-weight: 500; white-space: nowrap; }
+  .badge-critical { background: var(--red-50); color: var(--red-800); }
+  .badge-high { background: var(--amber-50); color: var(--amber-800); }
+  .sb-todo { background: var(--blue-50); color: var(--blue-800); }
+
+  .domain-tag { font-size: 11px; padding: 2px 8px; border: 1px solid var(--border); border-radius: 4px; color: var(--text-secondary); background: var(--bg-secondary); font-weight: 500; }
+
+  .channel-tag { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; color: var(--text-secondary); }
+  .channel-tag svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 1.5; }
+
+  .sh-actions { display: flex; gap: 8px; flex-shrink: 0; align-items: center; }
+
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 14px; border-radius: var(--radius);
+    background: var(--bg-primary); color: var(--text-secondary);
+    font-size: 13px; font-weight: 500; border: 1px solid var(--border);
+    cursor: pointer; font-family: var(--font); transition: border-color 0.15s;
+  }
+  .btn-outline:hover { border-color: var(--blue-200); color: var(--text-primary); }
+  .btn-outline svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 1.5; }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 16px; border-radius: var(--radius);
+    background: var(--text-primary); color: var(--bg-primary);
+    font-size: 13px; font-weight: 500; border: none; cursor: pointer;
+    font-family: var(--font); transition: opacity 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-primary svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+  /* ═══ CONTENT AREA ═══ */
+  .content-area { flex: 1; display: flex; overflow: hidden; }
+
+  .col-main { flex: 1; padding: 24px 28px; overflow-y: auto; min-width: 0; }
+  .col-right { width: 340px; border-left: 1px solid var(--border); overflow-y: auto; flex-shrink: 0; background: var(--bg-secondary); }
+
+  /* ═══ SECTION HEADERS ═══ */
+  .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .section-title { font-size: 13px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.6px; }
+  .section-link { font-size: 12px; color: var(--blue-600); text-decoration: none; font-weight: 500; cursor: pointer; }
+
+  /* ═══ AI SUMMARY ═══ */
+  .ai-summary {
+    background: var(--purple-50);
+    border: 1px solid var(--purple-200);
+    border-radius: var(--radius-lg);
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+
+  .ai-summary-header {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 8px;
+  }
+
+  .ai-icon {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--purple-100); color: var(--purple-800);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 600; flex-shrink: 0;
+  }
+
+  .ai-summary-label { font-size: 12px; font-weight: 500; color: var(--purple-800); }
+
+  .ai-summary-text { font-size: 13px; line-height: 1.55; color: var(--purple-800); }
+
+  /* ═══ TASKS ═══ */
+  .tasks-section { margin-bottom: 32px; }
+
+  .task-card {
+    border: 1px solid var(--border); border-radius: var(--radius-lg);
+    padding: 14px 18px; margin-bottom: 8px;
+    display: flex; align-items: flex-start; gap: 12px;
+    transition: border-color 0.15s;
+  }
+
+  .task-card:hover { border-color: var(--blue-200); }
+
+  .task-check {
+    width: 18px; height: 18px; border: 2px solid var(--border);
+    border-radius: 4px; flex-shrink: 0; margin-top: 1px; cursor: pointer;
+    transition: border-color 0.15s;
+  }
+  .task-check:hover { border-color: var(--blue-200); }
+
+  .task-check.done {
+    background: var(--teal-200); border-color: var(--teal-200);
+    position: relative;
+  }
+  .task-check.done::after {
+    content: ''; position: absolute; top: 2px; left: 5px;
+    width: 5px; height: 9px; border: solid white; border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  .task-body { flex: 1; min-width: 0; }
+
+  .task-title { font-size: 14px; font-weight: 500; line-height: 1.35; margin-bottom: 4px; }
+  .task-title.done-text { text-decoration: line-through; color: var(--text-tertiary); }
+
+  .task-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+  .task-kind { font-size: 10px; padding: 1px 6px; border-radius: 3px; font-weight: 500; }
+  .kind-decision { background: var(--amber-50); color: var(--amber-800); }
+  .kind-reply { background: var(--blue-50); color: var(--blue-800); }
+  .kind-check { background: var(--teal-50); color: var(--teal-800); }
+  .kind-call { background: var(--green-50); color: var(--green-800); }
+  .kind-inform { background: var(--purple-50); color: var(--purple-800); }
+
+  .task-source { font-size: 10px; color: var(--text-tertiary); }
+
+  .task-action-btn {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 4px 10px; border-radius: 4px;
+    background: var(--bg-secondary); color: var(--text-secondary);
+    font-size: 11px; font-weight: 500; border: 1px solid var(--border);
+    cursor: pointer; margin-top: 8px; font-family: var(--font);
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .task-action-btn:hover { border-color: var(--blue-200); color: var(--text-primary); }
+  .task-action-btn svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 1.5; }
+
+  .add-task-btn {
+    display: flex; align-items: center; gap: 6px;
+    padding: 10px 14px; border-radius: var(--radius);
+    color: var(--text-tertiary); font-size: 13px;
+    border: 1px dashed var(--border); cursor: pointer;
+    font-family: var(--font); transition: color 0.15s, border-color 0.15s;
+    background: none; width: 100%;
+  }
+  .add-task-btn:hover { color: var(--text-secondary); border-color: var(--blue-200); }
+  .add-task-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 1.5; }
+
+  /* ═══ MESSAGES / CONVERSATION ═══ */
+  .messages-section { margin-bottom: 32px; }
+
+  .message-card {
+    margin-bottom: 14px; display: flex; gap: 12px;
+  }
+
+  .msg-avatar {
+    width: 32px; height: 32px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600; flex-shrink: 0;
+  }
+  .msg-avatar-ext { background: var(--amber-50); color: var(--amber-800); }
+  .msg-avatar-user { background: var(--blue-50); color: var(--blue-800); }
+
+  .msg-body { flex: 1; min-width: 0; }
+
+  .msg-header { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; flex-wrap: wrap; }
+  .msg-sender { font-size: 13px; font-weight: 500; }
+  .msg-direction { font-size: 10px; padding: 1px 6px; border-radius: 3px; font-weight: 500; }
+  .msg-dir-in { background: var(--amber-50); color: var(--amber-800); }
+  .msg-dir-out { background: var(--blue-50); color: var(--blue-800); }
+  .msg-time { font-size: 11px; color: var(--text-tertiary); }
+  .msg-channel { font-size: 11px; color: var(--text-tertiary); display: inline-flex; align-items: center; gap: 3px; }
+  .msg-channel svg { width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 1.5; }
+
+  .msg-content {
+    font-size: 13px; line-height: 1.55; color: var(--text-primary);
+    background: var(--bg-secondary); border-radius: 0 var(--radius-lg) var(--radius-lg) var(--radius-lg);
+    padding: 12px 16px; border: 1px solid var(--border-light);
+  }
+
+  .msg-content-out {
+    background: var(--blue-50); border-color: var(--blue-100);
+    border-radius: var(--radius-lg) 0 var(--radius-lg) var(--radius-lg);
+  }
+
+  .msg-attachment {
+    display: inline-flex; align-items: center; gap: 5px;
+    margin-top: 8px; padding: 5px 10px; border-radius: 4px;
+    background: var(--bg-primary); border: 1px solid var(--border);
+    font-size: 11px; color: var(--text-secondary);
+  }
+  .msg-attachment svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 1.5; }
+
+  /* ═══ COMPOSE ═══ */
+  .compose-bar {
+    border: 1px solid var(--border); border-radius: var(--radius-lg);
+    padding: 14px 16px; margin-top: 4px;
+  }
+
+  .compose-to { font-size: 12px; color: var(--text-secondary); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+  .compose-to strong { font-weight: 500; color: var(--text-primary); }
+
+  .compose-textarea {
+    width: 100%; min-height: 70px; border: none; outline: none;
+    font-family: var(--font); font-size: 13px; line-height: 1.5;
+    color: var(--text-primary); resize: vertical; background: transparent;
+  }
+
+  .compose-footer {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border-light);
+  }
+
+  .compose-tools { display: flex; gap: 6px; }
+  .compose-tool-btn {
+    width: 32px; height: 32px; border-radius: var(--radius);
+    border: 1px solid var(--border); background: var(--bg-primary);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+  }
+  .compose-tool-btn svg { width: 14px; height: 14px; stroke: var(--text-secondary); fill: none; stroke-width: 1.5; }
+
+  /* ═══ RIGHT SIDEBAR PANELS ═══ */
+  .panel { padding: 20px; border-bottom: 1px solid var(--border); }
+  .panel:last-child { border-bottom: none; }
+
+  .panel-title { font-size: 12px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 14px; }
+
+  /* Details panel */
+  .detail-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; }
+  .detail-label { font-size: 12px; color: var(--text-tertiary); }
+  .detail-value { font-size: 12px; font-weight: 500; color: var(--text-primary); text-align: right; }
+
+  .status-select {
+    padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 500;
+    border: 1px solid var(--blue-200); background: var(--blue-50); color: var(--blue-800);
+    cursor: pointer; font-family: var(--font);
+  }
+
+  .priority-select {
+    padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 500;
+    border: 1px solid var(--red-200); background: var(--red-50); color: var(--red-800);
+    cursor: pointer; font-family: var(--font);
+  }
+
+  /* Contact card */
+  .contact-card {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 12px; border-radius: var(--radius);
+    border: 1px solid var(--border); background: var(--bg-primary);
+  }
+
+  .contact-avatar-lg {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--amber-50); color: var(--amber-800);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 600; flex-shrink: 0;
+  }
+
+  .contact-info { flex: 1; min-width: 0; }
+  .contact-name-lg { font-size: 13px; font-weight: 500; }
+  .contact-company { font-size: 11px; color: var(--text-tertiary); }
+  .contact-channels { display: flex; gap: 8px; margin-top: 6px; }
+  .contact-ch { font-size: 10px; color: var(--text-tertiary); display: flex; align-items: center; gap: 3px; }
+  .contact-ch svg { width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 1.5; }
+
+  /* Timeline */
+  .timeline { position: relative; }
+
+  .tl-item {
+    display: flex; gap: 10px; padding-bottom: 16px; position: relative;
+  }
+
+  .tl-item:last-child { padding-bottom: 0; }
+
+  .tl-item::before {
+    content: ''; position: absolute; left: 11px; top: 24px;
+    width: 1px; height: calc(100% - 24px);
+    background: var(--border);
+  }
+
+  .tl-item:last-child::before { display: none; }
+
+  .tl-dot {
+    width: 22px; height: 22px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; position: relative; z-index: 1;
+  }
+  .tl-dot svg { width: 10px; height: 10px; stroke-width: 2; fill: none; }
+
+  .tl-dot-msg { background: var(--blue-50); }
+  .tl-dot-msg svg { stroke: var(--blue-600); }
+  .tl-dot-task { background: var(--green-50); }
+  .tl-dot-task svg { stroke: var(--green-600); }
+  .tl-dot-status { background: var(--purple-50); }
+  .tl-dot-status svg { stroke: var(--purple-600); }
+  .tl-dot-action { background: var(--amber-50); }
+  .tl-dot-action svg { stroke: var(--amber-600); }
+
+  .tl-actor {
+    font-size: 7px; font-weight: 600; width: 12px; height: 12px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    position: absolute; bottom: -2px; right: -3px;
+    border: 1.5px solid var(--bg-secondary);
+  }
+  .tl-actor-ext { background: var(--amber-100); color: var(--amber-800); }
+  .tl-actor-ai { background: var(--purple-100); color: var(--purple-800); }
+  .tl-actor-user { background: var(--blue-100); color: var(--blue-800); }
+
+  .tl-content { flex: 1; min-width: 0; }
+  .tl-text { font-size: 12px; line-height: 1.35; }
+  .tl-text strong { font-weight: 500; }
+  .tl-time { font-size: 10px; color: var(--text-tertiary); margin-top: 1px; }
+
+  /* Attachments */
+  .attachment-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 10px; border-radius: var(--radius);
+    border: 1px solid var(--border); background: var(--bg-primary);
+    margin-bottom: 6px; cursor: pointer; transition: border-color 0.15s;
+  }
+  .attachment-item:hover { border-color: var(--blue-200); }
+
+  .att-icon {
+    width: 32px; height: 32px; border-radius: 4px;
+    background: var(--red-50); color: var(--red-800);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px; font-weight: 700; flex-shrink: 0;
+  }
+
+  .att-info { flex: 1; min-width: 0; }
+  .att-name { font-size: 12px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .att-size { font-size: 10px; color: var(--text-tertiary); }
+
+  .divider { height: 1px; background: var(--border); margin: 24px 0; }
+
+  /* ═══ RESPONSIVE ═══ */
+  @media (max-width: 1100px) {
+    .col-right { width: 300px; }
+  }
+
+  @media (max-width: 900px) {
+    .sidebar { width: 56px; padding: 16px 6px; }
+    .logo { font-size: 0; }
+    .nav-item span, .nav-badge, .nav-group-label, .user-info { display: none; }
+    .nav-item { justify-content: center; padding: 10px; }
+    .sidebar-footer { justify-content: center; padding-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ═══ SIDEBAR ═══ -->
+  <aside class="sidebar">
+    <div class="logo">Relvo</div>
+    <a class="nav-item" href="index.html"><div class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div><span>Dashboard</span></a>
+    <a class="nav-item active" href="subjects.html"><div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div><span>Sujets</span><div class="nav-badge">7</div></a>
+    <a class="nav-item" href="#"><div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><span>Messages</span><div class="nav-badge">12</div></a>
+    <a class="nav-item" href="#"><div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div><span>Contacts</span></a>
+    <div class="nav-group-label">Organisation</div>
+    <a class="nav-item" href="#"><div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg></div><span>Domaines</span></a>
+    <a class="nav-item" href="#"><div class="nav-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><span>Activit&eacute;</span></a>
+    <div class="nav-group-label">Syst&egrave;me</div>
+    <a class="nav-item" href="#"><div class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></div><span>Param&egrave;tres</span></a>
+    <div class="sidebar-footer">
+      <div class="user-avatar">VC</div>
+      <div class="user-info"><div class="user-name">Vincent Chollet</div><div class="user-role">CEO</div></div>
+    </div>
+  </aside>
+
+  <!-- ═══ MAIN ═══ -->
+  <div class="main">
+
+    <!-- SUBJECT HEADER -->
+    <div class="subject-header">
+      <div class="sh-breadcrumb">
+        <a href="subjects.html">Sujets</a>
+        <span>/</span>
+        <span>SUB-0142</span>
+      </div>
+      <div class="sh-top">
+        <div class="sh-left">
+          <div class="sh-title">Retard livraison sauce blanche &mdash; Montpellier</div>
+          <div class="sh-badges" style="margin-top: 10px;">
+            <span class="badge sb-todo">&agrave; faire</span>
+            <span class="badge badge-critical">critique</span>
+            <span class="domain-tag">Fournisseurs</span>
+            <span class="channel-tag"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg> WhatsApp</span>
+            <span style="font-size: 12px; color: var(--text-tertiary);">Ouvert il y a 25 min</span>
+          </div>
+        </div>
+        <div class="sh-actions">
+          <button class="btn-outline">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+          </button>
+          <button class="btn-outline">
+            <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            R&eacute;soudre
+          </button>
+          <button class="btn-primary">
+            <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            R&eacute;pondre
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content-area">
+
+      <!-- ══ COLONNE PRINCIPALE ══ -->
+      <div class="col-main">
+
+        <!-- AI SUMMARY -->
+        <div class="ai-summary">
+          <div class="ai-summary-header">
+            <div class="ai-icon">&#10022;</div>
+            <span class="ai-summary-label">R&eacute;sum&eacute; de la situation</span>
+          </div>
+          <div class="ai-summary-text">
+            Le fournisseur SoGood Distribution ne pourra pas livrer la sauce blanche pr&eacute;vue demain pour le shop de Montpellier. Il propose un remplacement par de la sauce alg&eacute;rienne. Une d&eacute;cision rapide est n&eacute;cessaire pour confirmer ou refuser la substitution, et il faut v&eacute;rifier si d'autres magasins sont &eacute;galement impact&eacute;s.
+          </div>
+        </div>
+
+        <!-- TASKS -->
+        <div class="tasks-section">
+          <div class="section-header">
+            <div class="section-title">T&acirc;ches &mdash; 2 ouvertes sur 3</div>
+            <span style="font-size: 11px; color: var(--text-tertiary);">1 IA &middot; 2 manuelles</span>
+          </div>
+
+          <!-- Task 1 — open, decision -->
+          <div class="task-card">
+            <div class="task-check"></div>
+            <div class="task-body">
+              <div class="task-title">Confirmer ou refuser le remplacement par la sauce alg&eacute;rienne</div>
+              <div class="task-meta">
+                <span class="task-kind kind-decision">d&eacute;cision</span>
+                <span class="task-source">Propos&eacute;e par l'IA &middot; il y a 24 min</span>
+              </div>
+              <button class="task-action-btn">
+                <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                R&eacute;pondre au fournisseur
+              </button>
+            </div>
+          </div>
+
+          <!-- Task 2 — open, call, created by user -->
+          <div class="task-card">
+            <div class="task-check"></div>
+            <div class="task-body">
+              <div class="task-title">Appeler le shop de Montpellier pour v&eacute;rifier l'impact sur les ventes</div>
+              <div class="task-meta">
+                <span class="task-kind kind-call">appel</span>
+                <span class="task-source">Cr&eacute;&eacute;e par VC &middot; il y a 18 min</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Task 3 — done, check, created by user -->
+          <div class="task-card" style="opacity: 0.6;">
+            <div class="task-check done"></div>
+            <div class="task-body">
+              <div class="task-title done-text">V&eacute;rifier les stocks de sauce blanche &agrave; B&eacute;ziers</div>
+              <div class="task-meta">
+                <span class="task-kind kind-check">v&eacute;rification</span>
+                <span class="task-source">Cr&eacute;&eacute;e par VC &middot; Coch&eacute;e il y a 10 min</span>
+              </div>
+            </div>
+          </div>
+
+          <button class="add-task-btn">
+            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Ajouter une t&acirc;che
+          </button>
+        </div>
+
+        <!-- MESSAGES / CONVERSATION -->
+        <div class="messages-section">
+          <div class="section-header">
+            <div class="section-title">Conversation &mdash; 1 message</div>
+          </div>
+
+          <!-- Message 1 — incoming -->
+          <div class="message-card">
+            <div class="msg-avatar msg-avatar-ext">SG</div>
+            <div class="msg-body">
+              <div class="msg-header">
+                <span class="msg-sender">Karim Benali &mdash; SoGood Distribution</span>
+                <span class="msg-direction msg-dir-in">entrant</span>
+                <span class="msg-channel"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg> WhatsApp</span>
+                <span class="msg-time">Aujourd'hui &agrave; 09:17</span>
+              </div>
+              <div class="msg-content">
+                Bonjour Vincent,<br><br>
+                Je vous contacte car on a un souci sur la livraison de demain pour votre shop de Montpellier. On est en rupture de sauce blanche depuis ce matin, le r&eacute;appro ne sera pas l&agrave; avant jeudi.<br><br>
+                Par contre je peux vous mettre de la sauce alg&eacute;rienne &agrave; la place, m&ecirc;me quantit&eacute;, m&ecirc;me prix. C'est ok pour vous ?<br><br>
+                Dites-moi vite si possible, je dois boucler les commandes avant 14h.<br><br>
+                Karim
+              </div>
+              <div class="msg-attachment">
+                <svg viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>
+                bon-livraison-montpellier.pdf &middot; 245 Ko
+              </div>
+            </div>
+          </div>
+
+          <!-- COMPOSE BAR with AI draft pre-filled -->
+          <div class="compose-bar">
+            <div class="compose-to">&Agrave; : <strong>Karim Benali &mdash; SoGood Distribution</strong> &middot; WhatsApp</div>
+            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px; padding: 4px 8px; background: var(--purple-50); border-radius: 4px; width: fit-content;">
+              <span style="font-size: 11px; color: var(--purple-800); font-weight: 500;">&#10022; Suggestion IA &mdash; modifiez librement avant d'envoyer</span>
+            </div>
+            <textarea class="compose-textarea" style="min-height: 100px;">Bonjour Karim,
+
+Merci pour le retour rapide. Je v&eacute;rifie avec l'&eacute;quipe de Montpellier si la sauce alg&eacute;rienne peut convenir et je vous confirme avant midi.
+
+Cordialement,
+Vincent Chollet</textarea>
+            <div class="compose-footer">
+              <div class="compose-tools">
+                <div class="compose-tool-btn"><svg viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg></div>
+                <div class="compose-tool-btn" title="Reg&eacute;n&eacute;rer la suggestion IA"><svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg></div>
+              </div>
+              <button class="btn-primary">
+                <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                Envoyer
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ══ COLONNE DROITE ══ -->
+      <div class="col-right">
+
+        <!-- DETAILS -->
+        <div class="panel">
+          <div class="panel-title">D&eacute;tails du sujet</div>
+          <div class="detail-row">
+            <span class="detail-label">R&eacute;f&eacute;rence</span>
+            <span class="detail-value" style="font-family: monospace;">SUB-0142</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Statut</span>
+            <select class="status-select">
+              <option selected>&agrave; faire</option>
+              <option>nouveau</option>
+              <option>&agrave; qualifier</option>
+              <option>en attente</option>
+              <option>bloqu&eacute;</option>
+              <option>r&eacute;solu</option>
+              <option>archiv&eacute;</option>
+            </select>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Priorit&eacute;</span>
+            <select class="priority-select">
+              <option selected>critique</option>
+              <option>haute</option>
+              <option>moyenne</option>
+              <option>basse</option>
+            </select>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Domaine</span>
+            <span class="detail-value">Fournisseurs</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Canal source</span>
+            <span class="detail-value">WhatsApp</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Ouvert le</span>
+            <span class="detail-value">21 avr. 2025 &agrave; 09:17</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Derni&egrave;re activit&eacute;</span>
+            <span class="detail-value">il y a 10 min</span>
+          </div>
+        </div>
+
+        <!-- CONTACT -->
+        <div class="panel">
+          <div class="panel-title">Contact principal</div>
+          <div class="contact-card">
+            <div class="contact-avatar-lg">KB</div>
+            <div class="contact-info">
+              <div class="contact-name-lg">Karim Benali</div>
+              <div class="contact-company">SoGood Distribution</div>
+              <div class="contact-channels">
+                <span class="contact-ch"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg> +33 6 12 34 56 78</span>
+                <span class="contact-ch"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> k.benali@sogood.fr</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ATTACHMENTS -->
+        <div class="panel">
+          <div class="panel-title">Pi&egrave;ces jointes &mdash; 1</div>
+          <div class="attachment-item">
+            <div class="att-icon">PDF</div>
+            <div class="att-info">
+              <div class="att-name">bon-livraison-montpellier.pdf</div>
+              <div class="att-size">245 Ko &middot; Re&ccedil;u le 21 avr.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TIMELINE / JOURNAL -->
+        <div class="panel">
+          <div class="panel-title">Journal de bord</div>
+          <div class="timeline">
+
+            <div class="tl-item">
+              <div class="tl-dot tl-dot-task">
+                <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+                <div class="tl-actor tl-actor-user">VC</div>
+              </div>
+              <div class="tl-content">
+                <div class="tl-text">T&acirc;che <strong>V&eacute;rifier stocks B&eacute;ziers</strong> coch&eacute;e</div>
+                <div class="tl-time">09:32</div>
+              </div>
+            </div>
+
+            <div class="tl-item">
+              <div class="tl-dot tl-dot-task">
+                <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                <div class="tl-actor tl-actor-user">VC</div>
+              </div>
+              <div class="tl-content">
+                <div class="tl-text">T&acirc;che cr&eacute;&eacute;e : <strong>Appeler le shop de Montpellier</strong></div>
+                <div class="tl-time">09:24</div>
+              </div>
+            </div>
+
+            <div class="tl-item">
+              <div class="tl-dot tl-dot-task">
+                <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                <div class="tl-actor tl-actor-user">VC</div>
+              </div>
+              <div class="tl-content">
+                <div class="tl-text">T&acirc;che cr&eacute;&eacute;e : <strong>V&eacute;rifier stocks B&eacute;ziers</strong></div>
+                <div class="tl-time">09:22</div>
+              </div>
+            </div>
+
+            <div class="tl-item">
+              <div class="tl-dot tl-dot-action">
+                <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                <div class="tl-actor tl-actor-ai">IA</div>
+              </div>
+              <div class="tl-content">
+                <div class="tl-text">Brouillon de r&eacute;ponse pr&eacute;par&eacute; pour <strong>Karim Benali</strong></div>
+                <div class="tl-time">09:18</div>
+              </div>
+            </div>
+
+            <div class="tl-item">
+              <div class="tl-dot tl-dot-task">
+                <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+                <div class="tl-actor tl-actor-ai">IA</div>
+              </div>
+              <div class="tl-content">
+                <div class="tl-text">T&acirc;che propos&eacute;e : <strong>Confirmer ou refuser le remplacement</strong></div>
+                <div class="tl-time">09:18</div>
+              </div>
+            </div>
+
+            <div class="tl-item">
+              <div class="tl-dot tl-dot-status">
+                <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+                <div class="tl-actor tl-actor-ai">IA</div>
+              </div>
+              <div class="tl-content">
+                <div class="tl-text">Statut pass&eacute; &agrave; <strong>&agrave; faire</strong> &middot; Priorit&eacute; <strong>critique</strong></div>
+                <div class="tl-time">09:18</div>
+              </div>
+            </div>
+
+            <div class="tl-item">
+              <div class="tl-dot tl-dot-status">
+                <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+                <div class="tl-actor tl-actor-ai">IA</div>
+              </div>
+              <div class="tl-content">
+                <div class="tl-text">Sujet cr&eacute;&eacute; &middot; Domaine <strong>Fournisseurs</strong></div>
+                <div class="tl-time">09:17</div>
+              </div>
+            </div>
+
+            <div class="tl-item">
+              <div class="tl-dot tl-dot-msg">
+                <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                <div class="tl-actor tl-actor-ext">IN</div>
+              </div>
+              <div class="tl-content">
+                <div class="tl-text">Message re&ccedil;u de <strong>Karim Benali</strong> via WhatsApp</div>
+                <div class="tl-time">09:17</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
