@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relvo — Domaines</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ═══ SIDEBAR ═══ -->
+  <aside class="sidebar">
+    <div class="logo">Relvo</div>
+
+    <a class="nav-item" href="index.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
+      <span>Dashboard</span>
+    </a>
+    <a class="nav-item" href="sujets.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
+      <span>Sujets</span>
+      <div class="nav-badge">9</div>
+    </a>
+    <a class="nav-item" href="messages.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+      <span>Messages</span>
+      <div class="nav-badge">3</div>
+    </a>
+    <a class="nav-item" href="contacts.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+      <span>Contacts</span>
+    </a>
+
+    <div class="nav-group-label">Organisation</div>
+    <a class="nav-item active" href="domaines.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg></div>
+      <span>Domaines</span>
+    </a>
+    <a class="nav-item" href="activite.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+      <span>Activité</span>
+    </a>
+
+    <div class="nav-group-label">Système</div>
+    <a class="nav-item" href="parametres.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></div>
+      <span>Paramètres</span>
+    </a>
+
+    <div class="sidebar-footer">
+      <div class="user-avatar">MF</div>
+      <div class="user-info">
+        <div class="user-name">Mamadou Faye</div>
+        <div class="user-role">CEO</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ═══ MAIN ═══ -->
+  <div class="main">
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+      <div class="page-header-top">
+        <div>
+          <div class="page-title">Domaines</div>
+          <div class="page-subtitle">6 domaines actifs · utilisés pour classer les sujets et les contacts</div>
+        </div>
+        <button class="btn-primary">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Nouveau domaine
+        </button>
+      </div>
+    </div>
+
+    <!-- DOMAINES GRID -->
+    <div class="col-main">
+
+      <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 20px; line-height: 1.5; max-width: 700px;">
+        Un <strong>domaine</strong> classe un sujet dans un périmètre métier. L'IA suggère le domaine d'un nouveau sujet à partir du contenu du message, du domaine par défaut du contact et du canal d'entrée. Tu peux toujours corriger.
+      </p>
+
+      <div class="domains-grid">
+
+        <!-- Fournisseurs -->
+        <a href="#" class="domain-card">
+          <div class="domain-card-actions">
+            <button class="domain-action-btn" title="Modifier">
+              <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            </button>
+            <button class="domain-action-btn" title="Désactiver">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+            </button>
+          </div>
+
+          <div class="domain-card-header">
+            <div class="domain-icon domain-icon-fournisseurs">
+              <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            </div>
+            <div>
+              <div class="domain-card-name">Fournisseurs</div>
+              <div class="domain-card-slug">fournisseurs</div>
+            </div>
+          </div>
+
+          <div class="domain-card-desc">
+            Tout ce qui vient des fournisseurs : commandes, livraisons, retards, factures, négociations.
+          </div>
+
+          <div class="domain-card-stats">
+            <div>
+              <div class="domain-stat-label">Sujets</div>
+              <div class="domain-stat-value">8</div>
+            </div>
+            <div>
+              <div class="domain-stat-label">Contacts</div>
+              <div class="domain-stat-value">3</div>
+            </div>
+            <div>
+              <div class="domain-stat-label">Channels</div>
+              <div class="domain-stat-value">2</div>
+            </div>
+          </div>
+        </a>
+
+        <!-- RH -->
+        <a href="#" class="domain-card">
+          <div class="domain-card-actions">
+            <button class="domain-action-btn" title="Modifier"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+            <button class="domain-action-btn" title="Désactiver"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg></button>
+          </div>
+
+          <div class="domain-card-header">
+            <div class="domain-icon domain-icon-rh">
+              <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            </div>
+            <div>
+              <div class="domain-card-name">RH</div>
+              <div class="domain-card-slug">rh</div>
+            </div>
+          </div>
+
+          <div class="domain-card-desc">
+            Demandes des collaborateurs, congés, embauches, formations, dossiers personnels.
+          </div>
+
+          <div class="domain-card-stats">
+            <div>
+              <div class="domain-stat-label">Sujets</div>
+              <div class="domain-stat-value">4</div>
+            </div>
+            <div>
+              <div class="domain-stat-label">Contacts</div>
+              <div class="domain-stat-value">2</div>
+            </div>
+            <div>
+              <div class="domain-stat-label">Channels</div>
+              <div class="domain-stat-value">1</div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Juridique -->
+        <a href="#" class="domain-card">
+          <div class="domain-card-actions">
+            <button class="domain-action-btn" title="Modifier"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+            <button class="domain-action-btn" title="Désactiver"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg></button>
+          </div>
+
+          <div class="domain-card-header">
+            <div class="domain-icon domain-icon-juridique">
+              <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
+            </div>
+            <div>
+              <div class="domain-card-name">Juridique</div>
+              <div class="domain-card-slug">juridique</div>
+            </div>
+          </div>
+
+          <div class="domain-card-desc">
+            Contrats, baux, conformité, litiges, propriété intellectuelle.
+          </div>
+
+          <div class="domain-card-stats">
+            <div>
+              <div class="domain-stat-label">Sujets</div>
+              <div class="domain-stat-value">5</div>
+            </div>
+            <div>
+              <div class="domain-stat-label">Contacts</div>
+              <div class="domain-stat-value">2</div>
+            </div>
+            <div>
+              <div class="domain-stat-label">Channels</div>
+              <div class="domain-stat-value">1</div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Business -->
+        <a href="#" class="domain-card">
+          <div class="domain-card-actions">
+            <button class="domain-action-btn" title="Modifier"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+            <button class="domain-action-btn" title="Désactiver"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg></button>
+          </div>
+
+          <div class="domain-card-header">
+            <div class="domain-icon domain-icon-business">
+              <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+            </div>
+            <div>
+              <div class="domain-card-name">Business</div>
+              <div class="domain-card-slug">business</div>
+            </div>
+          </div>
+
+          <div class="domain-card-desc">
+            Clients, restaurants partenaires, paiements, devis, opportunités commerciales.
+          </div>
+
+          <div class="domain-card-stats">
+            <div>
+              <div class="domain-stat-label">Sujets</div>
+              <div class="domain-stat-value">6</div>
+            </div>
+            <div>
+              <div class="domain-stat-label">Contacts</div>
+              <div class="domain-stat-value">3</div>
+            </div>
+            <div>
+              <div class="domain-stat-label">Channels</div>
+              <div class="domain-stat-value">2</div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Production -->
+        <a href="#" class="domain-card">
+          <div class="domain-card-actions">
+            <button class="domain-action-btn" title="Modifier"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+            <button class="domain-action-btn" title="Désactiver"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg></button>
+          </div>
+
+          <div class="domain-card-header">
+            <div class="domain-icon domain-icon-production">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+            </div>
+            <div>
+              <div class="domain-card-name">Production</div>
+              <div class="domain-card-slug">production</div>
+            </div>
+          </div>
+
+          <div class="domain-card-desc">
+            Équipements des shops, maintenance, pannes, gestion opérationnelle des sites.
+          </div>
+
+          <div class="domain-card-stats">
+            <div>
+              <div class="domain-stat-label">Sujets</div>
+              <div class="domain-stat-value">5</div>
+            </div>
+            <div>
+              <div class="domain-stat-label">Contacts</div>
+              <div class="domain-stat-value">2</div>
+            </div>
+            <div>
+              <div class="domain-stat-label">Channels</div>
+              <div class="domain-stat-value">1</div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Support — peu d'activité (illustre un domaine encore vide) -->
+        <a href="#" class="domain-card">
+          <div class="domain-card-actions">
+            <button class="domain-action-btn" title="Modifier"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+            <button class="domain-action-btn" title="Désactiver"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg></button>
+          </div>
+
+          <div class="domain-card-header">
+            <div class="domain-icon domain-icon-support">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </div>
+            <div>
+              <div class="domain-card-name">Support</div>
+              <div class="domain-card-slug">support</div>
+            </div>
+          </div>
+
+          <div class="domain-card-desc">
+            Demandes d'aide informatique, outils internes, dépannage logiciel.
+          </div>
+
+          <div class="domain-card-stats">
+            <div>
+              <div class="domain-stat-label">Sujets</div>
+              <div class="domain-stat-value">2</div>
+            </div>
+            <div>
+              <div class="domain-stat-label">Contacts</div>
+              <div class="domain-stat-value">0</div>
+            </div>
+            <div>
+              <div class="domain-stat-label">Channels</div>
+              <div class="domain-stat-value">1</div>
+            </div>
+          </div>
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>

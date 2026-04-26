@@ -2095,6 +2095,149 @@ button { font-family: var(--font); }
 }
 
 /* ═══════════════════════════════════════════════════════
+   DOMAINS GRID (Page Domaines)
+   ═══════════════════════════════════════════════════════ */
+.domains-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 14px;
+  padding: 4px;
+}
+
+.domain-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--bg-primary);
+  padding: 20px;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+}
+.domain-card:hover {
+  border-color: var(--blue-200);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.domain-card.is-inactive { opacity: 0.6; }
+
+.domain-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.domain-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.domain-icon svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.domain-icon-fournisseurs   { background: var(--blue-50); }
+.domain-icon-fournisseurs svg { stroke: var(--blue-600); }
+.domain-icon-rh             { background: var(--pink-50); }
+.domain-icon-rh svg         { stroke: var(--pink-600); }
+.domain-icon-juridique      { background: var(--purple-50); }
+.domain-icon-juridique svg  { stroke: var(--purple-600); }
+.domain-icon-business       { background: var(--green-50); }
+.domain-icon-business svg   { stroke: var(--green-600); }
+.domain-icon-support        { background: var(--teal-50); }
+.domain-icon-support svg    { stroke: var(--teal-600); }
+.domain-icon-production     { background: var(--amber-50); }
+.domain-icon-production svg { stroke: var(--amber-600); }
+
+.domain-card-name {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+.domain-card-slug {
+  font-size: 11px;
+  font-family: monospace;
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}
+
+.domain-card-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+.domain-card-stats {
+  display: flex;
+  gap: 18px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-light);
+}
+
+.domain-stat-label {
+  font-size: 10px;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+.domain-stat-value {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.domain-card-actions {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.domain-card:hover .domain-card-actions { opacity: 1; }
+
+.domain-action-btn {
+  width: 26px;
+  height: 26px;
+  border: none;
+  background: transparent;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s;
+  font-family: var(--font);
+}
+.domain-action-btn:hover {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+.domain-action-btn svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.5;
+}
+
+/* ═══════════════════════════════════════════════════════
    TABLE (générique pour Contacts, Domaines, etc.)
    ═══════════════════════════════════════════════════════ */
 .table-wrap {
