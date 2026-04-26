@@ -405,12 +405,14 @@ Historise tout ce qui doit apparaître dans la timeline du sujet ou dans la page
 
 Le champ `actor_type` porte l'information "qui a agi". Il est structurant pour toute la plateforme :
 
-- **user** → "Moi" — actions de l'utilisateur (tâche créée, tâche cochée, message envoyé, statut modifié)
-- **ai** → "IA" — actions de l'intelligence artificielle (tâche proposée, sujet créé, brouillon préparé, domaine suggéré)
-- **contact** → "Externe" — actions du monde extérieur (message reçu, pièce jointe reçue)
-- **system** → événements techniques automatiques (changement de statut automatique, archivage)
+- **user** → affiché **"Moi"** dans l'UI — actions de l'utilisateur (tâche créée, tâche cochée, message envoyé, statut modifié)
+- **ai** → affiché **"Relvo"** dans l'UI — actions de l'assistant IA (tâche proposée, sujet créé, brouillon préparé, domaine suggéré)
+- **contact** → affiché **"Externe"** dans l'UI — actions du monde extérieur (message reçu, pièce jointe reçue)
+- **system** → événements techniques automatiques (changement de statut automatique, archivage) — généralement non affiché à l'utilisateur
 
-Ce triptyque **Moi / IA / Externe** est utilisé dans l'interface pour filtrer l'activité et pour identifier visuellement l'acteur de chaque événement (badges colorés).
+Ce triptyque **Moi / Relvo / Externe** est utilisé dans l'interface pour filtrer l'activité et pour identifier visuellement l'acteur de chaque événement (badges colorés `M`, `R`, `E`).
+
+> **Convention de nommage**. Le modèle conserve `ai` comme valeur d'enum et la doc `04-ia.md` continue de parler de « l'IA » pour les aspects techniques (modèles, prompts, coûts). Mais dans l'**UI** et la **communication produit**, on utilise toujours **« Relvo »** (le nom de l'assistant) plutôt que « l'IA » (catégorie technique). Cf. principe 5 dans `01-principes.md`.
 
 ### Exemples d'event_type
 

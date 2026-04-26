@@ -51,21 +51,31 @@ Avant de créer ou modifier un écran, lis toujours les documents de conception 
 
 ### Points critiques à respecter
 
-1. **Pas de statut `to_qualify`.** Si l'IA ne comprend pas un message, elle ne crée ni sujet ni contact. Le message reste "Sans sujet" dans la page Messages.
+1. **Pas de statut `to_qualify`.** Si Relvo ne comprend pas un message, il ne crée ni sujet ni contact. Le message reste "Sans sujet" dans la page Messages, accompagné d'un `triage_hint` (intention floue, prospection, sans action, expéditeur inconnu, trop court, autre) qui aide au tri humain.
 
-2. **Sources des tâches.** L'IA ne peut proposer que des tâches déductibles du contenu du message. Les tâches métier (appeler un magasin, vérifier un stock) sont créées par l'utilisateur. La source (IA ou utilisateur) est toujours visible.
+2. **Sources des tâches.** Relvo ne peut proposer que des tâches déductibles du contenu du message. Les tâches métier (appeler un magasin, vérifier un stock) sont créées par l'utilisateur. La source (Relvo ou utilisateur) est toujours visible via un actor-pill (`✦ Relvo` ou `Moi`). Le champ technique `kind` (decision, reply, check…) **n'est pas affiché par défaut** — il sert aux automatisations et au filtrage futur.
 
-3. **Brouillon IA dans le composer.** Le brouillon n'est jamais affiché comme un message dans le fil de conversation. Il est directement dans la zone de rédaction, identifié comme "Suggestion IA".
+3. **Brouillon de Relvo dans le composer.** Le brouillon n'est jamais affiché comme un message dans le fil de conversation. Il est directement dans la zone de rédaction, identifié comme « Suggestion de Relvo — modifiez librement avant d'envoyer », avec actions « Régénérer » / « Effacer ».
 
-4. **Conversations par contact, pas par canal.** Un même contact peut écrire par email et WhatsApp — tous ses messages sont dans une seule conversation. Chaque message porte son indicateur de canal. Le composer propose un sélecteur de canal.
+4. **Acquittement implicite des suggestions.** Aucun bouton « valider » à cliquer sur les suggestions de Relvo. Ouvrir la fiche d'un sujet vaut acquittement de toutes les suggestions présentes. Sur les listes (Dashboard, Sujets), le badge `✦ N tâches suggérées` / `✦ Réponse suggérée` / `✦ Résolution suggérée` disparaît dès la consultation. La logique repose sur `Subject.last_opened_at` (cf. `04-ia.md §8`).
 
-5. **Contacts liés à la création de sujet.** Un contact n'est créé que lorsqu'un sujet est créé. Un message "Sans sujet" d'un expéditeur inconnu n'engendre pas de contact.
+5. **Conversations par contact, pas par canal.** Un même contact peut écrire par email et WhatsApp — tous ses messages sont dans une seule conversation. Chaque message porte son indicateur de canal **et** son badge de rattachement à un sujet (linked) ou « Sans sujet » (orphan). Le composer propose un sélecteur de canal présélectionné sur le dernier canal utilisé par le contact.
 
-6. **Sujets multi-contacts.** Un sujet peut avoir plusieurs contacts (`contact_ids: UUID[]`). Le composer affiche un sélecteur de destinataire quand il y a plusieurs contacts.
+6. **Contacts liés à la création de sujet.** Un contact n'est créé que lorsqu'un sujet est créé. Un message « Sans sujet » d'un expéditeur inconnu n'engendre pas de contact — il est identifié par `sender_raw` (email ou téléphone), avec un avatar `?` gris dans l'UI.
 
-7. **Triptyque d'acteurs dans l'activité.** Chaque événement est identifié par son acteur : Moi (utilisateur), IA, Externe (contacts). Ce triptyque est utilisé partout : journal de bord du sujet, page Activité, filtres.
+7. **Sujets multi-contacts.** Un sujet peut avoir plusieurs contacts (`contact_ids: UUID[]`). Le composer affiche un sélecteur de destinataire quand il y a plusieurs contacts.
 
-8. **Pièces jointes — 3 niveaux d'analyse.** Label automatique (Haiku, à la réception), résumé au premier accès (Sonnet, caché), analyse approfondie à la demande (Sonnet, explicite).
+8. **Triptyque d'acteurs : Moi / Relvo / Externe.** Chaque événement est identifié par son acteur. Côté modèle ce sont les valeurs d'enum `user / ai / contact`. Côté UI on les affiche **Moi / Relvo / Externe** avec des badges colorés `M` (bleu), `R` (violet), `E` (ambre). Utilisé partout : journal de bord du sujet, page Activité, filtres.
+
+9. **Pièces jointes — 3 niveaux d'analyse.** Label automatique (Haiku, à la réception, badge discret affiché à côté du nom), résumé au premier accès (Sonnet, caché et affiché en italique sous le titre dans un accordéon `<details>`), analyse approfondie à la demande explicite via bouton « Analyser avec Relvo pour plus de détails ».
+
+10. **Vue d'ensemble long terme sur la page Activité.** En plus du fil chronologique d'événements, la page Activité présente une section « Vue d'ensemble » avec KPIs (sujets résolus, délai moyen, charge actuelle vs capacité, **% d'aide Relvo**), une **courbe d'évolution** sur 8 semaines, et les bénéfices Relvo (tâches suggérées, brouillons préparés, PJ étiquetées, temps économisé). Cf. `01-principes.md §10`.
+
+11. **Priorité matérialisée par marque-page latéral.** Sur les cartes de sujets (Dashboard et Sujets), la priorité critique/haute est rendue par une **bordure gauche colorée de 4px** (rouge `--brand-accent` pour critique, ambre pour haute). Sur la fiche du sujet (header), la priorité est affichée comme un badge classique. Le statut reste toujours rendu par un badge `sb-*` à part.
+
+12. **Sujets non lus mis en évidence.** Les cartes de sujets en statut `unread` ont un fond légèrement teinté (`#F4FAEC`) et un titre en gras, façon « email non lu ».
+
+13. **« Relvo » dans l'UI, « IA » dans la doc technique.** Dans toute l'interface (textes, badges, libellés), on utilise « Relvo » comme nom de l'assistant. La doc `04-ia.md` continue de parler de « l'IA » pour les aspects techniques (modèles, coûts, prompts) et le modèle conserve `actor_type = ai`.
 
 ## Conventions CSS
 

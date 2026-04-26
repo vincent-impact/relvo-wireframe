@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relvo — Activité</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ═══ SIDEBAR ═══ -->
+  <aside class="sidebar">
+    <div class="logo">Relvo</div>
+
+    <a class="nav-item" href="index.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
+      <span>Dashboard</span>
+    </a>
+    <a class="nav-item" href="sujets.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
+      <span>Sujets</span>
+      <div class="nav-badge">9</div>
+    </a>
+    <a class="nav-item" href="messages.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+      <span>Messages</span>
+      <div class="nav-badge">3</div>
+    </a>
+    <a class="nav-item" href="contacts.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+      <span>Contacts</span>
+    </a>
+
+    <div class="nav-group-label">Organisation</div>
+    <a class="nav-item" href="domaines.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg></div>
+      <span>Domaines</span>
+    </a>
+    <a class="nav-item active" href="activite.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+      <span>Activité</span>
+    </a>
+
+    <div class="nav-group-label">Système</div>
+    <a class="nav-item" href="parametres.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></div>
+      <span>Paramètres</span>
+    </a>
+
+    <div class="sidebar-footer">
+      <div class="user-avatar">MF</div>
+      <div class="user-info">
+        <div class="user-name">Mamadou Faye</div>
+        <div class="user-role">CEO</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ═══ MAIN — overflow-y auto pour permettre le scroll global de la page ═══ -->
+  <div class="main" style="overflow-y: auto;">
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+      <div class="page-header-top">
+        <div>
+          <div class="page-title">Activité</div>
+          <div class="page-subtitle">Tout ce qui s'est passé sur la plateforme — Moi, Relvo, et l'extérieur</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ VUE D'ENSEMBLE — recul long terme + bénéfices IA ═══ -->
+    <section class="overview-section">
+
+      <div class="section-header">
+        <div class="section-title">Vue d'ensemble · 8 dernières semaines</div>
+        <select class="filter-select">
+          <option>8 dernières semaines</option>
+          <option>3 derniers mois</option>
+          <option>6 derniers mois</option>
+          <option>12 derniers mois</option>
+        </select>
+      </div>
+
+      <!-- KPIs -->
+      <div class="kpi-grid">
+
+        <div class="kpi-card">
+          <div class="kpi-label">Sujets résolus · 7 j</div>
+          <div class="kpi-value">6
+            <span class="kpi-trend up-good" title="vs 7 jours précédents">
+              <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+              +50&nbsp;%
+            </span>
+          </div>
+          <div class="kpi-sub">vs 4 la semaine précédente</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-label">Délai moyen de résolution</div>
+          <div class="kpi-value">2 j 4 h
+            <span class="kpi-trend down-good" title="en baisse, c'est bien">
+              <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+              −18&nbsp;%
+            </span>
+          </div>
+          <div class="kpi-sub">de la création à la résolution</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-label">Charge actuelle</div>
+          <div class="kpi-value">24<span style="font-size: 14px; color: var(--text-tertiary); font-weight: 500; margin-left: 6px;">/ ~30</span></div>
+          <div class="kpi-sub" style="display: flex; align-items: center; gap: 6px;">
+            <span style="display: inline-block; width: 60px; height: 4px; background: var(--bg-tertiary); border-radius: 2px; overflow: hidden;">
+              <span style="display: block; height: 100%; width: 80%; background: var(--amber-200); border-radius: 2px;"></span>
+            </span>
+            ~80&nbsp;% de ta capacité
+          </div>
+        </div>
+
+        <div class="kpi-card" style="background: var(--purple-50); border: 1px solid var(--purple-200);">
+          <div class="kpi-label" style="color: var(--purple-800);">Aide de Relvo</div>
+          <div class="kpi-value" style="color: var(--purple-900);">62&nbsp;%</div>
+          <div class="kpi-sub" style="color: var(--purple-800);">
+            des tâches sont parties d'une suggestion de Relvo
+          </div>
+        </div>
+
+      </div>
+
+      <!-- COURBE D'ÉVOLUTION -->
+      <div class="chart-card">
+        <div class="chart-header">
+          <div class="chart-title">Sujets ouverts vs résolus — 8 dernières semaines</div>
+          <div class="chart-legend">
+            <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--brand-accent);"></span>Ouverts</span>
+            <span class="chart-legend-item"><span class="chart-legend-dot" style="background: var(--teal-600);"></span>Résolus</span>
+          </div>
+        </div>
+
+        <div class="chart-svg-wrap">
+          <svg class="chart-svg" viewBox="0 0 800 220" preserveAspectRatio="none">
+            <!-- Grid horizontal -->
+            <line x1="40" y1="20"  x2="780" y2="20"  stroke="#eeecea" stroke-width="1" stroke-dasharray="3 3"/>
+            <line x1="40" y1="65"  x2="780" y2="65"  stroke="#eeecea" stroke-width="1" stroke-dasharray="3 3"/>
+            <line x1="40" y1="110" x2="780" y2="110" stroke="#eeecea" stroke-width="1" stroke-dasharray="3 3"/>
+            <line x1="40" y1="155" x2="780" y2="155" stroke="#eeecea" stroke-width="1" stroke-dasharray="3 3"/>
+            <line x1="40" y1="200" x2="780" y2="200" stroke="#e4e2de" stroke-width="1"/>
+
+            <!-- Labels Y -->
+            <text x="32" y="24"  text-anchor="end" fill="#9a9a9a" font-size="10" font-family="-apple-system, sans-serif">40</text>
+            <text x="32" y="69"  text-anchor="end" fill="#9a9a9a" font-size="10" font-family="-apple-system, sans-serif">30</text>
+            <text x="32" y="114" text-anchor="end" fill="#9a9a9a" font-size="10" font-family="-apple-system, sans-serif">20</text>
+            <text x="32" y="159" text-anchor="end" fill="#9a9a9a" font-size="10" font-family="-apple-system, sans-serif">10</text>
+            <text x="32" y="204" text-anchor="end" fill="#9a9a9a" font-size="10" font-family="-apple-system, sans-serif">0</text>
+
+            <!-- Labels X (semaines) -->
+            <text x="80"  y="215" text-anchor="middle" fill="#9a9a9a" font-size="10" font-family="-apple-system, sans-serif">S-8</text>
+            <text x="180" y="215" text-anchor="middle" fill="#9a9a9a" font-size="10" font-family="-apple-system, sans-serif">S-7</text>
+            <text x="280" y="215" text-anchor="middle" fill="#9a9a9a" font-size="10" font-family="-apple-system, sans-serif">S-6</text>
+            <text x="380" y="215" text-anchor="middle" fill="#9a9a9a" font-size="10" font-family="-apple-system, sans-serif">S-5</text>
+            <text x="480" y="215" text-anchor="middle" fill="#9a9a9a" font-size="10" font-family="-apple-system, sans-serif">S-4</text>
+            <text x="580" y="215" text-anchor="middle" fill="#9a9a9a" font-size="10" font-family="-apple-system, sans-serif">S-3</text>
+            <text x="680" y="215" text-anchor="middle" fill="#9a9a9a" font-size="10" font-family="-apple-system, sans-serif">S-2</text>
+            <text x="765" y="215" text-anchor="end"    fill="#1a1a1a" font-size="10" font-weight="500" font-family="-apple-system, sans-serif">Cette semaine</text>
+
+            <!-- Aire sous Sujets ouverts -->
+            <path d="M 80,119 L 180,101 L 280,82 L 380,33 L 480,52 L 580,74 L 680,65 L 760,74 L 760,200 L 80,200 Z"
+                  fill="#E63150" fill-opacity="0.06"/>
+
+            <!-- Courbe Sujets ouverts (rouge) — 18, 22, 25, 32, 28, 24, 26, 24 -->
+            <path d="M 80,119 L 180,101 L 280,82 L 380,33 L 480,52 L 580,74 L 680,65 L 760,74"
+                  stroke="#E63150" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+            <!-- Aire sous Sujets résolus -->
+            <path d="M 80,137 L 180,119 L 280,110 L 380,101 L 480,87 L 580,92 L 680,87 L 760,92 L 760,200 L 80,200 Z"
+                  fill="#0F6E56" fill-opacity="0.06"/>
+
+            <!-- Courbe Sujets résolus (teal) — 14, 18, 20, 22, 25, 24, 25, 24 -->
+            <path d="M 80,137 L 180,119 L 280,110 L 380,101 L 480,87 L 580,92 L 680,87 L 760,92"
+                  stroke="#0F6E56" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+            <!-- Points Ouverts -->
+            <circle cx="80"  cy="119" r="3.5" fill="#E63150"/>
+            <circle cx="180" cy="101" r="3.5" fill="#E63150"/>
+            <circle cx="280" cy="82"  r="3.5" fill="#E63150"/>
+            <circle cx="380" cy="33"  r="4"   fill="#E63150"/>
+            <circle cx="480" cy="52"  r="3.5" fill="#E63150"/>
+            <circle cx="580" cy="74"  r="3.5" fill="#E63150"/>
+            <circle cx="680" cy="65"  r="3.5" fill="#E63150"/>
+            <circle cx="760" cy="74"  r="4"   fill="#E63150" stroke="#fff" stroke-width="1.5"/>
+
+            <!-- Points Résolus -->
+            <circle cx="80"  cy="137" r="3.5" fill="#0F6E56"/>
+            <circle cx="180" cy="119" r="3.5" fill="#0F6E56"/>
+            <circle cx="280" cy="110" r="3.5" fill="#0F6E56"/>
+            <circle cx="380" cy="101" r="3.5" fill="#0F6E56"/>
+            <circle cx="480" cy="87"  r="3.5" fill="#0F6E56"/>
+            <circle cx="580" cy="92"  r="3.5" fill="#0F6E56"/>
+            <circle cx="680" cy="87"  r="3.5" fill="#0F6E56"/>
+            <circle cx="760" cy="92"  r="4"   fill="#0F6E56" stroke="#fff" stroke-width="1.5"/>
+
+            <!-- Annotation pic S-5 -->
+            <line x1="380" y1="20" x2="380" y2="33" stroke="#E63150" stroke-width="1" stroke-dasharray="2 2" opacity="0.5"/>
+            <text x="380" y="14" text-anchor="middle" fill="#A32D2D" font-size="10" font-weight="500" font-family="-apple-system, sans-serif">Pic — 32 sujets</text>
+          </svg>
+        </div>
+
+        <div style="margin-top: 12px; font-size: 11px; color: var(--text-tertiary); line-height: 1.5;">
+          Pic d'activité <strong>il y a 5 semaines</strong> (32 sujets ouverts). Depuis, l'écart avec les sujets résolus se resserre — bonne dynamique.
+        </div>
+      </div>
+
+      <!-- BÉNÉFICES IA -->
+      <div class="section-header" style="margin-bottom: 12px;">
+        <div class="section-title">Aide de Relvo · 7 derniers jours</div>
+        <span class="text-xs muted">données fictives — V1 : tracking activé à la mise en prod</span>
+      </div>
+
+      <div class="ai-benefits-grid">
+
+        <div class="ai-benefit-card">
+          <div class="ai-benefit-label">
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15 8.5 22 9.3 17 14 18.5 21 12 17.5 5.5 21 7 14 2 9.3 9 8.5 12 2"/></svg>
+            Tâches suggérées
+          </div>
+          <div class="ai-benefit-value">47</div>
+          <div class="ai-benefit-sub">dont 38 conservées (81 %)</div>
+        </div>
+
+        <div class="ai-benefit-card">
+          <div class="ai-benefit-label">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Brouillons préparés
+          </div>
+          <div class="ai-benefit-value">12</div>
+          <div class="ai-benefit-sub">9 envoyés après modification</div>
+        </div>
+
+        <div class="ai-benefit-card">
+          <div class="ai-benefit-label">
+            <svg viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>
+            Pièces jointes labellisées
+          </div>
+          <div class="ai-benefit-value">23</div>
+          <div class="ai-benefit-sub">3 analyses approfondies demandées</div>
+        </div>
+
+        <div class="ai-benefit-card">
+          <div class="ai-benefit-label">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Temps estimé économisé
+          </div>
+          <div class="ai-benefit-value">~3 h 20</div>
+          <div class="ai-benefit-sub">cette semaine (estimation)</div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ═══ ACTIVITÉ RÉCENTE ═══ -->
+    <div class="page-header">
+      <div class="page-header-top">
+        <div>
+          <div class="page-title" style="font-size: 18px;">Activité récente</div>
+          <div class="page-subtitle">Fil chronologique — filtres ci-dessous</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABS — filtre par acteur (triptyque) -->
+    <div class="status-tabs">
+      <a class="status-tab active" href="#">Tous <span class="tab-count">42</span></a>
+      <a class="status-tab" href="#"><span class="leg-dot ld-user" style="margin-right: 4px;"></span>Moi <span class="tab-count">14</span></a>
+      <a class="status-tab" href="#"><span class="leg-dot ld-ai" style="margin-right: 4px;"></span>Relvo <span class="tab-count">19</span></a>
+      <a class="status-tab" href="#"><span class="leg-dot ld-ext" style="margin-right: 4px;"></span>Externe <span class="tab-count">9</span></a>
+    </div>
+
+    <!-- FILTERS BAR -->
+    <div class="filters-bar">
+      <input type="text" class="filter-search" placeholder="Rechercher dans l'activité…" />
+      <select class="filter-select">
+        <option>Tous types d'événement</option>
+        <option>Messages</option>
+        <option>Tâches</option>
+        <option>Actions</option>
+        <option>Statuts de sujet</option>
+        <option>Contacts</option>
+      </select>
+      <select class="filter-select">
+        <option>Tous les sujets</option>
+        <option>SUB-0142</option>
+        <option>SUB-0148</option>
+        <option>SUB-0082</option>
+        <option>SUB-0131</option>
+        <option>SUB-0103</option>
+      </select>
+      <select class="filter-select">
+        <option>Aujourd'hui</option>
+        <option>7 derniers jours</option>
+        <option>30 derniers jours</option>
+        <option>Tout</option>
+      </select>
+      <span class="results-count">42 événements</span>
+    </div>
+
+    <div class="content-area" style="overflow: visible; flex: none;">
+
+      <!-- ═══ COLONNE PRINCIPALE — fil d'activité ═══ -->
+      <div class="col-main" style="overflow: visible;">
+
+        <!-- ── Aujourd'hui ── -->
+        <div style="font-size: 11px; font-weight: 600; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.6px; margin: 4px 0 12px;">Aujourd'hui · 29 avril</div>
+
+        <div class="activity-list">
+
+          <!-- Moi — Tâche cochée -->
+          <div class="activity-item">
+            <div class="icon-wrap">
+              <div class="act-ic act-ic-task">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <span class="actor-badge actor-user">M</span>
+            </div>
+            <div class="act-content">
+              <div class="act-text"><strong>J'ai coché</strong> la tâche <em>« Vérifier les stocks de sauce blanche à Béziers »</em> sur <a href="sujet.html">SUB-0142</a></div>
+              <div class="act-time">il y a 5 min</div>
+            </div>
+          </div>
+
+          <!-- Moi — Tâche créée -->
+          <div class="activity-item">
+            <div class="icon-wrap">
+              <div class="act-ic act-ic-task">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </div>
+              <span class="actor-badge actor-user">M</span>
+            </div>
+            <div class="act-content">
+              <div class="act-text"><strong>J'ai ajouté</strong> la tâche <em>« Vérifier les stocks de sauce blanche à Béziers »</em> sur <a href="sujet.html">SUB-0142</a></div>
+              <div class="act-time">il y a 10 min</div>
+            </div>
+          </div>
+
+          <!-- IA — Brouillon préparé -->
+          <div class="activity-item">
+            <div class="icon-wrap">
+              <div class="act-ic act-ic-action">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              </div>
+              <span class="actor-badge actor-ai">R</span>
+            </div>
+            <div class="act-content">
+              <div class="act-text"><strong>Relvo a préparé un brouillon de réponse</strong> pour <a href="contact.html">Karim Benali</a> sur <a href="sujet.html">SUB-0142</a></div>
+              <div class="act-time">il y a 22 min</div>
+            </div>
+          </div>
+
+          <!-- IA — 2 tâches proposées -->
+          <div class="activity-item">
+            <div class="icon-wrap">
+              <div class="act-ic act-ic-task">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </div>
+              <span class="actor-badge actor-ai">R</span>
+            </div>
+            <div class="act-content">
+              <div class="act-text"><strong>Relvo a proposé 2 tâches</strong> sur <a href="sujet.html">SUB-0142</a> : décision sur le remplacement, réponse au fournisseur</div>
+              <div class="act-time">il y a 22 min</div>
+            </div>
+          </div>
+
+          <!-- IA — Sujet créé -->
+          <div class="activity-item">
+            <div class="icon-wrap">
+              <div class="act-ic act-ic-status">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+              </div>
+              <span class="actor-badge actor-ai">R</span>
+            </div>
+            <div class="act-content">
+              <div class="act-text"><strong>Relvo a créé le sujet</strong> <a href="sujet.html">SUB-0142 · Retard livraison sauce blanche</a> et a associé <a href="contact.html">Karim Benali</a></div>
+              <div class="act-time">il y a 22 min</div>
+            </div>
+          </div>
+
+          <!-- Externe — Message reçu de Karim -->
+          <div class="activity-item">
+            <div class="icon-wrap">
+              <div class="act-ic act-ic-msg">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </div>
+              <span class="actor-badge actor-ext">E</span>
+            </div>
+            <div class="act-content">
+              <div class="act-text"><a href="contact.html"><strong>Karim Benali</strong></a> a envoyé un message sur <a href="sujet.html">SUB-0142</a> par Email — pièce jointe reçue (<em>bon-cmd-29avril.pdf</em>)</div>
+              <div class="act-time">09:15</div>
+            </div>
+          </div>
+
+          <!-- IA — sujet sans tâche identifiée -->
+          <div class="activity-item">
+            <div class="icon-wrap">
+              <div class="act-ic act-ic-status">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+              </div>
+              <span class="actor-badge actor-ai">R</span>
+            </div>
+            <div class="act-content">
+              <div class="act-text"><strong>Relvo a créé le sujet</strong> <a href="sujet.html">SUB-0152 · Devis signé reçu</a>, sans tâche identifiée — statut <strong>nouveau</strong></div>
+              <div class="act-time">08:42</div>
+            </div>
+          </div>
+
+          <!-- IA — message non rattaché -->
+          <div class="activity-item">
+            <div class="icon-wrap">
+              <div class="act-ic act-ic-msg">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </div>
+              <span class="actor-badge actor-ai">R</span>
+            </div>
+            <div class="act-content">
+              <div class="act-text"><strong>Relvo n'a pas su rattacher</strong> un message de <em>j.morel@gmail.com</em> — laissé « Sans sujet · Intention floue » dans <a href="messages.html">Messages</a></div>
+              <div class="act-time">08:41</div>
+            </div>
+          </div>
+
+          <!-- Externe — Sophie Blanchard -->
+          <div class="activity-item">
+            <div class="icon-wrap">
+              <div class="act-ic act-ic-msg">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </div>
+              <span class="actor-badge actor-ext">E</span>
+            </div>
+            <div class="act-content">
+              <div class="act-text"><a href="contact.html"><strong>Sophie Blanchard</strong></a> a envoyé un message sur <a href="sujet.html">SUB-0148 · Demande de congé maternité</a></div>
+              <div class="act-time">08:55</div>
+            </div>
+          </div>
+
+          <!-- IA — Suggestion résolution -->
+          <div class="activity-item">
+            <div class="icon-wrap">
+              <div class="act-ic act-ic-status">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <span class="actor-badge actor-ai">R</span>
+            </div>
+            <div class="act-content">
+              <div class="act-text"><strong>Relvo a suggéré la résolution</strong> de <a href="sujet.html">SUB-0131 · Confirmation virement client</a> — aucune tâche restante</div>
+              <div class="act-time">06:18</div>
+            </div>
+          </div>
+
+          <!-- Externe — Restaurant Le Palais -->
+          <div class="activity-item">
+            <div class="icon-wrap">
+              <div class="act-ic act-ic-msg">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+              </div>
+              <span class="actor-badge actor-ext">E</span>
+            </div>
+            <div class="act-content">
+              <div class="act-text"><a href="contact.html"><strong>Restaurant Le Palais</strong></a> a envoyé un message WhatsApp sur <a href="sujet.html">SUB-0131</a> — virement de 3 200 € confirmé</div>
+              <div class="act-time">06:12</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ── Hier ── -->
+        <div style="font-size: 11px; font-weight: 600; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.6px; margin: 28px 0 12px;">Hier · 28 avril</div>
+
+        <div class="activity-list">
+
+          <!-- Moi — Statut waiting -->
+          <div class="activity-item">
+            <div class="icon-wrap">
+              <div class="act-ic act-ic-status">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <span class="actor-badge actor-user">M</span>
+            </div>
+            <div class="act-content">
+              <div class="act-text"><strong>J'ai passé</strong> <a href="sujet.html">SUB-0103 · Commande papier emballage</a> en statut <strong>en attente</strong> après envoi de la commande</div>
+              <div class="act-time">17:42</div>
+            </div>
+          </div>
+
+          <!-- Moi — Message envoyé -->
+          <div class="activity-item">
+            <div class="icon-wrap">
+              <div class="act-ic act-ic-msg">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              </div>
+              <span class="actor-badge actor-user">M</span>
+            </div>
+            <div class="act-content">
+              <div class="act-text"><strong>J'ai envoyé un message</strong> à <a href="contact.html">Bruno Martelli</a> sur <a href="sujet.html">SUB-0103</a> par Email — confirmation de commande de 500 rouleaux</div>
+              <div class="act-time">17:40</div>
+            </div>
+          </div>
+
+          <!-- IA — Tâche cochée auto (message_match) -->
+          <div class="activity-item">
+            <div class="icon-wrap">
+              <div class="act-ic act-ic-task">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <span class="actor-badge actor-ai">R</span>
+            </div>
+            <div class="act-content">
+              <div class="act-text"><strong>Relvo a coché automatiquement</strong> la tâche <em>« Répondre au fournisseur »</em> sur <a href="sujet.html">SUB-0103</a> suite à l'envoi du message</div>
+              <div class="act-time">17:40</div>
+            </div>
+          </div>
+
+          <!-- Moi — Contact complété -->
+          <div class="activity-item">
+            <div class="icon-wrap">
+              <div class="act-ic act-ic-contact">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg>
+              </div>
+              <span class="actor-badge actor-user">M</span>
+            </div>
+            <div class="act-content">
+              <div class="act-text"><strong>J'ai complété la fiche</strong> de <a href="contact.html">Karim Benali</a> — ajout du téléphone WhatsApp et de la fonction</div>
+              <div class="act-time">15:20</div>
+            </div>
+          </div>
+
+          <!-- Externe — Antoine Guérin -->
+          <div class="activity-item">
+            <div class="icon-wrap">
+              <div class="act-ic act-ic-msg">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </div>
+              <span class="actor-badge actor-ext">E</span>
+            </div>
+            <div class="act-content">
+              <div class="act-text"><a href="contact.html"><strong>Antoine Guérin</strong></a> (ClimaPro) a envoyé un message sur <a href="sujet.html">SUB-0082 · Contrat maintenance climatisation</a> — nouvelle proposition avec clause révisée</div>
+              <div class="act-time">14:08</div>
+            </div>
+          </div>
+
+          <!-- Moi — Sujet manuel créé -->
+          <div class="activity-item">
+            <div class="icon-wrap">
+              <div class="act-ic act-ic-status">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </div>
+              <span class="actor-badge actor-user">M</span>
+            </div>
+            <div class="act-content">
+              <div class="act-text"><strong>J'ai créé manuellement</strong> le sujet <a href="sujet.html">SUB-0150 · Renégociation tarifs Semoulerie</a> avec <a href="contact.html">Étienne Rocher</a></div>
+              <div class="act-time">10:15</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ── Lundi 27 avril ── -->
+        <div style="font-size: 11px; font-weight: 600; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.6px; margin: 28px 0 12px;">Lundi 27 avril</div>
+
+        <div class="activity-list">
+
+          <!-- Moi — Sujet résolu -->
+          <div class="activity-item">
+            <div class="icon-wrap">
+              <div class="act-ic act-ic-status">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <span class="actor-badge actor-user">M</span>
+            </div>
+            <div class="act-content">
+              <div class="act-text"><strong>J'ai marqué comme résolu</strong> le sujet <a href="sujet.html">SUB-0078 · Stock papier emballage</a> — commande livrée et conforme</div>
+              <div class="act-time">16:55</div>
+            </div>
+          </div>
+
+          <!-- Moi — Réaffecté un message -->
+          <div class="activity-item">
+            <div class="icon-wrap">
+              <div class="act-ic act-ic-msg">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 14 4 9 9 4"/><path d="M20 20v-7a4 4 0 00-4-4H4"/></svg>
+              </div>
+              <span class="actor-badge actor-user">M</span>
+            </div>
+            <div class="act-content">
+              <div class="act-text"><strong>J'ai réaffecté</strong> un message de <a href="contact.html">Marie Campos</a> à <em>« Sans sujet »</em> — initialement rattaché à un sujet par erreur</div>
+              <div class="act-time">11:30</div>
+            </div>
+          </div>
+
+          <!-- IA — Pièce jointe analysée -->
+          <div class="activity-item">
+            <div class="icon-wrap">
+              <div class="act-ic act-ic-action">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15 8.5 22 9.3 17 14 18.5 21 12 17.5 5.5 21 7 14 2 9.3 9 8.5 12 2"/></svg>
+              </div>
+              <span class="actor-badge actor-ai">R</span>
+            </div>
+            <div class="act-content">
+              <div class="act-text"><strong>Relvo a analysé en profondeur</strong> le contrat <em>contrat-clima-2025.pdf</em> sur <a href="sujet.html">SUB-0082</a> à votre demande — clauses extraites et points d'attention identifiés</div>
+              <div class="act-time">09:45</div>
+            </div>
+          </div>
+
+          <!-- IA — Domaine suggéré -->
+          <div class="activity-item">
+            <div class="icon-wrap">
+              <div class="act-ic act-ic-status">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+              </div>
+              <span class="actor-badge actor-ai">R</span>
+            </div>
+            <div class="act-content">
+              <div class="act-text"><strong>Relvo a suggéré le domaine</strong> <span class="domain-tag" style="font-size: 10px;">Production</span> pour <a href="sujet.html">SUB-0117 · Remplacement congélateur</a></div>
+              <div class="act-time">08:15</div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ═══ COLONNE DROITE ═══ -->
+      <div class="col-right" style="overflow: visible;">
+
+        <!-- LÉGENDE TRIPTYQUE -->
+        <div class="section-header">
+          <div class="section-title">Acteurs</div>
+        </div>
+        <p style="font-size: 12px; color: var(--text-tertiary); margin-bottom: 12px; line-height: 1.45;">
+          Trois voix structurent toute l'activité du produit.
+        </p>
+
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px;">
+          <div style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-primary);">
+            <span class="actor-badge actor-user" style="position: static; border: none; width: 22px; height: 22px; font-size: 10px;">M</span>
+            <div>
+              <div style="font-size: 13px; font-weight: 500;">Moi</div>
+              <div style="font-size: 11px; color: var(--text-tertiary);">Utilisateur — vous</div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-primary);">
+            <span class="actor-badge actor-ai" style="position: static; border: none; width: 22px; height: 22px; font-size: 10px;">R</span>
+            <div>
+              <div style="font-size: 13px; font-weight: 500;">Relvo</div>
+              <div style="font-size: 11px; color: var(--text-tertiary);">L'assistant — suggestions et automatisations</div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-primary);">
+            <span class="actor-badge actor-ext" style="position: static; border: none; width: 22px; height: 22px; font-size: 10px;">E</span>
+            <div>
+              <div style="font-size: 13px; font-weight: 500;">Externe</div>
+              <div style="font-size: 11px; color: var(--text-tertiary);">Contacts — fournisseurs, clients, équipe</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STATS DU JOUR -->
+        <div class="section-header">
+          <div class="section-title">Aujourd'hui</div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div class="detail-row" style="border-bottom: 1px solid var(--border-light); padding: 8px 0;">
+            <span class="detail-label">Événements</span>
+            <span class="detail-value">11</span>
+          </div>
+          <div class="detail-row" style="border-bottom: 1px solid var(--border-light); padding: 8px 0;">
+            <span class="detail-label">Messages reçus</span>
+            <span class="detail-value">3</span>
+          </div>
+          <div class="detail-row" style="border-bottom: 1px solid var(--border-light); padding: 8px 0;">
+            <span class="detail-label">Tâches créées</span>
+            <span class="detail-value">3</span>
+          </div>
+          <div class="detail-row" style="border-bottom: 1px solid var(--border-light); padding: 8px 0;">
+            <span class="detail-label">Sujets ouverts</span>
+            <span class="detail-value">2</span>
+          </div>
+          <div class="detail-row" style="padding: 8px 0;">
+            <span class="detail-label">Brouillons préparés</span>
+            <span class="detail-value">1</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

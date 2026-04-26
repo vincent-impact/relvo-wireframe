@@ -62,7 +62,9 @@ Une tâche sert à matérialiser :
 
 Dans l'interface, l'utilisateur manipule des **tâches**, qu'il peut conserver, supprimer, modifier ou cocher. La source de chaque tâche (IA ou utilisateur) est toujours visible.
 
-## 5. L'IA aide à la décision et à l'exécution
+## 5. Relvo aide à la décision et à l'exécution
+
+> **Note de nommage.** « Relvo » est le nom donné à l'assistant IA intégré au produit. Dans l'interface, on l'appelle **Relvo** (« Relvo a préparé un brouillon… »), pas « l'IA ». Dans la documentation technique (notamment `04-ia.md`) et le modèle de données, on conserve « IA » et la valeur d'enum `actor_type = ai` pour rester neutre. Le triptyque d'acteurs s'écrit donc **Moi / Relvo / Externe** côté UI, et `user / ai / contact` côté modèle.
 
 ### Aide à la décision
 
@@ -75,13 +77,17 @@ Relvo peut préparer certaines actions concrètes, en particulier :
 - une réponse préremplie (brouillon)
 - avec destinataire, canal et contenu déjà préparés
 
-Le brouillon IA est présenté directement dans la zone de rédaction du message, clairement identifié comme une suggestion modifiable. L'utilisateur peut l'éditer librement avant envoi, le régénérer, ou l'effacer pour écrire de zéro.
+Le brouillon est présenté directement dans la zone de rédaction du message, clairement identifié comme **« Suggestion de Relvo — modifiez librement avant d'envoyer »**. L'utilisateur peut l'éditer librement avant envoi, le régénérer, ou l'effacer pour écrire de zéro.
 
-L'IA ne remplace pas l'utilisateur, elle :
+Relvo ne remplace pas l'utilisateur, il :
 
 - structure le travail
 - prépare des exécutions
 - réduit la charge mentale
+
+### Acquittement implicite des suggestions
+
+Le produit fait un choix de **légèreté maximale** : aucune validation explicite à donner aux suggestions de Relvo. Le simple fait d'ouvrir la fiche d'un sujet vaut acquittement de toutes les suggestions présentes — tâches proposées, brouillon de réponse, suggestion de résolution. L'utilisateur agit ensuite naturellement (cocher, modifier, supprimer) à son rythme. Sur les listes (Dashboard, Sujets), le badge « ✦ N tâches suggérées » disparaît dès que l'utilisateur a ouvert le sujet. Cf. `04-ia.md §8` pour le détail.
 
 ## 6. L'action est une exécution concrète dans l'interface
 
@@ -119,9 +125,11 @@ Tout cela produit des **LogEvents**.
 Chaque événement est identifié selon deux dimensions :
 
 - **Le type d'événement** : message, tâche, action, changement de statut
-- **L'acteur** : Moi (l'utilisateur), IA, ou Externe (le monde extérieur — contacts, fournisseurs, etc.)
+- **L'acteur** : **Moi** (l'utilisateur), **Relvo** (l'assistant IA), ou **Externe** (le monde extérieur — contacts, fournisseurs, etc.)
 
-Ce triptyque **Moi / IA / Externe** structure la lecture de l'activité dans toute la plateforme. Il permet de comprendre d'un coup d'œil qui agit dans le système et de filtrer l'activité par voix.
+Ce triptyque **Moi / Relvo / Externe** structure la lecture de l'activité dans toute la plateforme. Il permet de comprendre d'un coup d'œil qui agit dans le système et de filtrer l'activité par voix.
+
+> Côté modèle de données, ces trois acteurs correspondent aux valeurs `actor_type = user / ai / contact` (cf. `02-modele-donnees.md §11`). « Relvo » est le nom de produit pour `ai`.
 
 Le journal de bord permet :
 
@@ -239,4 +247,30 @@ C'est le statut final d'un sujet déjà résolu, que l'on conserve pour l'histor
 - **resolved** → c'est traité
 - **archived** → c'est rangé
 
-Et en amont du cycle : un message que l'IA n'a pas su traiter reste **"Sans sujet"** dans la page Messages, en attente de tri par l'utilisateur.
+Et en amont du cycle : un message que Relvo n'a pas su traiter reste **"Sans sujet"** dans la page Messages, en attente de tri par l'utilisateur. Un indice de tri (`triage_hint` — cf. `04-ia.md §1.1bis`) explique pourquoi : trop court, intention floue, prospection, expéditeur inconnu, sans action, autre.
+
+## 10. Relvo aide aussi à prendre du recul
+
+Relvo n'est pas qu'un outil de gestion de l'urgence. Il sert aussi à **mesurer l'efficacité dans la durée** et à rendre visible la valeur que l'assistant apporte. C'est important pour deux raisons :
+
+- pour l'utilisateur, c'est l'occasion de constater concrètement si la charge mentale baisse et si l'organisation s'améliore avec le temps ;
+- pour le produit, c'est la preuve continue que Relvo apporte de la valeur — sans cette visibilité, on perd vite confiance en un assistant.
+
+### Page Activité — vue d'ensemble
+
+La page Activité contient deux registres distincts, empilés :
+
+1. **Vue d'ensemble** (en haut) — le recul long terme :
+   - **KPIs avec variations** vs période précédente : sujets résolus, délai moyen de résolution, charge actuelle (vs capacité estimée), **% des tâches issues d'une suggestion de Relvo**.
+   - **Courbe d'évolution** sur 8 semaines (paramétrable jusqu'à 12 mois) : sujets ouverts vs sujets résolus. Permet de repérer les pics, et de constater si le pipeline se résorbe ou s'accumule.
+   - **Bénéfices Relvo · 7 derniers jours** : tâches suggérées (avec taux d'adoption), brouillons préparés, pièces jointes étiquetées, temps estimé économisé.
+
+2. **Activité récente** (en bas) — le fil chronologique des `EventLog` avec triptyque, déjà décrit au principe 7. C'est la lecture temps réel.
+
+### Le KPI structurant : le « % d'aide Relvo »
+
+Le pourcentage de tâches issues d'une suggestion de Relvo (vs créées manuellement) est le KPI le plus parlant pour matérialiser la valeur ajoutée. Il est mis en évidence visuellement (card violette) sur la Vue d'ensemble. Plus ce ratio est élevé, plus Relvo a réellement allégé le travail de l'utilisateur — sans pour autant invalider les tâches métier que seul l'utilisateur peut créer (cf. principe 4).
+
+### Capacité estimée et charge actuelle
+
+Pour aider l'utilisateur à se situer, Relvo affiche sa **charge actuelle** (nombre de sujets ouverts) face à sa **capacité estimée** (par défaut une cible définie ensemble, ex. ~30 sujets simultanés). Une mini-barre de progression dans la KPI card matérialise le ratio : en-dessous de 70 % c'est confortable, entre 70 et 90 % c'est tendu, au-dessus c'est de la surcharge. La capacité est ajustable dans les paramètres et apprend des données dans le temps (V2).

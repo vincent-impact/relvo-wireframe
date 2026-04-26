@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relvo — Paramètres</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ═══ SIDEBAR ═══ -->
+  <aside class="sidebar">
+    <div class="logo">Relvo</div>
+
+    <a class="nav-item" href="index.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
+      <span>Dashboard</span>
+    </a>
+    <a class="nav-item" href="sujets.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
+      <span>Sujets</span>
+      <div class="nav-badge">9</div>
+    </a>
+    <a class="nav-item" href="messages.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+      <span>Messages</span>
+      <div class="nav-badge">3</div>
+    </a>
+    <a class="nav-item" href="contacts.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+      <span>Contacts</span>
+    </a>
+
+    <div class="nav-group-label">Organisation</div>
+    <a class="nav-item" href="domaines.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg></div>
+      <span>Domaines</span>
+    </a>
+    <a class="nav-item" href="activite.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+      <span>Activité</span>
+    </a>
+
+    <div class="nav-group-label">Système</div>
+    <a class="nav-item active" href="parametres.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></div>
+      <span>Paramètres</span>
+    </a>
+
+    <div class="sidebar-footer">
+      <div class="user-avatar">MF</div>
+      <div class="user-info">
+        <div class="user-name">Mamadou Faye</div>
+        <div class="user-role">CEO</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ═══ MAIN — scroll global pour la page Paramètres ═══ -->
+  <div class="main" style="overflow-y: auto;">
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+      <div class="page-header-top">
+        <div>
+          <div class="page-title">Paramètres</div>
+          <div class="page-subtitle">Compte, channels connectés, notifications, équipe</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LAYOUT 2 COLS — sub-nav sticky + contenu -->
+    <div class="settings-layout">
+
+      <!-- Sub-nav latérale -->
+      <aside class="settings-nav">
+        <a href="#compte" class="settings-nav-item active">Compte</a>
+        <a href="#channels" class="settings-nav-item">Channels</a>
+        <a href="#notifications" class="settings-nav-item">Notifications</a>
+        <a href="#equipe" class="settings-nav-item">Équipe</a>
+      </aside>
+
+      <!-- Contenu -->
+      <div class="settings-content">
+
+        <!-- ════ COMPTE ════ -->
+        <section id="compte" class="settings-section">
+          <h2 class="settings-section-title">Compte</h2>
+          <p class="settings-section-desc">Tes informations personnelles. Ce qui apparaît dans les messages que tu envoies et dans le journal d'activité.</p>
+
+          <div class="avatar-uploader">
+            <div class="avatar avatar-color-2">MF</div>
+            <div>
+              <button class="btn-outline">Changer la photo</button>
+              <div class="form-help" style="margin-top: 6px;">PNG ou JPG, 200×200 px minimum.</div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div>
+              <div class="form-label">Prénom</div>
+            </div>
+            <input type="text" class="form-input" value="Mamadou">
+          </div>
+
+          <div class="form-row">
+            <div>
+              <div class="form-label">Nom</div>
+            </div>
+            <input type="text" class="form-input" value="Faye">
+          </div>
+
+          <div class="form-row">
+            <div>
+              <div class="form-label">Email de connexion</div>
+              <div class="form-help">Sert uniquement à te connecter. Ne reçoit pas les messages.</div>
+            </div>
+            <input type="email" class="form-input" value="mamadou.faye@tastycrousty.fr">
+          </div>
+
+          <div class="form-row">
+            <div>
+              <div class="form-label">Fonction</div>
+            </div>
+            <input type="text" class="form-input" value="CEO">
+          </div>
+
+          <div class="form-row">
+            <div>
+              <div class="form-label">Rôle dans Relvo</div>
+              <div class="form-help">Détermine ce que tu peux faire dans la plateforme. Modifiable uniquement par un admin.</div>
+            </div>
+            <select class="form-select" disabled>
+              <option selected>Admin</option>
+              <option>CEO</option>
+              <option>Manager</option>
+              <option>Operator</option>
+              <option>Viewer</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <div>
+              <div class="form-label">Sécurité</div>
+              <div class="form-help">Mot de passe et authentification à deux facteurs.</div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px; align-items: flex-start;">
+              <button class="btn-outline">Changer le mot de passe</button>
+              <button class="btn-outline">Activer la 2FA</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ════ CHANNELS ════ -->
+        <section id="channels" class="settings-section">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 4px;">
+            <h2 class="settings-section-title">Channels</h2>
+            <button class="btn-primary">
+              <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Connecter un channel
+            </button>
+          </div>
+          <p class="settings-section-desc">
+            Les <strong>channels</strong> sont les boîtes mail et numéros WhatsApp que Relvo surveille pour traiter les messages entrants. Chaque channel peut être associé à un ou plusieurs domaines, ce qui aide Relvo à proposer le bon classement.
+          </p>
+
+          <!-- Channel 1 — Email principal CEO -->
+          <div class="channel-card">
+            <div class="channel-icon-lg channel-icon-email">
+              <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div class="channel-body">
+              <div class="channel-name">Boîte principale CEO</div>
+              <div class="channel-identifier">mamadou.faye@tastycrousty.fr</div>
+              <div class="channel-meta">
+                <span class="channel-status channel-status-connected">Connecté</span>
+                <span class="text-xs muted">Google Workspace · sync il y a 2 min</span>
+                <span class="domain-tag">Tous domaines</span>
+              </div>
+            </div>
+            <div class="channel-actions">
+              <button class="btn-ghost">Modifier</button>
+              <button class="btn-ghost">Déconnecter</button>
+            </div>
+          </div>
+
+          <!-- Channel 2 — Email RH -->
+          <div class="channel-card">
+            <div class="channel-icon-lg channel-icon-email">
+              <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div class="channel-body">
+              <div class="channel-name">Boîte RH</div>
+              <div class="channel-identifier">rh@tastycrousty.fr</div>
+              <div class="channel-meta">
+                <span class="channel-status channel-status-connected">Connecté</span>
+                <span class="text-xs muted">Google Workspace · sync il y a 4 min</span>
+                <span class="domain-tag">RH</span>
+              </div>
+            </div>
+            <div class="channel-actions">
+              <button class="btn-ghost">Modifier</button>
+              <button class="btn-ghost">Déconnecter</button>
+            </div>
+          </div>
+
+          <!-- Channel 3 — Email Fournisseurs -->
+          <div class="channel-card">
+            <div class="channel-icon-lg channel-icon-email">
+              <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div class="channel-body">
+              <div class="channel-name">Boîte Fournisseurs</div>
+              <div class="channel-identifier">fournisseurs@tastycrousty.fr</div>
+              <div class="channel-meta">
+                <span class="channel-status channel-status-connected">Connecté</span>
+                <span class="text-xs muted">Google Workspace · sync il y a 1 min</span>
+                <span class="domain-tag">Fournisseurs</span>
+                <span class="domain-tag">Production</span>
+              </div>
+            </div>
+            <div class="channel-actions">
+              <button class="btn-ghost">Modifier</button>
+              <button class="btn-ghost">Déconnecter</button>
+            </div>
+          </div>
+
+          <!-- Channel 4 — Email Juridique -->
+          <div class="channel-card">
+            <div class="channel-icon-lg channel-icon-email">
+              <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div class="channel-body">
+              <div class="channel-name">Boîte Juridique</div>
+              <div class="channel-identifier">juridique@tastycrousty.fr</div>
+              <div class="channel-meta">
+                <span class="channel-status channel-status-connected">Connecté</span>
+                <span class="text-xs muted">Google Workspace · sync il y a 12 min</span>
+                <span class="domain-tag">Juridique</span>
+              </div>
+            </div>
+            <div class="channel-actions">
+              <button class="btn-ghost">Modifier</button>
+              <button class="btn-ghost">Déconnecter</button>
+            </div>
+          </div>
+
+          <!-- Channel 5 — Email Support -->
+          <div class="channel-card">
+            <div class="channel-icon-lg channel-icon-email">
+              <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div class="channel-body">
+              <div class="channel-name">Boîte Support</div>
+              <div class="channel-identifier">support@tastycrousty.fr</div>
+              <div class="channel-meta">
+                <span class="channel-status channel-status-connected">Connecté</span>
+                <span class="text-xs muted">Google Workspace · sync il y a 3 min</span>
+                <span class="domain-tag">Support</span>
+              </div>
+            </div>
+            <div class="channel-actions">
+              <button class="btn-ghost">Modifier</button>
+              <button class="btn-ghost">Déconnecter</button>
+            </div>
+          </div>
+
+          <!-- Channel 6 — WhatsApp CEO -->
+          <div class="channel-card">
+            <div class="channel-icon-lg channel-icon-whatsapp">
+              <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+            </div>
+            <div class="channel-body">
+              <div class="channel-name">WhatsApp CEO</div>
+              <div class="channel-identifier">+33 6 12 34 56 78</div>
+              <div class="channel-meta">
+                <span class="channel-status channel-status-connected">Connecté</span>
+                <span class="text-xs muted">Twilio Business API · sync il y a 1 min</span>
+                <span class="domain-tag">Tous domaines</span>
+              </div>
+            </div>
+            <div class="channel-actions">
+              <button class="btn-ghost">Modifier</button>
+              <button class="btn-ghost">Déconnecter</button>
+            </div>
+          </div>
+
+          <!-- Channel 7 — WhatsApp Fournisseurs -->
+          <div class="channel-card">
+            <div class="channel-icon-lg channel-icon-whatsapp">
+              <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+            </div>
+            <div class="channel-body">
+              <div class="channel-name">WhatsApp Fournisseurs</div>
+              <div class="channel-identifier">+33 7 89 12 34 56</div>
+              <div class="channel-meta">
+                <span class="channel-status channel-status-connected">Connecté</span>
+                <span class="text-xs muted">Twilio Business API · sync il y a 6 min</span>
+                <span class="domain-tag">Fournisseurs</span>
+              </div>
+            </div>
+            <div class="channel-actions">
+              <button class="btn-ghost">Modifier</button>
+              <button class="btn-ghost">Déconnecter</button>
+            </div>
+          </div>
+
+          <!-- Channel 8 — WhatsApp Business — en erreur (illustration) -->
+          <div class="channel-card">
+            <div class="channel-icon-lg channel-icon-whatsapp">
+              <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+            </div>
+            <div class="channel-body">
+              <div class="channel-name">WhatsApp Business</div>
+              <div class="channel-identifier">+33 6 99 88 77 66</div>
+              <div class="channel-meta">
+                <span class="channel-status channel-status-error">Erreur d'authentification</span>
+                <span class="text-xs muted">Twilio Business API · échec il y a 2 h</span>
+                <span class="domain-tag">Business</span>
+              </div>
+            </div>
+            <div class="channel-actions">
+              <button class="btn-outline" style="color: var(--brand-accent); border-color: var(--red-200);">Reconnecter</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ════ NOTIFICATIONS ════ -->
+        <section id="notifications" class="settings-section">
+          <h2 class="settings-section-title">Notifications</h2>
+          <p class="settings-section-desc">Choisis ce qui mérite de t'interrompre. Tout reste accessible dans l'<a href="activite.html" style="color: var(--blue-600);">Activité</a>, indépendamment de ces réglages.</p>
+
+          <div style="margin-top: 8px;">
+            <h3 style="font-size: 13px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 8px;">Ce qui me notifie</h3>
+
+            <div class="toggle-row">
+              <div class="toggle-row-info">
+                <div class="toggle-row-label">Nouveau sujet critique</div>
+                <div class="toggle-row-help">Un sujet est ouvert avec priorité <strong>critique</strong>.</div>
+              </div>
+              <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+            </div>
+
+            <div class="toggle-row">
+              <div class="toggle-row-info">
+                <div class="toggle-row-label">Réponse d'un contact en attente</div>
+                <div class="toggle-row-help">Un sujet en <strong>en attente</strong> reçoit un nouveau message.</div>
+              </div>
+              <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+            </div>
+
+            <div class="toggle-row">
+              <div class="toggle-row-info">
+                <div class="toggle-row-label">Sujet bloqué depuis +3 jours</div>
+                <div class="toggle-row-help">Un sujet en statut <strong>bloqué</strong> n'a pas avancé depuis 3 jours.</div>
+              </div>
+              <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+            </div>
+
+            <div class="toggle-row">
+              <div class="toggle-row-info">
+                <div class="toggle-row-label">Brouillon préparé par Relvo</div>
+                <div class="toggle-row-help">Relvo a préparé une réponse, prête à être validée.</div>
+              </div>
+              <label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label>
+            </div>
+
+            <div class="toggle-row">
+              <div class="toggle-row-info">
+                <div class="toggle-row-label">Message « Sans sujet » accumulé</div>
+                <div class="toggle-row-help">Plus de 5 messages en attente de tri humain.</div>
+              </div>
+              <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+            </div>
+
+            <div class="toggle-row">
+              <div class="toggle-row-info">
+                <div class="toggle-row-label">Channel en erreur</div>
+                <div class="toggle-row-help">Une boîte mail ou un WhatsApp ne sync plus.</div>
+              </div>
+              <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+            </div>
+          </div>
+
+          <div style="margin-top: 32px;">
+            <h3 style="font-size: 13px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 8px;">Comment me notifier</h3>
+
+            <div class="toggle-row">
+              <div class="toggle-row-info">
+                <div class="toggle-row-label">Notifications dans l'application</div>
+                <div class="toggle-row-help">Cloche dans la barre du haut.</div>
+              </div>
+              <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+            </div>
+
+            <div class="toggle-row">
+              <div class="toggle-row-info">
+                <div class="toggle-row-label">Email récapitulatif</div>
+                <div class="toggle-row-help">Envoyé chaque matin à 8 h sur ton email de connexion.</div>
+              </div>
+              <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+            </div>
+
+            <div class="toggle-row">
+              <div class="toggle-row-info">
+                <div class="toggle-row-label">Notifications push (mobile)</div>
+                <div class="toggle-row-help">Nécessite l'application mobile Relvo. <span class="muted">Bientôt disponible.</span></div>
+              </div>
+              <label class="toggle"><input type="checkbox" disabled><span class="toggle-slider"></span></label>
+            </div>
+          </div>
+        </section>
+
+        <!-- ════ ÉQUIPE ════ -->
+        <section id="equipe" class="settings-section">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 4px;">
+            <h2 class="settings-section-title">Équipe</h2>
+            <button class="btn-primary">
+              <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Inviter un membre
+            </button>
+          </div>
+          <p class="settings-section-desc">Les autres personnes qui utilisent Relvo pour ton organisation. Chaque rôle détermine ce qu'elles peuvent voir et faire.</p>
+
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Membre</th>
+                  <th>Email</th>
+                  <th>Rôle</th>
+                  <th>Statut</th>
+                  <th>Dernière activité</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="cell-with-avatar">
+                      <div class="avatar avatar-md avatar-color-2">MF</div>
+                      <div>
+                        <div class="cell-primary">Mamadou Faye <span class="muted" style="font-weight: 400;">(toi)</span></div>
+                        <div class="cell-muted">CEO</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="cell-muted">mamadou.faye@tastycrousty.fr</td>
+                  <td><span class="status-pill status-pill-complete">Admin</span></td>
+                  <td><span class="channel-status channel-status-connected">Actif</span></td>
+                  <td class="cell-muted">À l'instant</td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <div class="cell-with-avatar">
+                      <div class="avatar avatar-md avatar-color-3">CL</div>
+                      <div>
+                        <div class="cell-primary">Camille Larue</div>
+                        <div class="cell-muted">Directrice opérations</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="cell-muted">camille.larue@tastycrousty.fr</td>
+                  <td><span class="status-pill status-pill-complete">Manager</span></td>
+                  <td><span class="channel-status channel-status-connected">Actif</span></td>
+                  <td class="cell-muted">il y a 2 h</td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <div class="cell-with-avatar">
+                      <div class="avatar avatar-md avatar-color-5">JD</div>
+                      <div>
+                        <div class="cell-primary">Julien Dassier</div>
+                        <div class="cell-muted">Assistant CEO</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="cell-muted">julien.dassier@tastycrousty.fr</td>
+                  <td><span class="status-pill status-pill-complete">Operator</span></td>
+                  <td><span class="channel-status channel-status-connected">Actif</span></td>
+                  <td class="cell-muted">hier</td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <div class="cell-with-avatar">
+                      <div class="avatar avatar-md avatar-color-6">SR</div>
+                      <div>
+                        <div class="cell-primary">Sarah Riboud</div>
+                        <div class="cell-muted">Comptable externe</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="cell-muted">s.riboud@cabinet-rh.fr</td>
+                  <td><span class="status-pill status-pill-auto">Viewer</span></td>
+                  <td><span class="channel-status channel-status-pending">Invité</span></td>
+                  <td class="cell-muted">en attente</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>
