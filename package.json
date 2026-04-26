@@ -1,0 +1,10 @@
+{
+  "name": "relvo-mockup",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Relvo — Maquette HTML/CSS statique",
+  "scripts": {
+    "dev": "npx serve public",
+    "start": "npx serve public"
+  }
+}

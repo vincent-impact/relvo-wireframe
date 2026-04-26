@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relvo — Dashboard</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ═══ SIDEBAR ═══ -->
+  <aside class="sidebar">
+    <div class="logo">Relvo</div>
+
+    <a class="nav-item active" href="index.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
+      <span>Dashboard</span>
+    </a>
+    <a class="nav-item" href="sujets.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
+      <span>Sujets</span>
+      <div class="nav-badge">9</div>
+    </a>
+    <a class="nav-item" href="messages.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+      <span>Messages</span>
+      <div class="nav-badge">3</div>
+    </a>
+    <a class="nav-item" href="contacts.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+      <span>Contacts</span>
+    </a>
+
+    <div class="nav-group-label">Organisation</div>
+    <a class="nav-item" href="domaines.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg></div>
+      <span>Domaines</span>
+    </a>
+    <a class="nav-item" href="activite.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+      <span>Activité</span>
+    </a>
+
+    <div class="nav-group-label">Système</div>
+    <a class="nav-item" href="parametres.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></div>
+      <span>Paramètres</span>
+    </a>
+
+    <div class="sidebar-footer">
+      <div class="user-avatar">MF</div>
+      <div class="user-info">
+        <div class="user-name">Mamadou Faye</div>
+        <div class="user-role">CEO</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ═══ MAIN ═══ -->
+  <div class="main">
+
+    <header class="topbar">
+      <div>
+        <span class="greeting">Bonjour Mamadou</span>
+        <span class="greeting-date">Lundi 21 avril 2025</span>
+      </div>
+      <div class="topbar-actions">
+        <input type="text" class="search-input" placeholder="Rechercher un sujet, un contact, un message…" />
+        <div class="notif-btn">
+          <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+          <div class="notif-dot"></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="content-area">
+
+      <!-- ── COLONNE PRINCIPALE ── -->
+      <div class="col-main">
+
+        <!-- KPIs -->
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-label">Sujets actifs</div>
+            <div class="kpi-value">24</div>
+            <div class="kpi-sub kpi-trend-up">+3 depuis hier</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">À traiter</div>
+            <div class="kpi-value kpi-accent">9</div>
+            <div class="kpi-sub">dont <strong style="color: var(--brand-accent);">3 critiques</strong></div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Tâches ouvertes</div>
+            <div class="kpi-value">18</div>
+            <div class="kpi-sub">5 proposées par l'IA</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Messages aujourd'hui</div>
+            <div class="kpi-value">12</div>
+            <div class="kpi-sub">8 entrants · <strong style="color: var(--amber-600);">3 sans sujet</strong></div>
+          </div>
+        </div>
+
+        <!-- SUJETS PRIORITAIRES -->
+        <div class="section-header">
+          <div class="section-title">Sujets prioritaires</div>
+          <a class="section-link" href="sujets.html">Voir tous les sujets →</a>
+        </div>
+
+        <div class="subject-list">
+
+          <!-- 1 — SUB-0142 — critique, to_do -->
+          <a href="sujet.html" class="subject-card priority-critical">
+            <div class="subject-top">
+              <div style="flex: 1; min-width: 0;">
+                <div class="subject-title">Retard livraison sauce blanche — Montpellier</div>
+                <div style="font-size: 11px; color: var(--text-tertiary); font-family: monospace; margin-top: 2px;">SUB-0142</div>
+              </div>
+              <span class="badge sb-todo">à faire</span>
+            </div>
+            <div class="subject-meta">
+              <span class="domain-tag">Fournisseurs</span>
+              <span class="contact-name"><span class="contact-avatar">KB</span>Karim Benali · SoGood Distribution</span>
+              <span class="channel-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Email</span>
+              <span title="Dernière activité">il y a 25 min</span>
+            </div>
+            <div class="subject-footer">
+              <div class="task-bar">
+                <div class="task-bar-track"><div class="task-bar-fill" style="width: 33%"></div></div>
+                <span class="task-bar-count"><strong>2</strong> restantes</span>
+              </div>
+              <span class="ai-hint">✦ 2 tâches suggérées</span>
+            </div>
+          </a>
+
+          <!-- 2 — SUB-0148 — haute, to_do -->
+          <a href="sujet.html" class="subject-card priority-high">
+            <div class="subject-top">
+              <div style="flex: 1; min-width: 0;">
+                <div class="subject-title">Demande de congé maternité — Sophie Blanchard</div>
+                <div style="font-size: 11px; color: var(--text-tertiary); font-family: monospace; margin-top: 2px;">SUB-0148</div>
+              </div>
+              <span class="badge sb-todo">à faire</span>
+            </div>
+            <div class="subject-meta">
+              <span class="domain-tag">RH</span>
+              <span class="contact-name"><span class="contact-avatar">SB</span>Sophie Blanchard</span>
+              <span class="channel-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Email</span>
+              <span title="Dernière activité">il y a 1 h</span>
+            </div>
+            <div class="subject-footer">
+              <div class="task-bar">
+                <div class="task-bar-track"><div class="task-bar-fill" style="width: 0%"></div></div>
+                <span class="task-bar-count"><strong>3</strong> restantes</span>
+              </div>
+              <span class="ai-hint">✦ 3 tâches suggérées</span>
+            </div>
+          </a>
+
+          <!-- 3 — SUB-0082 — medium, to_do -->
+          <a href="sujet.html" class="subject-card">
+            <div class="subject-top">
+              <div style="flex: 1; min-width: 0;">
+                <div class="subject-title">Contrat maintenance climatisation — renouvellement annuel</div>
+                <div style="font-size: 11px; color: var(--text-tertiary); font-family: monospace; margin-top: 2px;">SUB-0082</div>
+              </div>
+              <span class="badge sb-todo">à faire</span>
+            </div>
+            <div class="subject-meta">
+              <span class="domain-tag">Juridique</span>
+              <span class="contact-name"><span class="contact-avatar">CP</span>Antoine Guérin · ClimaPro Services</span>
+              <span class="channel-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Email</span>
+              <span title="Dernière activité">il y a 3 h</span>
+            </div>
+            <div class="subject-footer">
+              <div class="task-bar">
+                <div class="task-bar-track"><div class="task-bar-fill" style="width: 67%"></div></div>
+                <span class="task-bar-count"><strong>1</strong> restante</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- 4 — SUB-0131 — low, unread -->
+          <a href="sujet.html" class="subject-card is-unread">
+            <div class="subject-top">
+              <div style="flex: 1; min-width: 0;">
+                <div class="subject-title">Confirmation virement client — Béziers centre</div>
+                <div style="font-size: 11px; color: var(--text-tertiary); font-family: monospace; margin-top: 2px;">SUB-0131</div>
+              </div>
+              <span class="badge sb-unread">non lu</span>
+            </div>
+            <div class="subject-meta">
+              <span class="domain-tag">Business</span>
+              <span class="contact-name"><span class="contact-avatar">RP</span>Restaurant Le Palais</span>
+              <span class="channel-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg> WhatsApp</span>
+              <span title="Dernière activité">il y a 4 h</span>
+            </div>
+            <div class="subject-footer">
+              <span class="subject-hint">Aucune action requise — à clôturer ?</span>
+              <span class="ai-hint">✦ Résolution suggérée</span>
+            </div>
+          </a>
+
+          <!-- 5 — SUB-0103 — haute, waiting -->
+          <a href="sujet.html" class="subject-card priority-high">
+            <div class="subject-top">
+              <div style="flex: 1; min-width: 0;">
+                <div class="subject-title">Commande papier emballage — réapprovisionnement urgent</div>
+                <div style="font-size: 11px; color: var(--text-tertiary); font-family: monospace; margin-top: 2px;">SUB-0103</div>
+              </div>
+              <span class="badge sb-waiting">en attente</span>
+            </div>
+            <div class="subject-meta">
+              <span class="domain-tag">Fournisseurs</span>
+              <span class="contact-name"><span class="contact-avatar">PP</span>Bruno Martelli · PackPlus SARL</span>
+              <span class="channel-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Email</span>
+              <span title="Dernière activité">hier</span>
+            </div>
+            <div class="subject-footer">
+              <span class="subject-hint">Réponse envoyée — en attente de confirmation</span>
+            </div>
+          </a>
+
+        </div>
+
+        <!-- PIPELINE -->
+        <div class="section-header">
+          <div class="section-title">Pipeline des sujets actifs</div>
+          <a class="section-link" href="sujets.html">Filtrer par statut →</a>
+        </div>
+
+        <div class="pipeline">
+          <div class="pipeline-row">
+            <div class="pipeline-label">nouveau</div>
+            <div class="pipeline-track"><div class="pipeline-fill fill-new" style="width: 35%"></div></div>
+            <div class="pipeline-count">5</div>
+          </div>
+          <div class="pipeline-row">
+            <div class="pipeline-label">à faire</div>
+            <div class="pipeline-track"><div class="pipeline-fill fill-todo" style="width: 62%"></div></div>
+            <div class="pipeline-count">9</div>
+          </div>
+          <div class="pipeline-row">
+            <div class="pipeline-label">en attente</div>
+            <div class="pipeline-track"><div class="pipeline-fill fill-waiting" style="width: 41%"></div></div>
+            <div class="pipeline-count">6</div>
+          </div>
+          <div class="pipeline-row">
+            <div class="pipeline-label">non lu</div>
+            <div class="pipeline-track"><div class="pipeline-fill fill-unread" style="width: 14%"></div></div>
+            <div class="pipeline-count">2</div>
+          </div>
+          <div class="pipeline-row">
+            <div class="pipeline-label">bloqué</div>
+            <div class="pipeline-track"><div class="pipeline-fill fill-blocked" style="width: 14%"></div></div>
+            <div class="pipeline-count">2</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ── COLONNE DROITE — Messages sans sujet ── -->
+      <div class="col-right">
+
+        <div class="section-header">
+          <div class="section-title">Messages sans sujet</div>
+          <a class="section-link" href="messages.html">Voir tous →</a>
+        </div>
+
+        <p style="font-size: 12px; color: var(--text-tertiary); margin-bottom: 16px; line-height: 1.45;">
+          L'IA n'a pas su rattacher ces messages à un sujet. Cliquez pour les trier ou les ignorer.
+        </p>
+
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+
+          <!-- Message 1 — J. Morel, contact inconnu (sender_raw affiché) -->
+          <a href="messages.html" style="border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 12px 14px; cursor: pointer; transition: border-color 0.15s; text-decoration: none; color: inherit; display: block; background: var(--bg-primary);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; gap: 8px;">
+              <div style="display: flex; align-items: center; gap: 8px; min-width: 0;">
+                <div class="avatar avatar-md avatar-color-7" style="background: var(--gray-50); color: var(--gray-600);">?</div>
+                <div style="min-width: 0;">
+                  <div style="font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">j.morel@gmail.com</div>
+                  <div style="font-size: 10px; color: var(--text-tertiary); margin-top: 1px;">Expéditeur inconnu</div>
+                </div>
+              </div>
+              <span style="font-size: 11px; color: var(--text-tertiary); flex-shrink: 0;">08:41</span>
+            </div>
+            <div style="font-size: 12px; color: var(--text-secondary); line-height: 1.4; margin-bottom: 8px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">Suite à notre échange de la semaine dernière, je me permets de revenir vers vous concernant notre offre…</div>
+            <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+              <span class="channel-icon" style="font-size: 10px;"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Email</span>
+              <span class="status-pill status-pill-auto">Intention floue</span>
+            </div>
+          </a>
+
+          <!-- Message 2 — Marie Campos, contact connu (comptable), message informatif -->
+          <a href="messages.html" style="border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 12px 14px; cursor: pointer; transition: border-color 0.15s; text-decoration: none; color: inherit; display: block; background: var(--bg-primary);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; gap: 8px;">
+              <div style="display: flex; align-items: center; gap: 8px; min-width: 0;">
+                <div class="avatar avatar-md avatar-color-3">MC</div>
+                <div style="min-width: 0;">
+                  <div style="font-size: 13px; font-weight: 500;">Marie Campos</div>
+                  <div style="font-size: 10px; color: var(--text-tertiary); margin-top: 1px;">Comptable</div>
+                </div>
+              </div>
+              <span style="font-size: 11px; color: var(--text-tertiary); flex-shrink: 0;">lun.</span>
+            </div>
+            <div style="font-size: 12px; color: var(--text-secondary); line-height: 1.4; margin-bottom: 8px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">Bonjour Mamadou, j'ai bien reçu les pièces pour le bilan. RAS de mon côté.</div>
+            <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+              <span class="channel-icon" style="font-size: 10px;"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Email</span>
+              <span class="status-pill status-pill-auto">Sans action</span>
+            </div>
+          </a>
+
+          <!-- Message 3 — Démarchage, contact inconnu -->
+          <a href="messages.html" style="border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 12px 14px; cursor: pointer; transition: border-color 0.15s; text-decoration: none; color: inherit; display: block; background: var(--bg-primary);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; gap: 8px;">
+              <div style="display: flex; align-items: center; gap: 8px; min-width: 0;">
+                <div class="avatar avatar-md avatar-color-7" style="background: var(--gray-50); color: var(--gray-600);">?</div>
+                <div style="min-width: 0;">
+                  <div style="font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">a.dupont@energie-conseil.fr</div>
+                  <div style="font-size: 10px; color: var(--text-tertiary); margin-top: 1px;">Expéditeur inconnu</div>
+                </div>
+              </div>
+              <span style="font-size: 11px; color: var(--text-tertiary); flex-shrink: 0;">lun.</span>
+            </div>
+            <div style="font-size: 12px; color: var(--text-secondary); line-height: 1.4; margin-bottom: 8px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">Bonjour M. Faye, je suis consultant en énergie et j'aimerais vous proposer un audit gratuit de vos installations…</div>
+            <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+              <span class="channel-icon" style="font-size: 10px;"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Email</span>
+              <span class="status-pill status-pill-auto">Prospection</span>
+            </div>
+          </a>
+
+        </div>
+
+        <div style="margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 12px; color: var(--text-tertiary);">3 messages en attente de tri</span>
+          <a href="messages.html" class="section-link">Trier →</a>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

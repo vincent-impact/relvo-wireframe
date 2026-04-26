@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relvo — Sujets</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ═══ SIDEBAR ═══ -->
+  <aside class="sidebar">
+    <div class="logo">Relvo</div>
+
+    <a class="nav-item" href="index.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
+      <span>Dashboard</span>
+    </a>
+    <a class="nav-item active" href="sujets.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
+      <span>Sujets</span>
+      <div class="nav-badge">9</div>
+    </a>
+    <a class="nav-item" href="messages.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+      <span>Messages</span>
+      <div class="nav-badge">3</div>
+    </a>
+    <a class="nav-item" href="contacts.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+      <span>Contacts</span>
+    </a>
+
+    <div class="nav-group-label">Organisation</div>
+    <a class="nav-item" href="domaines.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg></div>
+      <span>Domaines</span>
+    </a>
+    <a class="nav-item" href="activite.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+      <span>Activité</span>
+    </a>
+
+    <div class="nav-group-label">Système</div>
+    <a class="nav-item" href="parametres.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></div>
+      <span>Paramètres</span>
+    </a>
+
+    <div class="sidebar-footer">
+      <div class="user-avatar">MF</div>
+      <div class="user-info">
+        <div class="user-name">Mamadou Faye</div>
+        <div class="user-role">CEO</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ═══ MAIN ═══ -->
+  <div class="main">
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+      <div class="page-header-top">
+        <div>
+          <div class="page-title">Sujets</div>
+          <div class="page-subtitle">24 sujets actifs · 4 résolus · 2 archivés</div>
+        </div>
+        <button class="btn-primary">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Nouveau sujet
+        </button>
+      </div>
+    </div>
+
+    <!-- STATUS TABS -->
+    <div class="status-tabs">
+      <a class="status-tab active" href="#">Tous <span class="tab-count">24</span></a>
+      <a class="status-tab" href="#">Nouveau <span class="tab-count">5</span></a>
+      <a class="status-tab" href="#">À faire <span class="tab-count">9</span></a>
+      <a class="status-tab" href="#">En attente <span class="tab-count">6</span></a>
+      <a class="status-tab" href="#">Non lu <span class="tab-count">2</span></a>
+      <a class="status-tab" href="#">Bloqué <span class="tab-count">2</span></a>
+      <a class="status-tab" href="#">Résolu <span class="tab-count">4</span></a>
+      <a class="status-tab" href="#">Archivé <span class="tab-count">2</span></a>
+    </div>
+
+    <!-- FILTERS BAR -->
+    <div class="filters-bar">
+      <input type="text" class="filter-search" placeholder="Rechercher un sujet…" />
+      <select class="filter-select">
+        <option>Tous les domaines</option>
+        <option>Fournisseurs</option>
+        <option>RH</option>
+        <option>Juridique</option>
+        <option>Business</option>
+        <option>Support</option>
+        <option>Production</option>
+      </select>
+      <select class="filter-select">
+        <option>Toutes priorités</option>
+        <option>Critique</option>
+        <option>Haute</option>
+        <option>Moyenne</option>
+        <option>Basse</option>
+      </select>
+      <select class="filter-select">
+        <option>Tous les canaux</option>
+        <option>Email</option>
+        <option>WhatsApp</option>
+      </select>
+      <button class="sort-btn">
+        <svg viewBox="0 0 24 24"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="14" y2="12"/><line x1="4" y1="18" x2="8" y2="18"/></svg>
+        Dernière activité
+      </button>
+      <span class="results-count">24 résultats</span>
+    </div>
+
+    <!-- SUBJECT LIST -->
+    <div class="subject-list-area">
+
+      <!-- 1 — SUB-0142 — to_do, critical -->
+      <a href="sujet.html" class="subject-card-row priority-critical">
+        <div class="sc-left">
+          <div class="sc-top">
+            <span class="sc-ref">SUB-0142</span>
+            <span class="badge sb-todo">à faire</span>
+            <span class="ai-hint">✦ 2 tâches suggérées</span>
+          </div>
+          <div class="sc-title">Retard livraison sauce blanche — Montpellier</div>
+          <div class="sc-summary">Karim Benali (SoGood) ne pourra pas livrer la sauce blanche demain. Il propose un remplacement par de la sauce algérienne. Décision à prendre rapidement pour le shop de Montpellier.</div>
+          <div class="sc-meta">
+            <span class="domain-tag">Fournisseurs</span>
+            <span class="contact-name"><span class="contact-avatar">KB</span>Karim Benali · SoGood Distribution</span>
+            <span class="channel-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Email</span>
+            <span class="sc-attachments">
+              <svg viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>
+              1
+            </span>
+          </div>
+        </div>
+        <div class="sc-right">
+          <div class="sc-time">
+            <span class="sc-time-label">Dernière activité</span>
+            <span class="sc-time-value">il y a 25 min</span>
+          </div>
+          <div class="task-bar">
+            <div class="task-bar-track"><div class="task-bar-fill" style="width: 33%"></div></div>
+            <span class="task-bar-count"><strong>2</strong> restantes</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- 2 — SUB-0148 — to_do, high -->
+      <a href="sujet.html" class="subject-card-row priority-high">
+        <div class="sc-left">
+          <div class="sc-top">
+            <span class="sc-ref">SUB-0148</span>
+            <span class="badge sb-todo">à faire</span>
+            <span class="ai-hint">✦ 3 tâches suggérées</span>
+          </div>
+          <div class="sc-title">Demande de congé maternité — Sophie Blanchard</div>
+          <div class="sc-summary">Sophie Blanchard informe de sa grossesse et demande les modalités pour son congé maternité prévu début septembre. Il faut vérifier ses droits, préparer la réponse officielle et anticiper son remplacement.</div>
+          <div class="sc-meta">
+            <span class="domain-tag">RH</span>
+            <span class="contact-name"><span class="contact-avatar">SB</span>Sophie Blanchard</span>
+            <span class="channel-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Email</span>
+          </div>
+        </div>
+        <div class="sc-right">
+          <div class="sc-time">
+            <span class="sc-time-label">Dernière activité</span>
+            <span class="sc-time-value">il y a 1 h</span>
+          </div>
+          <div class="task-bar">
+            <div class="task-bar-track"><div class="task-bar-fill" style="width: 0%"></div></div>
+            <span class="task-bar-count"><strong>3</strong> restantes</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- 3 — SUB-0152 — new, low (sujet créé sans tâche identifiée) -->
+      <a href="sujet.html" class="subject-card-row">
+        <div class="sc-left">
+          <div class="sc-top">
+            <span class="sc-ref">SUB-0152</span>
+            <span class="badge sb-new">nouveau</span>
+          </div>
+          <div class="sc-title">Devis signé reçu — Restaurant La Pergola</div>
+          <div class="sc-summary">Reçu du devis contresigné pour la fourniture de pain de mie sur 12 mois. Pas d'action immédiate suggérée par l'IA. À consulter pour archive.</div>
+          <div class="sc-meta">
+            <span class="domain-tag">Business</span>
+            <span class="contact-name"><span class="contact-avatar">LP</span>Léa Petit · Restaurant La Pergola</span>
+            <span class="channel-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Email</span>
+            <span class="sc-attachments">
+              <svg viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>
+              1
+            </span>
+          </div>
+        </div>
+        <div class="sc-right">
+          <div class="sc-time">
+            <span class="sc-time-label">Dernière activité</span>
+            <span class="sc-time-value">il y a 2 h</span>
+          </div>
+          <div class="muted" style="font-style: italic; font-size: 12px;">Aucune tâche encore</div>
+        </div>
+      </a>
+
+      <!-- 4 — SUB-0082 — to_do, high -->
+      <a href="sujet.html" class="subject-card-row priority-high">
+        <div class="sc-left">
+          <div class="sc-top">
+            <span class="sc-ref">SUB-0082</span>
+            <span class="badge sb-todo">à faire</span>
+          </div>
+          <div class="sc-title">Contrat maintenance climatisation — renouvellement annuel</div>
+          <div class="sc-summary">ClimaPro Services propose le renouvellement du contrat de maintenance annuel. Une clause de révision tarifaire a été ajoutée. À valider avant le 30 avril.</div>
+          <div class="sc-meta">
+            <span class="domain-tag">Juridique</span>
+            <span class="contact-name"><span class="contact-avatar">CP</span>Antoine Guérin · ClimaPro Services</span>
+            <span class="channel-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Email</span>
+            <span class="sc-attachments">
+              <svg viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>
+              2
+            </span>
+          </div>
+        </div>
+        <div class="sc-right">
+          <div class="sc-time">
+            <span class="sc-time-label">Dernière activité</span>
+            <span class="sc-time-value">il y a 3 h</span>
+          </div>
+          <div class="task-bar">
+            <div class="task-bar-track"><div class="task-bar-fill" style="width: 67%"></div></div>
+            <span class="task-bar-count"><strong>1</strong> restante</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- 5 — SUB-0131 — unread, low (avec hint résolution) -->
+      <a href="sujet.html" class="subject-card-row is-unread">
+        <div class="sc-left">
+          <div class="sc-top">
+            <span class="sc-ref">SUB-0131</span>
+            <span class="badge sb-unread">non lu</span>
+            <span class="ai-hint">✦ Résolution suggérée</span>
+          </div>
+          <div class="sc-title">Confirmation virement client — Béziers centre</div>
+          <div class="sc-summary">Le Restaurant Le Palais confirme par WhatsApp que le virement de 3 200 € a bien été effectué. Aucune action supplémentaire nécessaire selon l'IA.</div>
+          <div class="sc-meta">
+            <span class="domain-tag">Business</span>
+            <span class="contact-name"><span class="contact-avatar">RP</span>Restaurant Le Palais</span>
+            <span class="channel-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg> WhatsApp</span>
+          </div>
+        </div>
+        <div class="sc-right">
+          <div class="sc-time">
+            <span class="sc-time-label">Dernière activité</span>
+            <span class="sc-time-value">il y a 4 h</span>
+          </div>
+          <div class="muted" style="font-style: italic; font-size: 12px;">À clôturer ?</div>
+        </div>
+      </a>
+
+      <!-- 6 — SUB-0103 — waiting, high -->
+      <a href="sujet.html" class="subject-card-row priority-high">
+        <div class="sc-left">
+          <div class="sc-top">
+            <span class="sc-ref">SUB-0103</span>
+            <span class="badge sb-waiting">en attente</span>
+          </div>
+          <div class="sc-title">Commande papier emballage — réapprovisionnement urgent</div>
+          <div class="sc-summary">Réponse envoyée à PackPlus SARL pour confirmer la commande de 500 rouleaux. En attente de la confirmation de livraison et du délai précis.</div>
+          <div class="sc-meta">
+            <span class="domain-tag">Fournisseurs</span>
+            <span class="contact-name"><span class="contact-avatar">PP</span>Bruno Martelli · PackPlus SARL</span>
+            <span class="channel-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Email</span>
+          </div>
+        </div>
+        <div class="sc-right">
+          <div class="sc-time">
+            <span class="sc-time-label">Dernière activité</span>
+            <span class="sc-time-value">hier</span>
+          </div>
+          <div class="muted" style="font-size: 12px;">Attente retour fournisseur</div>
+        </div>
+      </a>
+
+      <!-- 7 — SUB-0117 — blocked, high -->
+      <a href="sujet.html" class="subject-card-row priority-high">
+        <div class="sc-left">
+          <div class="sc-top">
+            <span class="sc-ref">SUB-0117</span>
+            <span class="badge sb-blocked">bloqué</span>
+          </div>
+          <div class="sc-title">Remplacement congélateur vitrine — shop Narbonne</div>
+          <div class="sc-summary">Le congélateur vitrine est en panne depuis 3 jours. FroidExpert SA n'a pas de pièces disponibles. Aucune solution alternative trouvée pour le moment.</div>
+          <div class="sc-meta">
+            <span class="domain-tag">Production</span>
+            <span class="contact-name"><span class="contact-avatar">FE</span>FroidExpert SA</span>
+            <span class="channel-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Email</span>
+          </div>
+        </div>
+        <div class="sc-right">
+          <div class="sc-time">
+            <span class="sc-time-label">Dernière activité</span>
+            <span class="sc-time-value">il y a 2 j</span>
+          </div>
+          <div style="color: var(--brand-accent); font-size: 12px; font-weight: 500;">Bloqué depuis 2 j</div>
+        </div>
+      </a>
+
+      <!-- 8 — SUB-0078 — resolved, low -->
+      <a href="sujet.html" class="subject-card-row" style="opacity: 0.7;">
+        <div class="sc-left">
+          <div class="sc-top">
+            <span class="sc-ref">SUB-0078</span>
+            <span class="badge sb-resolved">résolu</span>
+          </div>
+          <div class="sc-title">Stock papier emballage — commande de réapprovisionnement</div>
+          <div class="sc-summary">La commande de papier emballage a été livrée et réceptionnée. Stock vérifié conforme. Sujet clôturé.</div>
+          <div class="sc-meta">
+            <span class="domain-tag">Fournisseurs</span>
+            <span class="contact-name"><span class="contact-avatar">PP</span>Bruno Martelli · PackPlus SARL</span>
+            <span class="channel-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Email</span>
+          </div>
+        </div>
+        <div class="sc-right">
+          <div class="sc-time">
+            <span class="sc-time-label">Dernière activité</span>
+            <span class="sc-time-value">il y a 5 j</span>
+          </div>
+          <div class="task-bar">
+            <div class="task-bar-track"><div class="task-bar-fill done" style="width: 100%"></div></div>
+            <span class="task-bar-count" style="color: var(--teal-600);">Toutes faites</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>
