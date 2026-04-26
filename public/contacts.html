@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relvo — Contacts</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ═══ SIDEBAR ═══ -->
+  <aside class="sidebar">
+    <div class="logo">Relvo</div>
+
+    <a class="nav-item" href="index.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
+      <span>Dashboard</span>
+    </a>
+    <a class="nav-item" href="sujets.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
+      <span>Sujets</span>
+      <div class="nav-badge">9</div>
+    </a>
+    <a class="nav-item" href="messages.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+      <span>Messages</span>
+      <div class="nav-badge">3</div>
+    </a>
+    <a class="nav-item active" href="contacts.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+      <span>Contacts</span>
+    </a>
+
+    <div class="nav-group-label">Organisation</div>
+    <a class="nav-item" href="domaines.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg></div>
+      <span>Domaines</span>
+    </a>
+    <a class="nav-item" href="activite.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+      <span>Activité</span>
+    </a>
+
+    <div class="nav-group-label">Système</div>
+    <a class="nav-item" href="parametres.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></div>
+      <span>Paramètres</span>
+    </a>
+
+    <div class="sidebar-footer">
+      <div class="user-avatar">MF</div>
+      <div class="user-info">
+        <div class="user-name">Mamadou Faye</div>
+        <div class="user-role">CEO</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ═══ MAIN ═══ -->
+  <div class="main">
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+      <div class="page-header-top">
+        <div>
+          <div class="page-title">Contacts</div>
+          <div class="page-subtitle">12 contacts · <strong style="color: var(--amber-700, var(--amber-800));">4 à compléter</strong></div>
+        </div>
+        <button class="btn-primary">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Nouveau contact
+        </button>
+      </div>
+    </div>
+
+    <!-- STATUS TABS -->
+    <div class="status-tabs">
+      <a class="status-tab active" href="#">Tous <span class="tab-count">12</span></a>
+      <a class="status-tab" href="#">À compléter <span class="tab-count">4</span></a>
+      <a class="status-tab" href="#">Complets <span class="tab-count">8</span></a>
+    </div>
+
+    <!-- FILTERS BAR -->
+    <div class="filters-bar">
+      <input type="text" class="filter-search" placeholder="Rechercher un contact, une entreprise…" />
+      <select class="filter-select">
+        <option>Tous les domaines</option>
+        <option>Fournisseurs</option>
+        <option>RH</option>
+        <option>Juridique</option>
+        <option>Business</option>
+        <option>Support</option>
+        <option>Production</option>
+      </select>
+      <select class="filter-select">
+        <option>Tous les canaux</option>
+        <option>Email</option>
+        <option>WhatsApp</option>
+      </select>
+      <button class="sort-btn">
+        <svg viewBox="0 0 24 24"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="14" y2="12"/><line x1="4" y1="18" x2="8" y2="18"/></svg>
+        Dernière activité
+      </button>
+      <span class="results-count">12 résultats</span>
+    </div>
+
+    <!-- TABLE DES CONTACTS -->
+    <div class="subject-list-area">
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Contact</th>
+              <th>Entreprise</th>
+              <th>Domaine</th>
+              <th>Canaux</th>
+              <th style="text-align: center;">Sujets actifs</th>
+              <th>Statut</th>
+              <th>Dernière activité</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <!-- Karim Benali — complete -->
+            <tr onclick="window.location.href='contact.html'">
+              <td>
+                <div class="cell-with-avatar">
+                  <div class="avatar avatar-md avatar-color-1">KB</div>
+                  <div>
+                    <div class="cell-primary">Karim Benali</div>
+                    <div class="cell-muted">karim.benali@sogood.fr</div>
+                  </div>
+                </div>
+              </td>
+              <td>SoGood Distribution</td>
+              <td><span class="domain-tag">Fournisseurs</span></td>
+              <td>
+                <div class="row-tight">
+                  <span class="channel-icon" title="Email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
+                  <span class="channel-icon" title="WhatsApp"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></span>
+                </div>
+              </td>
+              <td style="text-align: center;"><strong>1</strong></td>
+              <td><span class="status-pill status-pill-complete">Complet</span></td>
+              <td class="cell-muted">il y a 25 min</td>
+            </tr>
+
+            <!-- Sophie Blanchard — complete -->
+            <tr onclick="window.location.href='contact.html'">
+              <td>
+                <div class="cell-with-avatar">
+                  <div class="avatar avatar-md avatar-color-2">SB</div>
+                  <div>
+                    <div class="cell-primary">Sophie Blanchard</div>
+                    <div class="cell-muted">sophie.blanchard@tastycrousty.fr</div>
+                  </div>
+                </div>
+              </td>
+              <td>Tasty Crousty</td>
+              <td><span class="domain-tag">RH</span></td>
+              <td>
+                <span class="channel-icon" title="Email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
+              </td>
+              <td style="text-align: center;"><strong>1</strong></td>
+              <td><span class="status-pill status-pill-complete">Complet</span></td>
+              <td class="cell-muted">il y a 1 h</td>
+            </tr>
+
+            <!-- Antoine Guérin — auto (à compléter) -->
+            <tr onclick="window.location.href='contact.html'">
+              <td>
+                <div class="cell-with-avatar">
+                  <div class="avatar avatar-md avatar-color-3">AG</div>
+                  <div>
+                    <div class="cell-primary">Antoine Guérin</div>
+                    <div class="cell-muted">a.guerin@climapro.fr</div>
+                  </div>
+                </div>
+              </td>
+              <td>ClimaPro Services</td>
+              <td><span class="domain-tag">Juridique</span></td>
+              <td>
+                <span class="channel-icon" title="Email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
+              </td>
+              <td style="text-align: center;"><strong>1</strong></td>
+              <td><span class="status-pill status-pill-auto">À compléter</span></td>
+              <td class="cell-muted">il y a 3 h</td>
+            </tr>
+
+            <!-- Léa Petit — auto -->
+            <tr onclick="window.location.href='contact.html'">
+              <td>
+                <div class="cell-with-avatar">
+                  <div class="avatar avatar-md avatar-color-4">LP</div>
+                  <div>
+                    <div class="cell-primary">Léa Petit</div>
+                    <div class="cell-muted">l.petit@restaurant-pergola.fr</div>
+                  </div>
+                </div>
+              </td>
+              <td>Restaurant La Pergola</td>
+              <td><span class="domain-tag">Business</span></td>
+              <td>
+                <span class="channel-icon" title="Email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
+              </td>
+              <td style="text-align: center;"><strong>1</strong></td>
+              <td><span class="status-pill status-pill-auto">À compléter</span></td>
+              <td class="cell-muted">il y a 2 h</td>
+            </tr>
+
+            <!-- Restaurant Le Palais — complete (entreprise sans personne nommée mais validée) -->
+            <tr onclick="window.location.href='contact.html'">
+              <td>
+                <div class="cell-with-avatar">
+                  <div class="avatar avatar-md avatar-color-5">RP</div>
+                  <div>
+                    <div class="cell-primary">Restaurant Le Palais</div>
+                    <div class="cell-muted">contact@lepalais-beziers.fr</div>
+                  </div>
+                </div>
+              </td>
+              <td>Restaurant Le Palais</td>
+              <td><span class="domain-tag">Business</span></td>
+              <td>
+                <div class="row-tight">
+                  <span class="channel-icon" title="WhatsApp"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></span>
+                  <span class="channel-icon" title="Email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
+                </div>
+              </td>
+              <td style="text-align: center;"><strong>1</strong></td>
+              <td><span class="status-pill status-pill-complete">Complet</span></td>
+              <td class="cell-muted">il y a 4 h</td>
+            </tr>
+
+            <!-- Bruno Martelli — auto -->
+            <tr onclick="window.location.href='contact.html'">
+              <td>
+                <div class="cell-with-avatar">
+                  <div class="avatar avatar-md avatar-color-6">BM</div>
+                  <div>
+                    <div class="cell-primary">Bruno Martelli</div>
+                    <div class="cell-muted">b.martelli@packplus.com</div>
+                  </div>
+                </div>
+              </td>
+              <td>PackPlus SARL</td>
+              <td><span class="domain-tag">Fournisseurs</span></td>
+              <td>
+                <span class="channel-icon" title="Email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
+              </td>
+              <td style="text-align: center;"><strong>2</strong></td>
+              <td><span class="status-pill status-pill-auto">À compléter</span></td>
+              <td class="cell-muted">hier</td>
+            </tr>
+
+            <!-- Marie Campos — complete -->
+            <tr onclick="window.location.href='contact.html'">
+              <td>
+                <div class="cell-with-avatar">
+                  <div class="avatar avatar-md avatar-color-7" style="background: var(--teal-50); color: var(--teal-800);">MC</div>
+                  <div>
+                    <div class="cell-primary">Marie Campos</div>
+                    <div class="cell-muted">marie.campos@cabinet-mc.fr</div>
+                  </div>
+                </div>
+              </td>
+              <td>Cabinet Campos</td>
+              <td><span class="domain-tag">Business</span></td>
+              <td>
+                <span class="channel-icon" title="Email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
+              </td>
+              <td style="text-align: center;"><strong>0</strong></td>
+              <td><span class="status-pill status-pill-complete">Complet</span></td>
+              <td class="cell-muted">lundi</td>
+            </tr>
+
+            <!-- FroidExpert SA — auto -->
+            <tr onclick="window.location.href='contact.html'">
+              <td>
+                <div class="cell-with-avatar">
+                  <div class="avatar avatar-md avatar-color-8">FE</div>
+                  <div>
+                    <div class="cell-primary">FroidExpert SA</div>
+                    <div class="cell-muted">contact@froidexpert.fr</div>
+                  </div>
+                </div>
+              </td>
+              <td>FroidExpert SA</td>
+              <td><span class="domain-tag">Production</span></td>
+              <td>
+                <span class="channel-icon" title="Email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
+              </td>
+              <td style="text-align: center;"><strong>1</strong></td>
+              <td><span class="status-pill status-pill-auto">À compléter</span></td>
+              <td class="cell-muted">il y a 2 j</td>
+            </tr>
+
+            <!-- Pierre Lemoine — complete (CEO interne, contact ressources humaines) -->
+            <tr onclick="window.location.href='contact.html'">
+              <td>
+                <div class="cell-with-avatar">
+                  <div class="avatar avatar-md avatar-color-2">PL</div>
+                  <div>
+                    <div class="cell-primary">Pierre Lemoine</div>
+                    <div class="cell-muted">p.lemoine@tastycrousty.fr</div>
+                  </div>
+                </div>
+              </td>
+              <td>Tasty Crousty</td>
+              <td><span class="domain-tag">RH</span></td>
+              <td>
+                <div class="row-tight">
+                  <span class="channel-icon" title="Email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
+                  <span class="channel-icon" title="WhatsApp"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></span>
+                </div>
+              </td>
+              <td style="text-align: center;"><strong>0</strong></td>
+              <td><span class="status-pill status-pill-complete">Complet</span></td>
+              <td class="cell-muted">3 avril</td>
+            </tr>
+
+            <!-- Yasmine Ouali — complete (avocat habituel) -->
+            <tr onclick="window.location.href='contact.html'">
+              <td>
+                <div class="cell-with-avatar">
+                  <div class="avatar avatar-md avatar-color-3">YO</div>
+                  <div>
+                    <div class="cell-primary">Yasmine Ouali</div>
+                    <div class="cell-muted">y.ouali@cabinet-ouali.com</div>
+                  </div>
+                </div>
+              </td>
+              <td>Cabinet Ouali Avocats</td>
+              <td><span class="domain-tag">Juridique</span></td>
+              <td>
+                <span class="channel-icon" title="Email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
+              </td>
+              <td style="text-align: center;"><strong>0</strong></td>
+              <td><span class="status-pill status-pill-complete">Complet</span></td>
+              <td class="cell-muted">28 mars</td>
+            </tr>
+
+            <!-- Étienne Rocher — complete -->
+            <tr onclick="window.location.href='contact.html'">
+              <td>
+                <div class="cell-with-avatar">
+                  <div class="avatar avatar-md avatar-color-1">ER</div>
+                  <div>
+                    <div class="cell-primary">Étienne Rocher</div>
+                    <div class="cell-muted">e.rocher@semoulerie-mediterranee.fr</div>
+                  </div>
+                </div>
+              </td>
+              <td>Semoulerie Méditerranée</td>
+              <td><span class="domain-tag">Fournisseurs</span></td>
+              <td>
+                <span class="channel-icon" title="Email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
+              </td>
+              <td style="text-align: center;"><strong>0</strong></td>
+              <td><span class="status-pill status-pill-complete">Complet</span></td>
+              <td class="cell-muted">15 avril</td>
+            </tr>
+
+            <!-- Manager Shop Béziers — complete -->
+            <tr onclick="window.location.href='contact.html'">
+              <td>
+                <div class="cell-with-avatar">
+                  <div class="avatar avatar-md avatar-color-6">NK</div>
+                  <div>
+                    <div class="cell-primary">Nadia Kerbouche</div>
+                    <div class="cell-muted">nadia.kerbouche@tastycrousty.fr</div>
+                  </div>
+                </div>
+              </td>
+              <td>Tasty Crousty — shop Béziers</td>
+              <td><span class="domain-tag">Production</span></td>
+              <td>
+                <div class="row-tight">
+                  <span class="channel-icon" title="Email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
+                  <span class="channel-icon" title="WhatsApp"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></span>
+                </div>
+              </td>
+              <td style="text-align: center;"><strong>0</strong></td>
+              <td><span class="status-pill status-pill-complete">Complet</span></td>
+              <td class="cell-muted">12 avril</td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>
