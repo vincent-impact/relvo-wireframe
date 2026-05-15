@@ -41,30 +41,32 @@ Au sein d'une conversation, les messages peuvent traverser **plusieurs sujets**.
 
 Lors de la réponse, le canal est présélectionné sur le **dernier canal utilisé par le contact**, avec la possibilité de le changer via un sélecteur.
 
-## 4. La tâche est l'unité de travail réelle
+## 4. La tâche est l'unité de travail du sujet
 
 La logique du produit repose sur une idée simple :
 
 > Un sujet avance parce que des tâches sont identifiées puis réalisées.
 
+**La tâche est rattachée au sujet, pas à un utilisateur.** Elle matérialise une action nécessaire pour faire avancer le dossier, indépendamment de la personne qui finira par l'exécuter. En V1, un compte = un humain : c'est implicitement le titulaire du compte qui agit, ce qui rend la notion d'affectation inutile à ce stade. La coordination multi-utilisateurs (assigner une tâche à un membre de l'équipe spécifique) est repoussée en V2.
+
 Une tâche peut être :
 
-- proposée par l'IA, à partir du contenu d'un message
+- proposée par Relvo, à partir du contenu disponible (message, et plus tard documents de connaissance)
 - créée manuellement par l'utilisateur, à partir de son savoir métier
 
-Cette distinction est importante : l'IA ne peut proposer que des tâches déductibles du contenu du message (par exemple "Confirmer ou refuser le remplacement"). Les tâches qui relèvent de la connaissance du terrain (par exemple "Appeler le shop de Montpellier" ou "Vérifier les stocks de Béziers") ne peuvent venir que de l'utilisateur.
+Cette distinction est importante : Relvo ne peut proposer que des actions déductibles du contenu disponible (par exemple "Confirmer ou refuser le remplacement", déductible du message reçu). Les tâches qui relèvent de la connaissance du terrain (par exemple "Appeler le shop de Montpellier" ou "Vérifier les stocks de Béziers") sont créées par l'utilisateur — Relvo ne sait pas, à la lecture d'un message seul, quels magasins sont impactés ni comment l'organisation interne est structurée.
 
 Une tâche sert à matérialiser :
 
-- ce qu'il reste à faire
+- ce qu'il reste à faire pour faire avancer le sujet
 - ce qui a déjà été fait
 - l'avancement réel du sujet
 
-Dans l'interface, l'utilisateur manipule des **tâches**, qu'il peut conserver, supprimer, modifier ou cocher. La source de chaque tâche (IA ou utilisateur) est toujours visible.
+Dans l'interface, l'utilisateur manipule des **tâches**, qu'il peut conserver, supprimer, modifier ou cocher. La source de chaque tâche (Relvo ou utilisateur), portée par le champ `source_actor`, est toujours visible via une pastille `✦ Relvo` ou `Moi`. Cette information reste lisible jusqu'à l'archivage du sujet — c'est un attribut historique permanent.
 
 ## 5. Relvo aide à la décision et à l'exécution
 
-> **Note de nommage.** « Relvo » est le nom donné à l'assistant IA intégré au produit. Dans l'interface, on l'appelle **Relvo** (« Relvo a préparé un brouillon… »), pas « l'IA ». Dans la documentation technique (notamment `04-ia.md`) et le modèle de données, on conserve « IA » et la valeur d'enum `actor_type = ai` pour rester neutre. Le triptyque d'acteurs s'écrit donc **Moi / Relvo / Externe** côté UI, et `user / ai / contact` côté modèle.
+> **Note de nommage.** « Relvo » est le nom donné à l'assistant IA intégré au produit. Dans l'interface, on l'appelle **Relvo** (« Relvo a préparé un brouillon… »), pas « l'IA ». Dans la documentation technique (notamment `04-ia.md`) et le modèle de données, on conserve « IA » et la valeur d'enum `Actor = ai` pour rester neutre. Le triptyque d'acteurs s'écrit donc **Moi / Relvo / Externe** côté UI, et `user / ai / contact` côté modèle.
 
 ### Aide à la décision
 
@@ -129,7 +131,7 @@ Chaque événement est identifié selon deux dimensions :
 
 Ce triptyque **Moi / Relvo / Externe** structure la lecture de l'activité dans toute la plateforme. Il permet de comprendre d'un coup d'œil qui agit dans le système et de filtrer l'activité par voix.
 
-> Côté modèle de données, ces trois acteurs correspondent aux valeurs `actor_type = user / ai / contact` (cf. `02-modele-donnees.md §11`). « Relvo » est le nom de produit pour `ai`.
+> Côté modèle de données, ces trois acteurs correspondent aux valeurs du type partagé `Actor = user | ai | contact | system` (cf. `02-modele-donnees.md §0`). « Relvo » est le nom de produit pour `ai`.
 
 Le journal de bord permet :
 
@@ -208,19 +210,7 @@ Même s'il reste encore quelques tâches secondaires ouvertes, le sujet peut pas
 
 Le sujet en état `waiting` reçoit un nouveau message qui n'implique aucune nouvelle action (ce sont souvent des messages de validation ou de confirmation). Pour inciter l'utilisateur à fermer le sujet manuellement, on place le sujet en `unread` si aucune nouvelle action n'est suggérée.
 
-### 5. `blocked`
-
-Le sujet ne peut pas avancer.
-
-Ce statut s'applique quand :
-
-- il manque une information indispensable
-- une dépendance est bloquée
-- aucune action utile ne permet de progresser à court terme
-
-Exemple : pas de stock alternatif, pas de réponse du fournisseur, pas de solution viable.
-
-### 6. `resolved`
+### 5. `resolved`
 
 Le sujet est traité.
 
@@ -231,7 +221,7 @@ Cela signifie que :
 - il n'y a plus de travail significatif à mener
 - le dossier est stabilisé
 
-### 7. `archived`
+### 6. `archived`
 
 Le sujet est clos et rangé.
 
@@ -241,22 +231,25 @@ C'est le statut final d'un sujet déjà résolu, que l'on conserve pour l'histor
 
 - **new** → un nouveau sujet naît
 - **to_do** → il y a des tâches à faire
-- **waiting** → on attend un retour
+- **waiting** → on attend un retour (qu'il s'agisse d'une réponse, d'une livraison, d'une décision tierce…)
 - **unread** → un message est arrivé, pas d'action requise
-- **blocked** → on ne peut plus avancer
 - **resolved** → c'est traité
 - **archived** → c'est rangé
+
+> **Note historique**. Un statut `blocked` figurait dans une version antérieure du modèle pour signaler les sujets « impossibles à avancer ». Il a été retiré : il n'incite pas à l'action, et tous les cas d'usage qu'il couvrait (pas de pièces, pas de réponse, pas de solution) se réduisent en réalité à une attente externe — donc à `waiting`. Cf. CLAUDE.md §7.
 
 Et en amont du cycle : un message que Relvo n'a pas su traiter reste **"Sans sujet"** dans la page Messages, en attente de tri par l'utilisateur. Un indice de tri (`triage_hint` — cf. `04-ia.md §1.1bis`) explique pourquoi : trop court, intention floue, prospection, expéditeur inconnu, sans action, autre.
 
 ## 10. Relvo aide aussi à prendre du recul
+
+> **Note de scope V1**. Ce principe décrit la vision complète. En V1 la **page Activité standalone est reportée en V2**. Seule une partie de la vue d'ensemble (KPIs essentiels) est portée sur le bandeau de l'**Accueil**. La courbe d'évolution sur 8 semaines, la « charge actuelle vs capacité », et le fil chronologique des `EventLog` arrivent en V2. Les questions analytiques transversales (« comment se passe ma semaine ? ») restent accessibles dans le chatbot via les tools `get_kpis` et équivalents (cf. `04-ia.md §11`).
 
 Relvo n'est pas qu'un outil de gestion de l'urgence. Il sert aussi à **mesurer l'efficacité dans la durée** et à rendre visible la valeur que l'assistant apporte. C'est important pour deux raisons :
 
 - pour l'utilisateur, c'est l'occasion de constater concrètement si la charge mentale baisse et si l'organisation s'améliore avec le temps ;
 - pour le produit, c'est la preuve continue que Relvo apporte de la valeur — sans cette visibilité, on perd vite confiance en un assistant.
 
-### Page Activité — vue d'ensemble
+### Page Activité — vue d'ensemble (V2)
 
 La page Activité contient deux registres distincts, empilés :
 
@@ -274,3 +267,120 @@ Le pourcentage de tâches issues d'une suggestion de Relvo (vs créées manuelle
 ### Capacité estimée et charge actuelle
 
 Pour aider l'utilisateur à se situer, Relvo affiche sa **charge actuelle** (nombre de sujets ouverts) face à sa **capacité estimée** (par défaut une cible définie ensemble, ex. ~30 sujets simultanés). Une mini-barre de progression dans la KPI card matérialise le ratio : en-dessous de 70 % c'est confortable, entre 70 et 90 % c'est tendu, au-dessus c'est de la surcharge. La capacité est ajustable dans les paramètres et apprend des données dans le temps (V2).
+
+## 11. Le calendrier matérialise la dimension temporelle des tâches
+
+Une tâche n'est pas seulement « ce qu'il faut faire pour faire avancer un sujet » (principe 4), c'est aussi quelque chose qui se positionne dans le temps. Relvo expose cette dimension à travers un modèle de date riche et deux surfaces calendaires complémentaires.
+
+### Modèle de date d'une tâche
+
+Une tâche peut avoir une **deadline** (date à laquelle elle doit être faite, optionnellement horodatée) et, indépendamment, une **durée** (plage de plusieurs jours ou créneau horaire). La deadline vit dans `start_date` / `start_time` ; la durée s'exprime via `end_date` / `end_time`. La sémantique précise est documentée dans `02-modele-donnees.md §9`.
+
+Quatre cas couvrent l'essentiel des situations :
+
+- **Aucune date** — pile « Aucune date », tâche en attente de planification
+- **Deadline jour** — tâche à faire ce jour-là
+- **Deadline horodatée** — rendez-vous, créneau ponctuel
+- **Plage** — salon, déplacement, créneau de réunion
+
+### Deux surfaces calendaires
+
+1. **Vue semaine sur l'Accueil** — widget compact intégré au brief de l'Accueil, lun → dim de la semaine en cours. Affiche les tâches groupées par jour avec un code couleur par **Dossier**. Permet de comprendre en un coup d'œil ce qui se joue dans la semaine. Une pile « Aucune date » est accessible en marge.
+
+2. **Page Planning dédiée — vue mois** — entrée de navigation après Sujets dans la nav. Grille mensuelle classique avec navigation mois précédent / suivant / « Aujourd'hui ». Les tâches multi-jours sont rendues comme des barres qui s'étalent. Click sur une tâche → ouvre la fiche du sujet correspondant.
+
+### Drag-and-drop pour replanifier
+
+Sur les deux surfaces, l'utilisateur peut faire glisser une tâche pour la replanifier sur un autre jour. C'est l'interaction principale pour ajuster son planning au fil de l'eau. Le drag-and-drop modifie `start_date` (et `end_date` proportionnellement si la tâche s'étalait).
+
+### Rôle de Relvo
+
+À la création d'une tâche, Relvo tente d'extraire ou de proposer une date à partir du contenu disponible (cf. `04-ia.md §2.5`). Si rien n'est extractible, la tâche est créée sans date — l'utilisateur la planifiera lui-même depuis la pile « Aucune date » ou directement depuis la fiche du sujet.
+
+## 12. Les Dossiers regroupent affaires en cours et connaissances métier
+
+Relvo ne lit pas que les messages entrants. Il s'appuie aussi sur une **base de connaissances** propre au compte, alimentée par l'utilisateur, qui lui permet de proposer des tâches plus contextualisées, des brouillons plus justes, et des réponses plus précises dans le chatbot. C'est ce qui transforme Relvo d'un assistant générique en un **assistant qui connaît votre métier**.
+
+Côté UI, cette base de connaissances **n'a pas sa propre page**. Elle vit à l'intérieur des **Dossiers** (entité technique `Folder`, cf. `02-modele-donnees.md §2`), aux côtés des Sujets du même périmètre. Un Dossier (Fournisseurs, RH, Juridique…) contient ainsi à la fois les affaires en cours et la connaissance qui sert à les traiter.
+
+### Pourquoi un Dossier unifié
+
+Le mental modèle est celui d'un **classeur physique** : tu ouvres ton dossier « Fournisseurs », tu y trouves les affaires en cours (ces Sujets ouverts avec Karim, avec PackPlus…) et les documents de référence (le contrat-type, la procédure de validation des devis, ta note sur les marottes de chacun). C'est l'unité de classement métier la plus intuitive pour des utilisateurs non rompus aux SaaS — un Dossier, c'est concret.
+
+Côté modèle, c'est l'entité `Folder` qui porte ce regroupement. `Subject.folder_id` et `KnowledgeDocument.folder_id` pointent tous deux vers un Folder.
+
+### Le Folder « Général »
+
+Un Folder spécial nommé **« Général »** est auto-créé à la création du compte. Il porte deux fonctions :
+
+- accueillir les **Connaissances transversales** (organigramme, charte rédactionnelle, ton de réponse) — c'est-à-dire les documents qui doivent être chargés dans le contexte de tous les Sujets, peu importe leur Folder
+- servir de **Folder de repli** quand Relvo ne sait pas dans quel Folder métier classer un nouveau Sujet
+
+### Deux natures de documents
+
+Les `KnowledgeDocument` se déclinent en deux formes complémentaires, identifiées par le champ `kind` :
+
+- **Fichiers (`kind = file`)** — PDFs, images, documents uploadés. Sources de référence figées : organigrammes, factures-types, devis-types, contrats fournisseurs, charte tarifaire. **Non modifiables** dans l'application (suppression seule). En V1, l'utilisateur peut **glisser-déposer** un PDF directement dans la fiche d'un Dossier pour l'ajouter.
+- **Notes (`kind = note`)** — texte Markdown rédigé directement dans l'app. **Mémoire vivante** que l'utilisateur écrit et fait évoluer dans le temps : règles internes, ton de réponse, liste des magasins, particularités d'un fournisseur, lessons learned. Exactement le pattern d'un fichier `.md` qu'on ajoute à Claude Code pour enrichir le contexte.
+
+La distinction des deux formes est importante : les fichiers sont des **références** auxquelles on se fie, les notes sont une **mémoire** qu'on façonne. La sensation de contrôle vient des notes — elles donnent à l'utilisateur la maîtrise de ce que Relvo « sait ».
+
+### Édition des notes — V1 et V2
+
+- **V1** — seul l'utilisateur édite les notes. Relvo les **consulte** mais ne les modifie pas.
+- **V2** — Relvo peut **proposer** des modifications à une note (« J'ai remarqué que tu ajoutes souvent des tâches sur Montpellier — veux-tu que j'ajoute ce magasin à ton organigramme ? »), à valider par l'utilisateur, selon le même mécanisme d'acquittement que les suggestions de tâches (cf. principe 5).
+
+### Citations — pour rendre Relvo auditable
+
+Quand Relvo propose une tâche ou un brouillon en s'appuyant sur un document de la base, il peut indiquer la **source** : « Suggéré à partir de *Procédure fournisseurs v3* ». Cette traçabilité est essentielle pour la confiance — sans elle, la base de connaissances devient une boîte noire.
+
+En V1 le mécanisme est activé techniquement (l'API d'Anthropic supporte les citations nativement) et l'affichage UI reste minimal (un petit lien « Source » discret). L'enrichissement de l'expérience citations (panneau latéral, surlignage dans le document source) est V2.
+
+### Points d'entrée pour ajouter un document
+
+1. **Depuis la fiche d'un Dossier** — bouton « + Ajouter un fichier » / « + Créer une note », ou glisser-déposer un PDF directement dans la fiche.
+2. **Depuis le chatbot (drawer)** — l'utilisateur peut demander à Relvo de créer une note avec un contenu dicté (`create_knowledge_note` côté tools, cf. `04-ia.md §11.6`).
+
+## 13. Relvo s'exprime de deux manières : un brief sur l'Accueil, une conversation dans le drawer
+
+Pour des utilisateurs non rompus aux SaaS bureautiques, l'omniprésence de Relvo doit se traduire par deux modes d'interaction distincts et complémentaires :
+
+### Mode brief — l'Accueil
+
+L'**Accueil** n'est pas une boîte de dialogue. C'est **la sortie compilée** que Relvo a préparée pour son utilisateur — l'équivalent d'un brief du matin. On y trouve :
+
+- Un **bandeau KPIs** (Sujets ouverts, Messages à trier, Tâches du jour, % d'aide Relvo)
+- Le **calendrier de la semaine** (widget compact, complémentaire de la page Planning)
+- Les **Sujets prioritaires du jour**
+- Une intro courte signée Relvo (« Bonjour Mamadou, voici ton brief : 3 sujets urgents, 1 message à trier »)
+
+L'entrée « Accueil » dans la navigation porte une icône **maison** classique. Le **robot 🤖** est réservé au bouton flottant qui ouvre le drawer chatbot — chaque icône a un rôle visuel distinct (la maison signale la page de brief, le robot signale le dialogue actif). C'est aussi la page d'atterrissage par défaut à la connexion.
+
+L'Accueil n'a pas de champ de saisie chat. Pour dialoguer, l'utilisateur ouvre le drawer.
+
+### Mode conversation — le drawer
+
+Le **drawer** est la surface conversationnelle, accessible depuis **toutes les pages** (Accueil compris) via un bouton flottant 🤖 en bas-droite. Il s'ouvre latéralement (~40 % de la largeur) par-dessus la page courante.
+
+C'est là que l'utilisateur **dialogue** avec Relvo, **demande des actions**, **creuse** un sujet ou un détail. C'est aussi par là que passent toutes les opérations action-capable.
+
+### Caractéristiques structurantes du drawer
+
+- **Page-aware** — le drawer sait toujours sur quelle page l'utilisateur se trouve (URL transmise + données contextuelles pertinentes). Un chip explicite en haut du drawer (« Contexte : SUB-0142 — Sauce blanche ») permet de basculer en discussion générale d'un clic sur ×.
+- **Sessions implicites** — à l'ouverture, nouvelle conversation par défaut, ou reprise de la conversation en cours si la dernière activité date de moins de 5 minutes. Bouton « + Nouvelle conversation » toujours accessible.
+- **Éphémère** — les conversations sont stockées **côté client dans IndexedDB**, pas sur le serveur. Aucune entité `ChatConversation` côté base de données en V1. Ce qui persiste, ce sont les actions effectuées et leurs résultats (`Task`, `Action`, `EventLog`…), pas le dialogue qui les a déclenchées.
+- **Action-capable day-one** — tout ce que l'utilisateur peut faire dans l'UI, il peut le demander au chat : créer une tâche, modifier un sujet, préparer un brouillon, éditer une note de Connaissances, consulter ses KPIs, retrouver un message. L'architecture est symétrique — chaque clic UI a un tool API correspondant qui appelle la même fonction métier. Détail technique dans `04-ia.md §11`.
+
+### Boundaries de l'action-capable en V1
+
+Toutes les actions de Relvo sont **visibles** dans le fil du drawer sous forme de blocs structurés (« ✦ J'ai créé la tâche *Appeler le shop de Montpellier* dans SUB-0142 ») et **annulables** d'un clic dans une fenêtre de quelques minutes après leur exécution.
+
+Le brouillon de message ne s'envoie **jamais** automatiquement — il atterrit dans le composer du Sujet pour validation utilisateur, conformément au principe « Relvo n'envoie jamais de message automatiquement » (cf. `04-ia.md §7.4`).
+
+La traçabilité des actions chat-driven est assurée via `EventLog` : la métadonnée `metadata.source = "chat"` permet de distinguer une tâche créée depuis le chat d'une tâche créée par suggestion automatique ou clic UI.
+
+### Pourquoi cette dualité
+
+Le brief sur l'Accueil sert l'**immédiateté** — l'utilisateur ouvre l'app, il voit l'essentiel sans poser de question. Le drawer sert l'**approfondissement** et l'**action** — l'utilisateur creuse, demande, fait faire. Les deux sont accessibles partout dans l'app (l'Accueil par la nav, le drawer par le bouton flottant), et ils se complètent sans se concurrencer.
+
+Cette dualité tient compte du profil utilisateur cible (food, bâtiment — peu rompu aux outils SaaS, mais habitué à dialoguer avec ChatGPT/Claude). Ne pas avoir à apprendre comment parler à Relvo : la page d'accueil le présente, le bouton flottant le rend toujours accessible.

@@ -33,7 +33,7 @@ Un fournisseur inconnu envoie un email pour signaler un retard de livraison. Le 
 3. aucun `Contact` existant trouvé
 4. l'IA comprend le contenu → créer un `Contact` en statut `auto` avec les informations extraites du message (nom depuis la signature, entreprise si détectable)
 5. créer un nouveau `Subject`, rattacher le contact comme `primary_contact_id`
-6. identifier le `Domain` (ex: Fournisseurs)
+6. identifier le `Folder` (ex: Fournisseurs)
 7. générer les `Task` déductibles du message, s'il y en a
 8. créer les `EventLog` : message reçu, contact créé, sujet créé, tâches créées si applicable
 
@@ -54,7 +54,7 @@ Un fournisseur connu écrit sur un nouveau problème, distinct de ses échanges 
 2. créer le `Message`
 3. chercher un `Subject` ouvert pertinent parmi les sujets du contact
 4. aucun sujet suffisamment proche → créer un nouveau `Subject`
-5. utiliser pour le cadrage : le `Channel`, le domaine habituel du contact, le contenu du message
+5. utiliser pour le cadrage : le `Channel`, le Folder habituel du contact (`default_folder_id`), le contenu du message
 6. générer les `Task` déductibles du message, s'il y en a
 7. créer les `EventLog`
 
@@ -75,7 +75,7 @@ Le fournisseur répond dans une conversation déjà engagée sur un sujet ouvert
 2. comparer le nouveau message avec les sujets existants en utilisant :
    - `external_thread_id` (continuité technique email)
    - `Channel`
-   - domaine
+   - Folder
    - similarité sémantique du contenu
    - proximité temporelle
 3. si le score est suffisant → rattacher le message au sujet existant
@@ -165,12 +165,13 @@ Le fournisseur dit :
 1. créer le `Message`
 2. créer ou rattacher le `Subject`
 3. comprendre le contenu
-4. identifier les tâches **déductibles du contenu du message** :
-   - confirmer ou non le remplacement _(source: IA)_
-5. créer les `Task` avec `source = ai`
-6. préparer éventuellement un brouillon de réponse dans le composer
-7. produire les `EventLog`
-8. mettre le sujet en `to_do`
+4. identifier les actions **déductibles du contenu du message** pour faire avancer le sujet :
+   - confirmer ou non le remplacement _(source_actor: ai)_
+5. créer les `Task` avec `source_actor = ai`
+6. tenter d'extraire une date pour chaque tâche (`start_date`, et le cas échéant `start_time`, `end_date`, `end_time` — cf. `04-ia.md §2.5`). Si rien n'est extractible, les champs date restent null.
+7. préparer éventuellement un brouillon de réponse dans le composer
+8. produire les `EventLog`
+9. mettre le sujet en `to_do`
 
 ### Résultat
 
@@ -178,7 +179,7 @@ Le fournisseur dit :
 
 ### Point important
 
-L'IA ne propose que les tâches que le contenu du message permet de déduire. Les tâches issues du savoir métier de l'utilisateur (par exemple "Appeler le shop de Montpellier" ou "Vérifier les stocks de Béziers") sont créées manuellement par l'utilisateur avec `source = user`, et tracées dans le journal de bord.
+Une tâche est rattachée au sujet, pas à un utilisateur (cf. `01-principes.md §4`). Relvo propose toutes les actions nécessaires pour faire avancer le sujet, dans la limite de ce que le contenu disponible permet de déduire. Les tâches issues du savoir métier de l'utilisateur (par exemple "Appeler le shop de Montpellier" ou "Vérifier les stocks de Béziers") sont créées manuellement par l'utilisateur avec `source_actor = user`, et tracées dans le journal de bord.
 
 ## Cas G — Préparation d'une réponse par l'IA
 
@@ -267,33 +268,10 @@ Le fournisseur répond à la suite d'une demande.
    - créer de nouvelles `Task` → `to_do`
    - constater que le sujet est réglé → `resolved`
    - constater que le message est informatif sans action requise → `unread`
-   - constater que la situation se dégrade → `blocked`
+   - constater que la situation reste en attente d'une réponse externe → garder `waiting`
 5. produire les `EventLog`
 
-## Cas K — Sujet bloqué
-
-### Exemple
-
-Le sujet ne peut plus avancer.
-
-### Cas typiques
-
-- information indispensable manquante
-- aucun retour d'un tiers malgré les relances
-- impossibilité opérationnelle
-- aucune solution disponible
-
-### Traitement
-
-1. constater qu'aucune tâche utile ne permet d'avancer
-2. mettre le sujet en `blocked` (manuellement par l'utilisateur ou suggéré par l'IA)
-3. produire un `EventLog`
-
-### Résultat
-
-- `Subject.status = blocked`
-
-## Cas L — Résolution du sujet
+## Cas K — Résolution du sujet
 
 ### Conditions possibles
 
@@ -318,7 +296,7 @@ Le sujet peut être considéré comme résolu si :
 
 L'IA peut suggérer la résolution (visible comme "Résolution suggérée" dans l'interface) mais ne peut pas résoudre un sujet d'elle-même. C'est toujours l'utilisateur qui confirme.
 
-## Cas M — Archivage du sujet
+## Cas L — Archivage du sujet
 
 ### Traitement
 
@@ -330,7 +308,7 @@ L'IA peut suggérer la résolution (visible comme "Résolution suggérée" dans 
 
 - `Subject.status = archived`
 
-## Cas N — Tri d'un message "Sans sujet" par l'utilisateur
+## Cas M — Tri d'un message "Sans sujet" par l'utilisateur
 
 ### Contexte
 
@@ -342,8 +320,8 @@ L'utilisateur consulte le dashboard ou la page Messages et voit des messages "Sa
 2. un popover s'ouvre avec les options d'affectation
 3. **si aucun contact n'existe pour cet expéditeur** : le système propose de créer un contact
    - les champs sont préremplis avec les informations disponibles (`sender_raw`, nom extrait si possible)
-   - l'utilisateur peut compléter (nom, entreprise, domaine par défaut)
-   - le contact est créé en statut `complete` (car vérifié par l'utilisateur) avec `source = user`
+   - l'utilisateur peut compléter (nom, entreprise, Dossier par défaut)
+   - le contact est créé en statut `complete` (car vérifié par l'utilisateur) avec `source_actor = user`
 4. **si un contact existe déjà** : le message lui est directement associé
 5. l'utilisateur choisit un sujet existant ou en crée un nouveau
 6. le `Message` est mis à jour : `subject_id` et `sender_contact_id` renseignés
@@ -354,7 +332,7 @@ L'utilisateur consulte le dashboard ou la page Messages et voit des messages "Sa
 - le message disparaît de la liste "Sans sujet"
 - le sujet est enrichi du nouveau message
 
-## Cas O — Message "Sans sujet" ignoré par l'utilisateur
+## Cas N — Message "Sans sujet" ignoré par l'utilisateur
 
 ### Contexte
 
@@ -373,7 +351,7 @@ L'utilisateur identifie un message comme non pertinent (spam, prospection, messa
 - le message reste en base (traçabilité) mais n'apparaît plus dans le flux actif
 - `subject_id` reste `null`
 
-## Cas P — Changement de rattachement d'un message
+## Cas O — Changement de rattachement d'un message
 
 ### Contexte
 
@@ -382,7 +360,7 @@ L'utilisateur constate qu'un message a été rattaché au mauvais sujet par l'IA
 ### Traitement
 
 1. l'utilisateur clique sur le badge du sujet affiché sous le message
-2. le même popover que le Cas N s'ouvre, avec le sujet actuel présélectionné
+2. le même popover que le Cas M s'ouvre, avec le sujet actuel présélectionné
 3. l'utilisateur peut :
    - réaffecter le message à un autre sujet existant
    - créer un nouveau sujet
@@ -395,7 +373,7 @@ L'utilisateur constate qu'un message a été rattaché au mauvais sujet par l'IA
 - le message apparaît dans le nouveau sujet
 - le journal de bord trace le changement
 
-## Cas Q — Complétion d'une fiche contact
+## Cas P — Complétion d'une fiche contact
 
 ### Contexte
 
@@ -403,12 +381,12 @@ L'utilisateur consulte la page Contacts et voit des fiches en statut `auto` marq
 
 ### Exemple
 
-L'IA a créé un contact "Karim Benali" à partir d'une signature email, mais il manque l'entreprise, le numéro de téléphone et le domaine par défaut.
+L'IA a créé un contact "Karim Benali" à partir d'une signature email, mais il manque l'entreprise, le numéro de téléphone et le Dossier par défaut.
 
 ### Traitement
 
 1. l'utilisateur ouvre la fiche contact
-2. il complète ou corrige les informations : nom, entreprise, téléphone, email, domaine par défaut, notes
+2. il complète ou corrige les informations : nom, entreprise, téléphone, email, Dossier par défaut, notes
 3. le contact passe en statut `complete`
 4. produire un `EventLog` (contact complété, actor: user)
 
@@ -416,4 +394,4 @@ L'IA a créé un contact "Karim Benali" à partir d'une signature email, mais il
 
 - `Contact.status = complete`
 - le contact disparaît du filtre "À compléter"
-- le domaine par défaut sera utilisé pour faciliter le classement des prochains messages de ce contact
+- le `default_folder_id` sera utilisé pour faciliter le classement des prochains messages de ce contact

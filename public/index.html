@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Relvo — Dashboard</title>
+<title>Relvo — Accueil</title>
 <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -12,38 +12,41 @@
 
   <!-- ═══ SIDEBAR ═══ -->
   <aside class="sidebar">
-    <div class="logo">Relvo</div>
+    <div class="logo-row">
+      <div class="logo">Relvo</div>
+      <input type="checkbox" id="sidebar-toggle" class="sidebar-toggle" hidden>
+      <label for="sidebar-toggle" class="sidebar-collapse-btn" title="Plier/déplier la sidebar">
+        <svg class="when-open" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        <svg class="when-collapsed" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </label>
+    </div>
 
     <a class="nav-item active" href="index.html">
-      <div class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
-      <span>Dashboard</span>
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 001 1h4v-6h4v6h4a1 1 0 001-1V9.5"/></svg></div>
+      <span>Accueil</span>
     </a>
     <a class="nav-item" href="sujets.html">
       <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
       <span>Sujets</span>
       <div class="nav-badge">9</div>
     </a>
+    <a class="nav-item" href="planning.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+      <span>Planning</span>
+    </a>
     <a class="nav-item" href="messages.html">
       <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
       <span>Messages</span>
       <div class="nav-badge">3</div>
     </a>
+    <a class="nav-item" href="dossiers.html">
+      <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg></div>
+      <span>Dossiers</span>
+    </a>
     <a class="nav-item" href="contacts.html">
       <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
       <span>Contacts</span>
     </a>
-
-    <div class="nav-group-label">Organisation</div>
-    <a class="nav-item" href="domaines.html">
-      <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg></div>
-      <span>Domaines</span>
-    </a>
-    <a class="nav-item" href="activite.html">
-      <div class="nav-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-      <span>Activité</span>
-    </a>
-
-    <div class="nav-group-label">Système</div>
     <a class="nav-item" href="parametres.html">
       <div class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></div>
       <span>Paramètres</span>
@@ -64,7 +67,7 @@
     <header class="topbar">
       <div>
         <span class="greeting">Bonjour Mamadou</span>
-        <span class="greeting-date">Lundi 21 avril 2025</span>
+        <span class="greeting-date">Vendredi 15 mai 2026</span>
       </div>
       <div class="topbar-actions">
         <input type="text" class="search-input" placeholder="Rechercher un sujet, un contact, un message…" />
@@ -83,24 +86,150 @@
         <!-- KPIs -->
         <div class="kpi-grid">
           <div class="kpi-card">
-            <div class="kpi-label">Sujets actifs</div>
+            <div class="kpi-label">Sujets ouverts</div>
             <div class="kpi-value">24</div>
             <div class="kpi-sub kpi-trend-up">+3 depuis hier</div>
           </div>
           <div class="kpi-card">
-            <div class="kpi-label">À traiter</div>
-            <div class="kpi-value kpi-accent">9</div>
-            <div class="kpi-sub">dont <strong style="color: var(--brand-accent);">3 critiques</strong></div>
+            <div class="kpi-label">Sujets à traiter</div>
+            <div class="kpi-value">9</div>
+            <div class="kpi-sub">dont <a href="sujets.html?filter=urgent" class="is-red">3 urgents</a></div>
           </div>
           <div class="kpi-card">
-            <div class="kpi-label">Tâches ouvertes</div>
-            <div class="kpi-value">18</div>
-            <div class="kpi-sub">5 proposées par Relvo</div>
+            <div class="kpi-label">Tâches du jour</div>
+            <div class="kpi-value">6</div>
+            <div class="kpi-sub">3 horodatées · <a href="planning.html">Voir le planning</a></div>
           </div>
           <div class="kpi-card">
-            <div class="kpi-label">Messages aujourd'hui</div>
+            <div class="kpi-label">Messages reçus aujourd'hui</div>
             <div class="kpi-value">12</div>
-            <div class="kpi-sub">8 entrants · <strong style="color: var(--amber-600);">3 sans sujet</strong></div>
+            <div class="kpi-sub">dont <a href="messages.html?filter=orphan" class="is-amber">3 sans sujet</a></div>
+          </div>
+          <div class="kpi-card is-relvo">
+            <div class="kpi-label">Aide Relvo</div>
+            <div class="kpi-value">61%</div>
+            <div class="kpi-sub">11 tâches sur 18 issues d'une suggestion</div>
+          </div>
+        </div>
+
+        <!-- SEMAINE EN COURS -->
+        <div class="section-header">
+          <div class="section-title">Cette semaine</div>
+          <a class="section-link" href="planning.html">Vue mois complète →</a>
+        </div>
+
+        <div class="week-widget-section">
+          <div class="week-widget">
+
+            <div class="week-day">
+              <div class="week-day-label"><span class="dow">lun.</span><span class="num">11</span></div>
+              <div class="week-day-tasks">
+                <div class="cal-task cal-task--rh">
+                  <div class="cal-task-title">Préparer point recrutement</div>
+                </div>
+                <div class="cal-task cal-task--business">
+                  <div class="cal-task-title">Note objectifs trimestre</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="week-day">
+              <div class="week-day-label"><span class="dow">mar.</span><span class="num">12</span></div>
+              <div class="week-day-tasks">
+                <div class="cal-task cal-task--rh">
+                  <div class="cal-task-title">Plan formation</div>
+                  <div class="cal-task-meta">Équipe nouveau shop</div>
+                </div>
+                <div class="cal-task cal-task--fournisseurs">
+                  <div class="cal-task-title">Mise à jour stock</div>
+                </div>
+                <div class="cal-task cal-task--fournisseurs">
+                  <div class="cal-task-title"><span class="time">16:00</span>Réponse PackPlus</div>
+                  <div class="cal-task-meta">SUB-0103</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="week-day">
+              <div class="week-day-label"><span class="dow">mer.</span><span class="num">13</span></div>
+              <div class="week-day-tasks">
+                <div class="cal-task cal-task--production">
+                  <div class="cal-task-title">Note ratio production</div>
+                </div>
+                <div class="cal-task cal-task--general">
+                  <div class="cal-task-title">Rappeler artisan boulanger</div>
+                </div>
+                <div class="cal-task cal-task--business">
+                  <div class="cal-task-title">Valider menu été</div>
+                </div>
+                <div class="cal-task cal-task--general">
+                  <div class="cal-task-title"><span class="time">15:00</span>Réunion R&D</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="week-day">
+              <div class="week-day-label"><span class="dow">jeu.</span><span class="num">14</span></div>
+              <div class="week-day-tasks">
+                <div class="cal-task cal-task--production">
+                  <div class="cal-task-title"><span class="time">09:00</span>Audit qualité Narbonne</div>
+                  <div class="cal-task-meta">SUB-0117 · FroidExpert</div>
+                </div>
+                <div class="cal-task cal-task--business">
+                  <div class="cal-task-title">Valider campagne pub</div>
+                </div>
+                <div class="cal-task cal-task--general">
+                  <div class="cal-task-title">Note projet expansion</div>
+                </div>
+                <div class="cal-task cal-task--business">
+                  <div class="cal-task-title"><span class="time">15:00</span>Rdv CCI Hérault</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="week-day is-today">
+              <div class="week-day-label"><span class="dow">ven.</span><span class="num">15</span></div>
+              <div class="week-day-tasks">
+                <div class="cal-task cal-task--general">
+                  <div class="cal-task-title"><span class="time">10:00</span>Réunion équipe ops</div>
+                  <div class="cal-task-meta">Direction · Atlas</div>
+                </div>
+                <div class="cal-task cal-task--fournisseurs">
+                  <div class="cal-task-title">Confirmer Karim</div>
+                  <div class="cal-task-meta">SUB-0142 · Urgent</div>
+                </div>
+                <div class="cal-task cal-task--general">
+                  <div class="cal-task-title"><span class="time">14:00</span>Présentation COMEX</div>
+                </div>
+                <div class="cal-task cal-task--business">
+                  <div class="cal-task-title">Finaliser slides Salon</div>
+                </div>
+                <div class="cal-task cal-task--rh">
+                  <div class="cal-task-title"><span class="time">16:30</span>Appel Sophie B.</div>
+                  <div class="cal-task-meta">SUB-0148</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="week-day is-weekend">
+              <div class="week-day-label"><span class="dow">sam.</span><span class="num">16</span></div>
+              <div class="week-day-tasks">
+                <div class="cal-task cal-task--fournisseurs">
+                  <div class="cal-task-title">Relancer PackPlus</div>
+                </div>
+                <div class="cal-task cal-task--production">
+                  <div class="cal-task-title"><span class="time">10:00</span>Visite shop Béziers</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="week-day is-weekend">
+              <div class="week-day-label"><span class="dow">dim.</span><span class="num">17</span></div>
+              <div class="week-day-tasks">
+                <span class="week-day-empty">Rien de prévu</span>
+              </div>
+            </div>
+
           </div>
         </div>
 
@@ -109,20 +238,52 @@
           <div class="section-title">Sujets prioritaires</div>
           <a class="section-link" href="sujets.html">Voir tous les sujets →</a>
         </div>
+        <p class="section-hint">Les 5 sujets ouverts qui demandent une décision aujourd'hui ou bientôt.</p>
 
-        <div class="subject-list">
+        <div class="priority-grid">
 
-          <!-- 1 — SUB-0142 — critique, to_do -->
-          <a href="sujet.html" class="subject-card priority-critical">
+          <!-- ── COLONNE GAUCHE — Pipeline (5 statuts ouverts) ── -->
+          <aside class="priority-pipeline">
+            <div class="priority-pipeline-title">
+              Pipeline <span class="total">24 ouverts</span>
+            </div>
+            <div class="pp-row">
+              <span class="pp-label">Nouveau</span>
+              <div class="pp-bar"><div class="pp-bar-fill pp-fill--new" style="width: 21%"></div></div>
+              <span class="pp-count">5</span>
+            </div>
+            <div class="pp-row">
+              <span class="pp-label">À faire</span>
+              <div class="pp-bar"><div class="pp-bar-fill pp-fill--todo" style="width: 38%"></div></div>
+              <span class="pp-count">9</span>
+            </div>
+            <div class="pp-row">
+              <span class="pp-label">En attente</span>
+              <div class="pp-bar"><div class="pp-bar-fill pp-fill--waiting" style="width: 33%"></div></div>
+              <span class="pp-count">8</span>
+            </div>
+            <div class="pp-row">
+              <span class="pp-label">Non lu</span>
+              <div class="pp-bar"><div class="pp-bar-fill pp-fill--unread" style="width: 8%"></div></div>
+              <span class="pp-count">2</span>
+            </div>
+          </aside>
+
+          <!-- ── COLONNE DROITE — Liste des sujets prioritaires ── -->
+          <div class="subject-list">
+
+          <!-- 1 — SUB-0142 — URGENT, to_do -->
+          <a href="sujet.html" class="subject-card priority-urgent">
             <div class="subject-top">
               <div style="flex: 1; min-width: 0;">
                 <div class="subject-title">Retard livraison sauce blanche — Montpellier</div>
                 <div style="font-size: 11px; color: var(--text-tertiary); font-family: monospace; margin-top: 2px;">SUB-0142</div>
               </div>
+              <span class="urgent-flag">Urgent</span>
               <span class="badge sb-todo">à faire</span>
             </div>
             <div class="subject-meta">
-              <span class="domain-tag">Fournisseurs</span>
+              <span class="folder-tag">Fournisseurs</span>
               <span class="contact-name"><span class="contact-avatar">KB</span>Karim Benali · SoGood Distribution</span>
               <span class="channel-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Email</span>
               <span title="Dernière activité">il y a 25 min</span>
@@ -136,8 +297,8 @@
             </div>
           </a>
 
-          <!-- 2 — SUB-0148 — haute, to_do -->
-          <a href="sujet.html" class="subject-card priority-high">
+          <!-- 2 — SUB-0148 — to_do (commun) -->
+          <a href="sujet.html" class="subject-card">
             <div class="subject-top">
               <div style="flex: 1; min-width: 0;">
                 <div class="subject-title">Demande de congé maternité — Sophie Blanchard</div>
@@ -146,7 +307,7 @@
               <span class="badge sb-todo">à faire</span>
             </div>
             <div class="subject-meta">
-              <span class="domain-tag">RH</span>
+              <span class="folder-tag">RH</span>
               <span class="contact-name"><span class="contact-avatar">SB</span>Sophie Blanchard</span>
               <span class="channel-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Email</span>
               <span title="Dernière activité">il y a 1 h</span>
@@ -170,7 +331,7 @@
               <span class="badge sb-todo">à faire</span>
             </div>
             <div class="subject-meta">
-              <span class="domain-tag">Juridique</span>
+              <span class="folder-tag">Juridique</span>
               <span class="contact-name"><span class="contact-avatar">CP</span>Antoine Guérin · ClimaPro Services</span>
               <span class="channel-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Email</span>
               <span title="Dernière activité">il y a 3 h</span>
@@ -183,17 +344,19 @@
             </div>
           </a>
 
-          <!-- 4 — SUB-0131 — low, unread -->
+          <!-- 4 — SUB-0131 — unread (visuel bold + fond gris + cloche notification) -->
           <a href="sujet.html" class="subject-card is-unread">
             <div class="subject-top">
               <div style="flex: 1; min-width: 0;">
                 <div class="subject-title">Confirmation virement client — Béziers centre</div>
                 <div style="font-size: 11px; color: var(--text-tertiary); font-family: monospace; margin-top: 2px;">SUB-0131</div>
               </div>
-              <span class="badge sb-unread">non lu</span>
+              <span class="unread-bell" title="Nouveau message reçu">
+                <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+              </span>
             </div>
             <div class="subject-meta">
-              <span class="domain-tag">Business</span>
+              <span class="folder-tag">Business</span>
               <span class="contact-name"><span class="contact-avatar">RP</span>Restaurant Le Palais</span>
               <span class="channel-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg> WhatsApp</span>
               <span title="Dernière activité">il y a 4 h</span>
@@ -204,8 +367,8 @@
             </div>
           </a>
 
-          <!-- 5 — SUB-0103 — haute, waiting -->
-          <a href="sujet.html" class="subject-card priority-high">
+          <!-- 5 — SUB-0103 — waiting (commun) -->
+          <a href="sujet.html" class="subject-card">
             <div class="subject-top">
               <div style="flex: 1; min-width: 0;">
                 <div class="subject-title">Commande papier emballage — réapprovisionnement urgent</div>
@@ -214,7 +377,7 @@
               <span class="badge sb-waiting">en attente</span>
             </div>
             <div class="subject-meta">
-              <span class="domain-tag">Fournisseurs</span>
+              <span class="folder-tag">Fournisseurs</span>
               <span class="contact-name"><span class="contact-avatar">PP</span>Bruno Martelli · PackPlus SARL</span>
               <span class="channel-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Email</span>
               <span title="Dernière activité">hier</span>
@@ -224,120 +387,8 @@
             </div>
           </a>
 
-        </div>
-
-        <!-- PIPELINE -->
-        <div class="section-header">
-          <div class="section-title">Pipeline des sujets actifs</div>
-          <a class="section-link" href="sujets.html">Filtrer par statut →</a>
-        </div>
-
-        <div class="pipeline">
-          <div class="pipeline-row">
-            <div class="pipeline-label">nouveau</div>
-            <div class="pipeline-track"><div class="pipeline-fill fill-new" style="width: 35%"></div></div>
-            <div class="pipeline-count">5</div>
           </div>
-          <div class="pipeline-row">
-            <div class="pipeline-label">à faire</div>
-            <div class="pipeline-track"><div class="pipeline-fill fill-todo" style="width: 62%"></div></div>
-            <div class="pipeline-count">9</div>
-          </div>
-          <div class="pipeline-row">
-            <div class="pipeline-label">en attente</div>
-            <div class="pipeline-track"><div class="pipeline-fill fill-waiting" style="width: 41%"></div></div>
-            <div class="pipeline-count">6</div>
-          </div>
-          <div class="pipeline-row">
-            <div class="pipeline-label">non lu</div>
-            <div class="pipeline-track"><div class="pipeline-fill fill-unread" style="width: 14%"></div></div>
-            <div class="pipeline-count">2</div>
-          </div>
-          <div class="pipeline-row">
-            <div class="pipeline-label">bloqué</div>
-            <div class="pipeline-track"><div class="pipeline-fill fill-blocked" style="width: 14%"></div></div>
-            <div class="pipeline-count">2</div>
-          </div>
-        </div>
 
-      </div>
-
-      <!-- ── COLONNE DROITE — Messages sans sujet ── -->
-      <div class="col-right">
-
-        <div class="section-header">
-          <div class="section-title">Messages sans sujet</div>
-          <a class="section-link" href="messages.html">Voir tous →</a>
-        </div>
-
-        <p style="font-size: 12px; color: var(--text-tertiary); margin-bottom: 16px; line-height: 1.45;">
-          Relvo n'a pas su rattacher ces messages à un sujet. Cliquez pour les trier ou les ignorer.
-        </p>
-
-        <div style="display: flex; flex-direction: column; gap: 8px;">
-
-          <!-- Message 1 — J. Morel, contact inconnu (sender_raw affiché) -->
-          <a href="messages.html" style="border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 12px 14px; cursor: pointer; transition: border-color 0.15s; text-decoration: none; color: inherit; display: block; background: var(--bg-primary);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; gap: 8px;">
-              <div style="display: flex; align-items: center; gap: 8px; min-width: 0;">
-                <div class="avatar avatar-md avatar-color-7" style="background: var(--gray-50); color: var(--gray-600);">?</div>
-                <div style="min-width: 0;">
-                  <div style="font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">j.morel@gmail.com</div>
-                  <div style="font-size: 10px; color: var(--text-tertiary); margin-top: 1px;">Expéditeur inconnu</div>
-                </div>
-              </div>
-              <span style="font-size: 11px; color: var(--text-tertiary); flex-shrink: 0;">08:41</span>
-            </div>
-            <div style="font-size: 12px; color: var(--text-secondary); line-height: 1.4; margin-bottom: 8px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">Suite à notre échange de la semaine dernière, je me permets de revenir vers vous concernant notre offre…</div>
-            <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
-              <span class="channel-icon" style="font-size: 10px;"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Email</span>
-              <span class="status-pill status-pill-auto">Intention floue</span>
-            </div>
-          </a>
-
-          <!-- Message 2 — Marie Campos, contact connu (comptable), message informatif -->
-          <a href="messages.html" style="border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 12px 14px; cursor: pointer; transition: border-color 0.15s; text-decoration: none; color: inherit; display: block; background: var(--bg-primary);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; gap: 8px;">
-              <div style="display: flex; align-items: center; gap: 8px; min-width: 0;">
-                <div class="avatar avatar-md avatar-color-3">MC</div>
-                <div style="min-width: 0;">
-                  <div style="font-size: 13px; font-weight: 500;">Marie Campos</div>
-                  <div style="font-size: 10px; color: var(--text-tertiary); margin-top: 1px;">Comptable</div>
-                </div>
-              </div>
-              <span style="font-size: 11px; color: var(--text-tertiary); flex-shrink: 0;">lun.</span>
-            </div>
-            <div style="font-size: 12px; color: var(--text-secondary); line-height: 1.4; margin-bottom: 8px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">Bonjour Mamadou, j'ai bien reçu les pièces pour le bilan. RAS de mon côté.</div>
-            <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
-              <span class="channel-icon" style="font-size: 10px;"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Email</span>
-              <span class="status-pill status-pill-auto">Sans action</span>
-            </div>
-          </a>
-
-          <!-- Message 3 — Démarchage, contact inconnu -->
-          <a href="messages.html" style="border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 12px 14px; cursor: pointer; transition: border-color 0.15s; text-decoration: none; color: inherit; display: block; background: var(--bg-primary);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; gap: 8px;">
-              <div style="display: flex; align-items: center; gap: 8px; min-width: 0;">
-                <div class="avatar avatar-md avatar-color-7" style="background: var(--gray-50); color: var(--gray-600);">?</div>
-                <div style="min-width: 0;">
-                  <div style="font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">a.dupont@energie-conseil.fr</div>
-                  <div style="font-size: 10px; color: var(--text-tertiary); margin-top: 1px;">Expéditeur inconnu</div>
-                </div>
-              </div>
-              <span style="font-size: 11px; color: var(--text-tertiary); flex-shrink: 0;">lun.</span>
-            </div>
-            <div style="font-size: 12px; color: var(--text-secondary); line-height: 1.4; margin-bottom: 8px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">Bonjour M. Faye, je suis consultant en énergie et j'aimerais vous proposer un audit gratuit de vos installations…</div>
-            <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
-              <span class="channel-icon" style="font-size: 10px;"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Email</span>
-              <span class="status-pill status-pill-auto">Prospection</span>
-            </div>
-          </a>
-
-        </div>
-
-        <div style="margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center;">
-          <span style="font-size: 12px; color: var(--text-tertiary);">3 messages en attente de tri</span>
-          <a href="messages.html" class="section-link">Trier →</a>
         </div>
 
       </div>
@@ -346,6 +397,76 @@
   </div>
 
 </div>
+
+<!-- ═══ DRAWER CHATBOT ═══ -->
+<button id="chat-fab" class="chat-fab" aria-label="Ouvrir l'assistant Relvo">
+  <svg viewBox="0 0 24 24"><rect x="4" y="7" width="16" height="13" rx="2"/><circle cx="9" cy="13" r="1.2" fill="currentColor"/><circle cx="15" cy="13" r="1.2" fill="currentColor"/><line x1="12" y1="3" x2="12" y2="7"/><circle cx="12" cy="3" r="1" fill="currentColor"/><path d="M9 16.5h6"/></svg>
+</button>
+
+<aside id="chat-drawer" class="chat-drawer">
+  <header class="chat-header">
+    <div class="chat-header-left">
+      <span class="chat-brand">Relvo</span>
+      <span class="chat-context-chip">
+        <span class="label-prefix">Contexte :</span>
+        <span class="chat-context-chip-label">Accueil</span>
+        <button class="chat-context-clear" title="Discussion générale">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </span>
+    </div>
+    <div class="chat-header-actions">
+      <button class="chat-new-btn">
+        <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Nouvelle
+      </button>
+      <button class="chat-header-btn" title="Conversations récentes">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </button>
+      <button id="chat-close" class="chat-header-btn" title="Fermer">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="chat-body">
+    <div class="chat-empty">
+      <div class="chat-empty-greeting">Bonjour <strong>Mamadou</strong> 👋</div>
+      <div class="chat-empty-helper">Demande-moi n'importe quoi sur tes sujets, ton planning ou tes contacts. Je peux aussi agir directement (créer une tâche, préparer un brouillon, mettre à jour une note…).</div>
+
+      <div class="chat-suggestions-label">Suggestions pour ton brief</div>
+      <div class="chat-suggestions">
+        <div class="chat-suggestion">Liste mes sujets urgents du jour</div>
+        <div class="chat-suggestion">Quels messages dois-je trier ?</div>
+        <div class="chat-suggestion">Résume ma semaine en 3 points</div>
+        <div class="chat-suggestion">Quelles tâches sont en retard ?</div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="chat-footer">
+    <div class="chat-input-row">
+      <textarea class="chat-input" placeholder="Écris à Relvo…" rows="1"></textarea>
+      <button class="chat-send-btn" title="Envoyer">
+        <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+    <div class="chat-footer-hint">Relvo peut se tromper. Vérifie les actions importantes.</div>
+  </footer>
+</aside>
+
+<script>
+(function() {
+  const fab = document.getElementById('chat-fab');
+  const drawer = document.getElementById('chat-drawer');
+  const closeBtn = document.getElementById('chat-close');
+  if (fab && drawer) fab.addEventListener('click', () => drawer.classList.add('is-open'));
+  if (closeBtn && drawer) closeBtn.addEventListener('click', () => drawer.classList.remove('is-open'));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && drawer && drawer.classList.contains('is-open')) drawer.classList.remove('is-open');
+  });
+})();
+</script>
 
 </body>
 </html>

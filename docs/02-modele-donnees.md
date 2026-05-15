@@ -1,36 +1,42 @@
 # 2. Entités et modèles de données
 
-## 1. Domain
+## 0. Type partagé `Actor`
+
+Le type `Actor` est un enum partagé par toutes les entités du modèle pour désigner **qui porte la donnée** (création, exécution, complétion, action dans le journal). Il remplace l'usage de FK utilisateur sur les ressources métier en V1.
+
+```
+Actor = enum(user, ai, contact, system)
+```
+
+### Mapping vers l'UI
+
+- `user` → **« Moi »** — l'humain titulaire du compte
+- `ai` → **« Relvo »** — l'assistant IA du compte
+- `contact` → **« Externe »** — un interlocuteur extérieur (entité `Contact`)
+- `system` → événements techniques automatiques, généralement non affichés
+
+### Convention de nommage
+
+Tout attribut typé `Actor` porte le suffixe `_actor` pour rendre le typage évident à la lecture. Exemples : `source_actor`, `created_by_actor`, `completed_by_actor`, `executed_by_actor`. Sur `EventLog`, l'entité ne portant qu'un seul acteur, on simplifie en `actor` (sans suffixe redondant).
+
+### Acteurs et identifiants
+
+Les acteurs ne sont **pas** des entités stockées :
+
+- `user`, `ai`, `system` n'ont pas d'`id` — l'humain titulaire du compte est implicite via `account_id`, Relvo est un mécanisme du compte, le système est automatique
+- `contact` est la seule valeur dont l'acteur correspond à une entité réelle (`Contact`)
+
+Quand un événement doit pointer vers le Contact concret (typiquement dans `EventLog`), on utilise un champ explicite `contact_id: UUID nullable`, renseigné uniquement quand `actor = contact`.
+
+## 1. Account
+
+Entité racine et tenant. Porteur technique du compte (auth + propriété des ressources).
 
 ### Propriétés
 
 - `id: UUID`
-- `name: string`
-- `slug: string`
-- `description: string nullable`
-- `is_active: boolean`
-- `created_at: datetime`
-- `updated_at: datetime`
-
-### Exemples
-
-- RH
-- Juridique
-- Fournisseurs
-- Support
-- Business
-- Production
-
-### Rôle
-
-Permet de catégoriser un sujet dans un périmètre métier principal. Le domaine est aussi associé aux contacts (via `default_domain_id`) pour faciliter le classement automatique des sujets.
-
-## 2. User
-
-### Propriétés
-
-- `id: UUID`
-- `email: string`
+- `email: string` (login)
+- `password_hash: string`
 - `first_name: string`
 - `last_name: string`
 - `role: enum(admin, ceo, manager, operator, viewer)`
@@ -40,21 +46,72 @@ Permet de catégoriser un sujet dans un périmètre métier principal. Le domain
 
 ### Rôle
 
-Utilisateur qui consulte les sujets, crée des tâches, exécute des actions et intervient dans le traitement. Dans le journal de bord, ses actions sont identifiées par l'acteur **"Moi"**.
+`Account` représente le titulaire du compte (un dirigeant, en V1). Toutes les ressources métier (sujets, contacts, tâches, documents, messages…) sont rattachées à un Account via `account_id`. C'est la clé tenant qui isole les données entre comptes et qui sert systématiquement de filtre dans les requêtes.
+
+En V1, un Account correspond à **un seul humain**. La gestion multi-utilisateurs (plusieurs humains partageant un même Account pour de la coordination) est repoussée en V2 et impliquera l'introduction d'une entité `User` distincte.
+
+Dans le journal de bord, les actions de l'humain titulaire sont identifiées par `actor = user` (libellé UI : **« Moi »**).
+
+## 2. Folder
+
+### Propriétés
+
+- `id: UUID`
+- `account_id: UUID`
+- `name: string`
+- `slug: string`
+- `description: string nullable`
+- `is_default: boolean default false` — vrai pour le Folder « Général » auto-créé à la création du compte
+- `is_active: boolean`
+- `created_at: datetime`
+- `updated_at: datetime`
+
+### Exemples
+
+- Général (auto-créé)
+- RH
+- Juridique
+- Fournisseurs
+- Support
+- Business
+- Production
+
+### Rôle
+
+Un Folder est un **conteneur métier** qui regroupe deux types de contenus :
+
+- les `Subject` (affaires en cours dans ce périmètre)
+- les `KnowledgeDocument` (PDFs et notes Markdown qui enrichissent Relvo pour ce périmètre)
+
+C'est aussi l'unité de classification utilisée par Relvo pour déterminer quel contexte de Connaissances charger lorsqu'il traite un Sujet (cf. `04-ia.md §10`).
+
+Le Folder est aussi associé aux contacts (via `default_folder_id`) pour faciliter le classement automatique des Sujets nouvellement créés.
+
+### Folder « Général »
+
+À la création du compte, un Folder spécial nommé **« Général »** est auto-créé avec `is_default = true`. Il sert :
+
+- de bac par défaut pour les `KnowledgeDocument` transversaux (organigramme, charte rédactionnelle, ton de réponse) — c'est-à-dire ceux qui doivent être chargés dans le contexte de **tous** les Sujets, indépendamment du Folder du Sujet
+- de Folder de repli quand Relvo n'arrive pas à déterminer un Folder métier pour un nouveau Sujet
+
+### Nommage UI
+
+Côté interface utilisateur, le libellé est **« Dossier(s) »**. Le terme « Folder » n'est utilisé que dans le modèle de données et la documentation technique.
 
 ## 3. Contact
 
 ### Propriétés
 
 - `id: UUID`
+- `account_id: UUID`
 - `name: string`
 - `email: string nullable`
 - `phone: string nullable`
 - `company: string nullable`
 - `job_title: string nullable`
-- `default_domain_id: UUID nullable`
+- `default_folder_id: UUID nullable`
 - `status: enum(auto, complete)`
-- `source: enum(ai, user)`
+- `source_actor: Actor` — `ai` si Relvo a auto-créé la fiche, `user` si l'utilisateur l'a créée
 - `notes: text nullable`
 - `created_at: datetime`
 - `updated_at: datetime`
@@ -69,8 +126,8 @@ Les contacts en statut `auto` apparaissent dans la page Contacts avec un indicat
 
 ### **Définition des statuts**
 
-- **auto** : contact créé automatiquement par l'IA à partir d'informations extraites du message (signature email, nom d'expéditeur, etc.). Les informations sont partielles et non vérifiées.
-- **complete** : l'utilisateur a vérifié et complété la fiche contact.
+- **auto** : contact créé automatiquement par Relvo à partir d'informations extraites du message (signature email, nom d'expéditeur, etc.). Les informations sont partielles et non vérifiées. Dans ce cas `source_actor = ai`.
+- **complete** : l'utilisateur a vérifié et complété la fiche contact. Dans ce cas `source_actor = user`.
 
 ### Point important — Contact et canaux
 
@@ -85,10 +142,11 @@ Point d'entrée de communication connecté à la plateforme.
 ### Propriétés
 
 - `id: UUID`
+- `account_id: UUID`
 - `name: string`
 - `type: enum(email, whatsapp)`
 - `identifier: string`
-- `domain_ids: UUID[]`
+- `folder_ids: UUID[]`
 - `is_active: boolean`
 - `created_at: datetime`
 - `updated_at: datetime`
@@ -119,6 +177,7 @@ Configuration technique du channel.
 ### Propriétés
 
 - `id: UUID`
+- `account_id: UUID`
 - `channel_id: UUID`
 - `provider: string`
 - `connection_data: jsonb`
@@ -143,12 +202,13 @@ Entité centrale du produit.
 ### Propriétés
 
 - `id: UUID`
+- `account_id: UUID`
 - `reference: string`
 - `title: string`
 - `summary: text nullable`
-- `domain_id: UUID`
+- `folder_id: UUID`
 - `contact_ids: UUID[] default []`
-- `status: enum(new, to_do, waiting, unread, blocked, resolved, archived)`
+- `status: enum(new, to_do, waiting, unread, resolved, archived)`
 - `priority: enum(low, medium, high, critical)`
 - `source_channel_id: UUID nullable`
 - `opened_at: datetime`
@@ -156,7 +216,7 @@ Entité centrale du produit.
 - `last_activity_at: datetime nullable`
 - `last_opened_at: datetime nullable`
 - `resolution_suggested_at: datetime nullable`
-- `created_by_user_id: UUID nullable`
+- `created_by_actor: Actor` — `ai` si Relvo a créé le sujet à la réception d'un message, `user` si l'utilisateur l'a créé manuellement
 - `created_at: datetime`
 - `updated_at: datetime`
 
@@ -185,6 +245,16 @@ Un sujet peut impliquer un ou plusieurs contacts. Le tableau `contact_ids` porte
 - Sujet multi-contacts : `contact_ids = [UUID de Julien, UUID de Karim, UUID de Youssef]`
 - Sujet sans contact (créé par l'utilisateur, pas encore de destinataire) : `contact_ids = []`
 
+### Mapping UI
+
+L'interface V1 applique **deux logiques opposées** selon la dimension :
+
+- **Statut UI — fidélité aux 6 valeurs**. Un badge coloré dédié pour chacune des 6 valeurs (`nouveau` violet, `à faire` bleu, `en attente` gris, `non lu` vert, `résolu` teal, `archivé` neutre). Justification : par défaut quasi tous les sujets visibles sont « ouverts », un badge binaire Ouvert/Fermé n'apporterait rien — c'est la nuance entre `to_do`, `waiting`, `unread` qui aide à trier rapidement. Note : les sujets dans les états `new` et `unread` adoptent en plus un visuel **bold + fond gris** (pattern aligné sur les conversations non lues), et les `unread` portent une **cloche notification** matérialisant « il y a un événement à voir ». Le statut `blocked` du modèle initial a été retiré (cf. CLAUDE.md §7).
+
+- **Priorité UI — binaire urgent / commun**. Un seul **drapeau « urgent »** (rouge) levé uniquement quand `priority = critical` côté modèle. Les niveaux `high`, `medium`, `low` ne sont **pas exposés** à l'utilisateur — ils restent un signal interne pour Relvo. Marque-page latéral 4 px rouge sur les cartes urgentes uniquement. Justification inverse de celle des statuts : la **rareté** du drapeau est son signal. Si l'urgence est partout, elle devient du bruit visuel et perd son poids ; si elle reste l'exception (typiquement 1-2 sujets sur 24 ouverts), elle attire immédiatement l'œil quand elle apparaît.
+
+Le modèle conserve les 4 valeurs de `priority` (Relvo en a besoin pour calibrer ses suggestions et déclencher les notifications), mais l'UI n'en projette que la binaire.
+
 ### Distinction `last_activity_at` / `last_opened_at`
 
 Ces deux timestamps portent des informations différentes et ne doivent pas être confondus.
@@ -198,9 +268,9 @@ Renseigné par l'IA quand elle estime que le sujet est candidat à la résolutio
 
 ### Cycle de vie des suggestions IA — vue modèle
 
-Une **suggestion IA** est tout élément créé par l'IA qui appelle une décision de l'utilisateur :
+Une **suggestion Relvo** est tout élément créé par Relvo qui appelle une décision de l'utilisateur :
 
-- une `Task` avec `source = ai`
+- une `Task` avec `source_actor = ai`
 - un brouillon de réponse — `Action` de type `send_message` avec `status = open` et `payload` renseigné
 - une suggestion de résolution — portée par `Subject.resolution_suggested_at`
 
@@ -208,7 +278,7 @@ Une suggestion est dite **"à examiner"** tant que sa date de création (ou de m
 
 Les badges agrégés sur les listes (Dashboard, Sujets) ne comptent que les suggestions **"à examiner"** :
 
-- `✦ N tâches suggérées` — `count(Task WHERE source='ai' AND status='open' AND created_at > Subject.last_opened_at)`
+- `✦ N tâches suggérées` — `count(Task WHERE source_actor='ai' AND status='open' AND created_at > Subject.last_opened_at)`
 - `✦ Réponse suggérée` — il existe une `Action` send_message avec `status='open'`, `payload IS NOT NULL` et `created_at > Subject.last_opened_at`
 - `✦ Résolution suggérée` — `resolution_suggested_at > last_opened_at`
 
@@ -221,6 +291,7 @@ Cf. doc 04-ia §8 pour le détail UX et les règles d'invalidation.
 ### Propriétés
 
 - `id: UUID`
+- `account_id: UUID`
 - `subject_id: UUID nullable`
 - `channel_id: UUID`
 - `sender_contact_id: UUID nullable`
@@ -242,10 +313,10 @@ Cf. doc 04-ia §8 pour le détail UX et les règles d'invalidation.
 
 - `subject_line` est surtout utile pour l'email.
 - `external_thread_id` aide au rattachement d'un email à un fil existant.
-- `subject_id` reste **nullable** : c'est le mécanisme qui porte les messages "Sans sujet". Un message avec `subject_id = null` est un message que l'IA n'a pas su traiter. Il est visible dans la page Messages et dans le dashboard, en attente d'affectation manuelle par l'utilisateur.
+- `subject_id` reste **nullable** : c'est le mécanisme qui porte les messages "Sans sujet". Un message avec `subject_id = null` est un message que Relvo n'a pas su traiter. Il est visible dans la page Messages et dans le dashboard, en attente d'affectation manuelle par l'utilisateur.
 - Un message avec `status = ignored` est un message que l'utilisateur a volontairement écarté (spam, non pertinent) sans lui affecter de sujet.
 - `sender_contact_id` est **nullable**. Un message peut exister sans contact associé : c'est le cas quand l'expéditeur est inconnu et qu'aucun sujet n'a encore été créé. L'information brute de l'expéditeur (adresse email ou numéro de téléphone) est conservée dans `sender_raw` pour permettre la création ultérieure du contact si l'utilisateur décide de traiter le message.
-- `triage_hint` est renseigné **uniquement** quand `subject_id = null`, c'est-à-dire pour les messages que l'IA n'a pas su rattacher à un sujet. Il porte la raison synthétique de cette décision et aide l'utilisateur à trier rapidement (afficher dans la liste des messages "Sans sujet", choisir d'ignorer ou d'affecter). Il n'est pas affiché pour les messages rattachés à un sujet. Valeurs :
+- `triage_hint` est renseigné **uniquement** quand `subject_id = null`, c'est-à-dire pour les messages que Relvo n'a pas su rattacher à un sujet. Il porte la raison synthétique de cette décision et aide l'utilisateur à trier rapidement (afficher dans la liste des messages "Sans sujet", choisir d'ignorer ou d'affecter). Il n'est pas affiché pour les messages rattachés à un sujet. Valeurs :
   - `too_short` — message trop court pour être exploitable ("Ok merci", "Bien reçu")
   - `ambiguous` — intention floue, sens non identifiable
   - `prospection` — démarchage commercial probable
@@ -264,6 +335,7 @@ Pièce jointe liée à un message.
 ### Propriétés
 
 - `id: UUID`
+- `account_id: UUID`
 - `message_id: UUID`
 - `subject_id: UUID nullable`
 - `name: string`
@@ -293,56 +365,81 @@ Permet de retrouver les documents :
 
 ## 9. Task
 
-Unité de travail du sujet.
+Unité de travail **du sujet** (pas de l'utilisateur).
 
 ### Propriétés
 
 - `id: UUID`
+- `account_id: UUID`
 - `subject_id: UUID`
 - `message_id: UUID nullable`
 - `title: string`
 - `description: text nullable`
-- `source: enum(ai, user, system)`
+- `source_actor: Actor` — qui a créé / proposé la tâche (`ai` = Relvo, `user` = utilisateur, `system` = workflow auto)
 - `kind: enum(decision, reply, check, call, inform, follow_up, other)`
 - `status: enum(open, done, deleted)`
-- `owner_user_id: UUID nullable`
 - `completion_mode: enum(manual, message_match, action_match)`
-- `due_at: datetime nullable`
+- `start_date: date nullable` — date à laquelle la tâche doit être effectuée (deadline au jour près)
+- `start_time: time nullable` — heure précise si la deadline est horodatée
+- `end_date: date nullable` — pour les tâches qui s'étalent dans le temps (durée multi-jours), date de fin de l'étalement
+- `end_time: time nullable` — heure de fin pour un créneau horodaté (réunion, événement)
 - `completed_at: datetime nullable`
-- `completed_by_user_id: UUID nullable`
+- `completed_by_actor: Actor nullable` — qui a coché la tâche (`user` manuellement, `ai` automatiquement via Relvo, `system` cas particuliers)
 - `created_at: datetime`
 - `updated_at: datetime`
 
 ### Rôle
 
-Représente une chose à faire dans le cadre du sujet.
+Représente une chose à faire **pour faire avancer le sujet**, indépendamment de qui finira par l'exécuter. La tâche est rattachée au sujet (`subject_id`), pas à un utilisateur. En V1 (un compte = un humain), c'est implicitement le titulaire du compte qui agit. La notion d'affectation à un utilisateur spécifique (coordination multi-utilisateurs) est repoussée en V2 et impliquera l'introduction d'une entité `User` et d'un champ `assignee_user_id`.
 
 ### Exemples
 
-- Confirmer ou refuser le remplacement sauce algérienne _(source: IA — déduit du message)_
-- Appeler le shop de Montpellier _(source: utilisateur — savoir métier)_
-- Vérifier les stocks de Béziers _(source: utilisateur — savoir métier)_
-- Répondre au fournisseur _(source: IA — déduit du message)_
+- Confirmer ou refuser le remplacement sauce algérienne _(source_actor: ai — déduit du message)_
+- Appeler le shop de Montpellier _(source_actor: user — savoir métier)_
+- Vérifier les stocks de Béziers _(source_actor: user — savoir métier)_
+- Répondre au fournisseur _(source_actor: ai — déduit du message)_
 
 ### Point important — Source des tâches
 
-Le champ `source` est systématiquement affiché dans l'interface. Il permet de distinguer :
+Le champ `source_actor` est systématiquement affiché dans l'interface via une pastille (« ✦ Relvo » ou « Moi »). Il permet de distinguer :
 
-- **ai** : tâche proposée par l'IA, déductible du contenu du message. L'IA ne peut proposer que ce que le texte du message permet de déduire.
-- **user** : tâche créée manuellement par l'utilisateur, souvent issue de son savoir métier ou de sa connaissance du terrain. L'IA n'a pas accès à ces informations.
-- **system** : tâche créée automatiquement par le système (cas rares, workflows automatisés).
+- **ai** : tâche proposée par Relvo, déductible du contenu disponible (message reçu, et plus tard documents de connaissance — cf. roadmap V2).
+- **user** : tâche créée manuellement par l'utilisateur, typiquement issue de son savoir métier ou de sa connaissance du terrain — informations auxquelles Relvo n'a pas accès en V1.
+- **system** : tâche créée automatiquement par un workflow (cas rares).
 
 ### Point important — Le champ `kind` n'est pas affiché par défaut
 
 Le champ `kind` (`decision`, `reply`, `check`, `call`, `inform`, `follow_up`, `other`) est conservé dans le modèle pour deux usages techniques :
 
-- **Automatisation `completion_mode = message_match`** : une tâche `kind = reply` peut être cochée automatiquement lorsqu'un message sortant est envoyé au même contact dans le même sujet.
+- **Automatisation `completion_mode = message_match`** : une tâche `kind = reply` peut être cochée automatiquement lorsqu'un message sortant est envoyé au même contact dans le même sujet. Dans ce cas `completed_by_actor = ai`.
 - **Filtrage et statistiques** futures (ex : "voir mes tâches d'appel cette semaine").
 
 En revanche, `kind` **n'est pas affiché** dans les cartes de tâches de l'interface principale. Les libellés (« décision », « réponse », « vérif »…) sont trop spécifiques pour apporter une lecture rapide et utile à l'utilisateur — la formulation du titre de la tâche suffit. Ce qui est affiché systématiquement, c'est :
 
-- l'**actor-pill** (`✦ IA` ou `Moi`) qui matérialise la `source`
+- l'**actor-pill** (`✦ Relvo` ou `Moi`) qui matérialise `source_actor`
 - une **action suggérée** contextuelle quand pertinent (« Aller au brouillon » pour les tâches de réponse, « Voir le message » pour les tâches qui pointent vers un message déclencheur, etc.)
+
+### Sémantique des dates
+
+Les quatre champs `start_date`, `start_time`, `end_date`, `end_time` portent une sémantique simple et asymétrique :
+
+- **`start_date` (+ `start_time`) est la deadline**. C'est le moment où la tâche **doit** être effectuée. Si l'utilisateur ne renseigne qu'un seul champ, c'est `start_date` — la tâche s'ancre sur cette date dans le calendrier.
+- **`end_date` (+ `end_time`) n'ajoute jamais de deadline supplémentaire**. Ces champs servent uniquement à indiquer une **durée** quand la tâche s'étale dans le temps (salon de plusieurs jours, créneau horaire d'une réunion).
+
+Configurations possibles :
+
+| Configuration | Sens |
+|---|---|
+| Tous null | Tâche sans deadline (pile « Aucune date ») |
+| `start_date` seul | Deadline au jour près |
+| `start_date` + `start_time` | Deadline horodatée |
+| `start_date` + `end_date` | Deadline au jour près + tâche étalée sur plusieurs jours |
+| `start_date` + `start_time` + `end_time` (même date) | Créneau horodaté dans la journée (réunion 10h-11h) |
+| 4 champs renseignés | Plage multi-jours avec horaires |
+
+La combinaison « `end_date` seul » (sans `start_date`) **n'est pas une configuration valide** — la deadline vit dans `start_date`.
+
+Sur le calendrier (Dashboard semaine, Planning mois), la tâche s'ancre toujours sur `start_date`. Les tâches multi-jours sont rendues comme une barre qui s'étend de `start_date` à `end_date`.
 
 ## 10. Action
 
@@ -351,6 +448,7 @@ Exécution concrète déclenchée depuis l'interface.
 ### Propriétés
 
 - `id: UUID`
+- `account_id: UUID`
 - `subject_id: UUID`
 - `task_id: UUID nullable`
 - `message_id: UUID nullable`
@@ -358,7 +456,7 @@ Exécution concrète déclenchée depuis l'interface.
 - `title: string`
 - `payload: jsonb nullable`
 - `status: enum(open, in_progress, done, cancelled, failed)`
-- `owner_user_id: UUID nullable`
+- `executed_by_actor: Actor nullable` — qui a exécuté l'action (`user` envoi manuel, `ai` cas auto, `system` cas rares)
 - `executed_at: datetime nullable`
 - `created_at: datetime`
 - `updated_at: datetime`
@@ -372,9 +470,9 @@ Trace une opération exécutée dans l'interface.
 Task : "Répondre au fournisseur"
 Action : "Envoyer le message de réponse"
 
-### Remarque — Brouillon IA
+### Remarque — Brouillon Relvo
 
-Lorsque l'IA prépare un brouillon de réponse, celui-ci est stocké dans le `payload` de l'action (destinataire, canal, contenu). Le brouillon est présenté directement dans la zone de rédaction (composer) de l'interface, clairement identifié comme une suggestion modifiable. Il ne constitue pas un message tant qu'il n'a pas été envoyé.
+Lorsque Relvo prépare un brouillon de réponse, celui-ci est stocké dans le `payload` de l'action (destinataire, canal, contenu). Le brouillon est présenté directement dans la zone de rédaction (composer) de l'interface, clairement identifié comme une suggestion modifiable. Il ne constitue pas un message tant qu'il n'a pas été envoyé.
 
 ## 11. EventLog
 
@@ -383,6 +481,7 @@ Journal de bord du système.
 ### Propriétés
 
 - `id: UUID`
+- `account_id: UUID`
 - `subject_id: UUID nullable`
 - `message_id: UUID nullable`
 - `task_id: UUID nullable`
@@ -392,8 +491,8 @@ Journal de bord du système.
 - `event_type: string`
 - `title: string`
 - `description: text nullable`
-- `actor_type: enum(user, ai, system, contact)`
-- `actor_id: UUID nullable`
+- `actor: Actor` — qui a agi
+- `contact_id: UUID nullable` — renseigné uniquement quand `actor = contact`, pointe vers le `Contact` concret
 - `metadata: jsonb nullable`
 - `created_at: datetime`
 
@@ -403,12 +502,12 @@ Historise tout ce qui doit apparaître dans la timeline du sujet ou dans la page
 
 ### Le triptyque d'acteurs
 
-Le champ `actor_type` porte l'information "qui a agi". Il est structurant pour toute la plateforme :
+Le champ `actor` porte l'information "qui a agi". Il est structurant pour toute la plateforme :
 
-- **user** → affiché **"Moi"** dans l'UI — actions de l'utilisateur (tâche créée, tâche cochée, message envoyé, statut modifié)
-- **ai** → affiché **"Relvo"** dans l'UI — actions de l'assistant IA (tâche proposée, sujet créé, brouillon préparé, domaine suggéré)
-- **contact** → affiché **"Externe"** dans l'UI — actions du monde extérieur (message reçu, pièce jointe reçue)
-- **system** → événements techniques automatiques (changement de statut automatique, archivage) — généralement non affiché à l'utilisateur
+- **user** → affiché **"Moi"** dans l'UI — actions de l'utilisateur (tâche créée, tâche cochée, message envoyé, statut modifié). Pas de FK : en V1, l'humain est implicite via `account_id`.
+- **ai** → affiché **"Relvo"** dans l'UI — actions de l'assistant IA (tâche proposée, sujet créé, brouillon préparé, domaine suggéré). Pas de FK : Relvo est un mécanisme du compte, pas une entité stockée.
+- **contact** → affiché **"Externe"** dans l'UI — actions du monde extérieur (message reçu, pièce jointe reçue). `contact_id` est renseigné pour identifier la Contact concrète.
+- **system** → événements techniques automatiques (changement de statut automatique, archivage) — généralement non affiché à l'utilisateur.
 
 Ce triptyque **Moi / Relvo / Externe** est utilisé dans l'interface pour filtrer l'activité et pour identifier visuellement l'acteur de chaque événement (badges colorés `M`, `R`, `E`).
 
@@ -425,3 +524,80 @@ Ce triptyque **Moi / Relvo / Externe** est utilisé dans l'interface pour filtre
 - `task_completed` (actor: user)
 - `action_draft_prepared` (actor: ai)
 - `action_send_message_done` (actor: user)
+- `knowledge_document_created` (actor: user)
+- `knowledge_document_updated` (actor: user)
+- `knowledge_document_deleted` (actor: user)
+
+## 12. KnowledgeDocument
+
+Document de référence chargé par l'utilisateur pour enrichir le contexte de Relvo (« base de connaissances »). Sert au retrieval : à chaque appel à Claude, on injecte dans le system prompt les documents pertinents pour le Folder considéré, mis en cache pour amortir le coût.
+
+### Propriétés
+
+- `id: UUID`
+- `account_id: UUID`
+- `folder_id: UUID` — le Folder dans lequel vit ce document (toujours renseigné — un doc vit toujours dans un Folder, à défaut dans le Folder « Général » auto-créé)
+- `kind: enum(file, note)` — nature du document
+- `name: string` — titre éditorial pour une note, nom de fichier pour un file
+- `description: text nullable` — courte description saisie par l'utilisateur (optionnelle)
+
+**Champs spécifiques `kind = file`** (PDF, image, document uploadé — non modifiable sauf suppression) :
+
+- `mime_type: string nullable`
+- `file_url: string nullable`
+- `file_size: integer nullable`
+- `anthropic_file_id: string nullable` — identifiant retourné par la Files API d'Anthropic, utilisé pour référencer le fichier dans les prompts sans le re-uploader
+- `ai_label: string nullable` — étiquette automatique (organigramme, facture, devis, contrat-type, procédure, autre) générée à la réception (Haiku)
+- `ai_summary: text nullable` — résumé court généré au premier accès (Sonnet), mis en cache
+
+**Champs spécifiques `kind = note`** (note Markdown rédigée par l'utilisateur — modifiable, mémoire vivante) :
+
+- `content: text nullable` — Markdown brut, source de vérité
+
+**Traçabilité** :
+
+- `created_by_actor: Actor` — qui a créé (en V1, toujours `user`)
+- `updated_by_actor: Actor nullable` — qui a fait la dernière modification (utile pour les notes ; en V1 toujours `user`, en V2 `ai` quand Relvo propose des modifications validées)
+- `created_at: datetime`
+- `updated_at: datetime`
+
+### Rôle
+
+Un `KnowledgeDocument` est une **information de référence**, distincte des `Attachment` (qui sont des pièces jointes aux messages) et des `Subject` (qui sont des affaires métier en cours). Sa raison d'être est d'**enrichir le contexte** de Relvo de façon persistante.
+
+Chaque document **vit dans un Folder**. C'est ce Folder qui détermine la portée du document : les documents du Folder « Général » sont chargés dans le contexte de **tous** les Sujets, les documents d'un Folder métier (Fournisseurs, RH…) ne sont chargés que pour les Sujets de ce même Folder.
+
+Exemples typiques :
+
+- **kind=file** : organigramme PDF, modèle de facture, devis-type, contrat fournisseur, charte tarifaire scannée
+- **kind=note** : « Nos magasins » (liste des shops et leurs particularités), « Procédure validation devis » (rédigée par l'utilisateur), « Ton et style des réponses » (charte rédactionnelle), « Personnes clés et rôles »
+
+### Distinction `file` vs `note`
+
+| | `kind = file` | `kind = note` |
+|---|---|---|
+| Source | Upload PDF, image, doc | Markdown rédigé dans l'app |
+| Modifiable | Non (suppression seule) | Oui (par l'utilisateur en V1) |
+| Stockage | Blob (file_url) + Anthropic Files API | Texte inline (`content`) |
+| Évolution | Statique | Mémoire vivante |
+| Usage type | Référence visuelle, modèle, contrat | Règles, contexte métier, ton, organisation |
+
+### Organisation par Folder — V1
+
+En V1, la seule dimension de classement d'un `KnowledgeDocument` est son **Folder**. Pas de `scope` global / domain — le concept est unifié dans l'entité Folder qui regroupe à la fois les Sujets et les Connaissances d'un périmètre.
+
+- Les documents transversaux (organigramme, charte rédactionnelle, ton) vivent dans le **Folder « Général »** (auto-créé)
+- Les documents spécifiques à un périmètre métier vivent dans le Folder correspondant (Fournisseurs, RH, Juridique…)
+
+Le scope `subject` n'existe pas en V1 — un document spécifique à un sujet ponctuel reste un `Attachment` du message qui l'a apporté.
+
+### Retrieval — quels documents sont inclus dans un appel à Claude
+
+- Travail **sur un sujet** (création de tâche, brouillon, statut) → documents du `folder_id` du Sujet + documents du Folder « Général » (`is_default = true`)
+- Travail **transversal** (chatbot, brief de l'Accueil) → documents du Folder « Général » uniquement, plus ce qui colle si Relvo identifie un Folder à partir du contexte ou de la question
+
+Les documents sont assemblés dans le system prompt et mis en **prompt cache** (cf. `04-ia.md §10` pour la stratégie complète).
+
+### Citations
+
+L'API d'Anthropic supporte nativement les citations : quand Claude génère une tâche ou un brouillon à partir d'un `KnowledgeDocument`, il peut renvoyer la portion exacte du document qui a fondé sa réponse. En V1 on **active le flag** côté API et on stocke les `citation_ids` retournés dans la `metadata` des `Task`, `Action` ou messages chatbot concernés. L'affichage UI des citations reste minimal en V1 (un petit lien « Source » discret) et s'enrichira en V2.
