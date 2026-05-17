@@ -87,16 +87,15 @@ C'est aussi l'unité de classification utilisée par Relvo pour déterminer quel
 
 Le Folder est aussi associé aux contacts (via `default_folder_id`) pour faciliter le classement automatique des Sujets nouvellement créés.
 
-### Folder « Général »
+### Folder « Général » — purement documentaire
 
-À la création du compte, un Folder spécial nommé **« Général »** est auto-créé avec `is_default = true`. Il sert :
+À la création du compte, un Folder spécial nommé **« Général »** est auto-créé avec `is_default = true`. Il sert **uniquement** de bac pour les `KnowledgeDocument` transversaux (organigramme, charte rédactionnelle, ton de réponse) — c'est-à-dire ceux qui doivent être chargés dans le contexte de **tous** les Sujets, indépendamment du Folder du Sujet.
 
-- de bac par défaut pour les `KnowledgeDocument` transversaux (organigramme, charte rédactionnelle, ton de réponse) — c'est-à-dire ceux qui doivent être chargés dans le contexte de **tous** les Sujets, indépendamment du Folder du Sujet
-- de Folder de repli quand Relvo n'arrive pas à déterminer un Folder métier pour un nouveau Sujet
+**Invariant** : aucun `Subject.folder_id` ne pointe vers le Folder Général. Si Relvo ne sait pas dans quel Folder métier classer un nouveau Sujet, le Sujet est créé avec `folder_id = null` (et apparaît dans Mon fil avec un badge discret « sans dossier » + suggestion Relvo « Range-moi dans X ? »). Cela évite de transformer le Folder Général en dépotoir et préserve son rôle de mémoire transversale claire.
 
 ### Nommage UI
 
-Côté interface utilisateur, le libellé est **« Dossier(s) »**. Le terme « Folder » n'est utilisé que dans le modèle de données et la documentation technique.
+Côté interface utilisateur, le libellé général est **« Mes dossiers »** (entrée de sidebar) ; chaque Folder est appelé **« Dossier »** (singulier) dans les fiches détail. Le terme « Folder » n'est utilisé que dans le modèle de données et la documentation technique. Justification du « Mes » : il signale à l'utilisateur que ces espaces sont à lui (qu'il les crée et les organise), même si Relvo y range automatiquement les sujets et y entretient sa mémoire documentaire — cf. `01-principes.md §12`.
 
 ## 3. Contact
 
@@ -206,7 +205,7 @@ Entité centrale du produit.
 - `reference: string`
 - `title: string`
 - `summary: text nullable`
-- `folder_id: UUID`
+- `folder_id: UUID nullable` — null si Relvo n'a pas su classer (le Sujet apparaît avec un badge « sans dossier » dans Mon fil et invite l'utilisateur à le ranger) ; jamais égal à l'ID du Folder Général (cf. §2 — invariant documentaire)
 - `contact_ids: UUID[] default []`
 - `status: enum(new, to_do, waiting, unread, resolved, archived)`
 - `priority: enum(low, medium, high, critical)`
@@ -254,6 +253,17 @@ L'interface V1 applique **deux logiques opposées** selon la dimension :
 - **Priorité UI — binaire urgent / commun**. Un seul **drapeau « urgent »** (rouge) levé uniquement quand `priority = critical` côté modèle. Les niveaux `high`, `medium`, `low` ne sont **pas exposés** à l'utilisateur — ils restent un signal interne pour Relvo. Marque-page latéral 4 px rouge sur les cartes urgentes uniquement. Justification inverse de celle des statuts : la **rareté** du drapeau est son signal. Si l'urgence est partout, elle devient du bruit visuel et perd son poids ; si elle reste l'exception (typiquement 1-2 sujets sur 24 ouverts), elle attire immédiatement l'œil quand elle apparaît.
 
 Le modèle conserve les 4 valeurs de `priority` (Relvo en a besoin pour calibrer ses suggestions et déclencher les notifications), mais l'UI n'en projette que la binaire.
+
+### Feed prioritaire et action « Ignorer »
+
+Le **feed prioritaire** affiché sur l'Accueil sélectionne les sujets tels que `priority IN (critical, high)` — c'est-à-dire les sujets que Relvo juge dignes d'attention immédiate, sans nécessairement être marqués urgent (rare). Les sujets `medium` et `low` n'apparaissent jamais dans le feed prioritaire ; ils ne sont accessibles que via la vue chronologique (« par ordre du jour »).
+
+Toute carte du feed expose deux icônes systématiques à droite des éventuels boutons d'action contextuels (voir CLAUDE.md §31) :
+
+- **✕ Ignorer** (à gauche, hover rouge) — rétrograde la priorité d'un cran : `critical → high → medium → low`. Le sujet sort du feed prioritaire dès qu'il atteint `medium`, mais reste visible dans l'ordre chronologique. Aucune perte d'information : c'est une **dépriorisation**, pas une suppression.
+- **✓ Marquer comme résolu** (à droite, hover vert) — passe le statut à `resolved`. Variante violette `is-relvo` quand `resolution_suggested_at > last_opened_at`, pour signaler que Relvo lui-même propose la clôture.
+
+Symétrie : le bouton ✕ est toujours présent (n'apparaît pas seulement sur les sujets en passe d'être terminés). L'utilisateur peut donc **toujours** rétrograder un sujet d'un clic, sans avoir à ouvrir sa fiche. Côté event log : `EventLog.kind = priority_changed` avec `metadata.delta = -1` et `metadata.source = "feed_ignore"`.
 
 ### Distinction `last_activity_at` / `last_opened_at`
 

@@ -23,11 +23,11 @@ relvo/
 │   ├── 03-cas-usage.md          # Cas d'usage détaillés
 │   └── 04-ia.md                 # Interventions de l'IA
 ├── public/                      # Fichiers statiques servis par Vercel
-│   ├── index.html               # Accueil — brief Relvo + KPIs + calendrier semaine + sujets prioritaires
-│   ├── sujets.html              # Liste des sujets
+│   ├── index.html               # Accueil — guide matinal : KPIs + calendrier semaine + 3 sujets prioritaires
+│   ├── feed.html                # Mon fil — workspace plein écran : feed complet + filtres + drawer chat
 │   ├── sujet.html               # Détail d'un sujet
-│   ├── planning.html            # Calendrier des tâches (vue mois)
-│   ├── messages.html            # Conversations par contact + filtres « non lus » / « sans sujet »
+│   ├── planning.html            # Calendrier des tâches (vue mois) — hors-nav
+│   ├── messages.html            # Conversations par contact + filtres « non lus » / « sans sujet » — hors-nav
 │   ├── dossiers.html            # Dossiers (ex-domaines) — contient Sujets + Connaissances
 │   ├── dossier.html             # Fiche d'un dossier (sujets + fichiers + notes)
 │   ├── contacts.html            # Liste des contacts
@@ -73,6 +73,8 @@ Avant de créer ou modifier un écran, lis toujours les documents de conception 
 7. **Statuts UI fidèles au modèle.** L'UI affiche les 6 statuts du modèle (`new`, `to_do`, `waiting`, `unread`, `resolved`, `archived`) avec un badge coloré dédié par valeur. Une simplification binaire (Ouvert/Fermé) a été testée et abandonnée : par défaut quasi tous les sujets visibles sont « ouverts », un badge binaire n'apporte donc aucune information utile dans les listes — la nuance (à faire / en attente / non lu) est précisément ce qui aide à trier. Le statut `blocked` du modèle initial a été retiré : il n'incite pas à avancer et finit toujours par se traduire en attente externe (pièces, réponse fournisseur, info client) — ces cas sont représentés par `waiting`.
 
 8. **Priorité UI binaire — drapeau « urgent ».** Côté UI, l'utilisateur ne voit qu'un drapeau **urgent** (rouge) levé uniquement quand `priority = critical` au modèle. Les niveaux `high / medium / low` ne sont **pas exposés** côté UI — ils restent un signal interne pour Relvo. Marque-page latéral 4 px rouge sur les cartes urgentes uniquement. **La rareté est le signal.** Si le drapeau apparaît partout il devient du bruit ; il doit rester l'exception (typiquement 1-2 sujets sur 24 ouverts). Cette règle est **inverse à celle des statuts** (point 7) : les statuts gagnent en valeur par leur nuance, la priorité gagne en valeur par sa rareté.
+
+   **Feed prioritaire et action « Ignorer ».** Le feed Accueil sélectionne `priority IN (critical, high)`. Toute carte expose deux icônes systématiques : **✕ Ignorer** (rouge, à gauche) qui rétrograde la priorité d'un cran (`critical → high → medium → low`) — le sujet sort du feed dès `medium` mais reste en vue chronologique — et **✓ Marquer comme résolu** (à droite). Variante violette `is-relvo` sur la coche quand `resolution_suggested_at > last_opened_at`. La paire ✕/✓ est **toujours présente**, indépendamment des boutons d'action contextuels violets. Cf. `02-modele-donnees.md §Subject — Feed prioritaire`.
 
 9. **Brouillon de Relvo dans le composer.** Le brouillon n'est jamais affiché comme un message dans le fil de conversation. Il est directement dans la zone de rédaction du Sujet, identifié comme « Suggestion de Relvo — modifiez librement avant d'envoyer », avec actions « Régénérer » / « Effacer ».
 
@@ -136,17 +138,26 @@ Avant de créer ou modifier un écran, lis toujours les documents de conception 
 
 La sidebar est identique sur toutes les pages. Les liens de navigation doivent pointer vers les bons fichiers HTML :
 
-Ordre de la navigation V1 (par priorité d'usage) :
+Ordre de la navigation V1 (par priorité d'usage) — **4 entrées** :
 
-1. Accueil (🏠) → `index.html`
-2. Sujets → `sujets.html`
-3. Planning → `planning.html`
-4. Messages → `messages.html`
-5. Dossiers → `dossiers.html`
-6. Contacts → `contacts.html`
-7. Paramètres → `parametres.html`
+1. Accueil (🏠) → `index.html` — guide matinal
+2. Mon fil (✉️) → `feed.html` — workspace de traitement
+3. Mes dossiers → `dossiers.html` — sujets + mémoire documentaire de Relvo, organisés par domaine
+4. Paramètres → `parametres.html`
 
-L'icône de l'entrée « Accueil » est une **maison** classique. Le **robot 🤖** est réservé au bouton flottant qui ouvre le drawer chatbot, présent sur les 7 pages — chaque icône a un rôle visuel distinct (la maison signale le brief lu, le robot signale le dialogue actif).
+Trois pages restent **hors-nav**, accessibles uniquement par URL ou via des liens contextuels :
+
+- `messages.html` — boîte des messages bruts, accessible via le lien « Voir tous les messages bruts » du `feed-strip` violet (présent sur Mon fil)
+- `planning.html` — vue mois complète, accessible via le lien « Vue mois complète → » du widget calendrier semaine (présent sur l'Accueil)
+- `contacts.html` / `contact.html` — fiche annuaire, accessible via la recherche topbar, le clic sur un nom de contact dans une carte, ou une sous-section future de Paramètres. Le geste « ajouter un contact » est rare en pratique (les contacts se créent par effet de bord à la réception d'un message), donc une entrée nav permanente ne se justifie pas.
+
+Justification : la séparation **Accueil / Mon fil** correspond à deux modes mentaux distincts (cf. `01-principes.md §13.bis`) :
+- **Accueil = orientation matinale** — l'utilisateur ouvre l'app et veut savoir « qu'est-ce qui m'attend dans la journée et les 2-3 jours suivants » → calendrier semaine en pleine largeur + 3 sujets prioritaires en aperçu (3 colonnes pour économiser le scroll). Lecture en 30 secondes.
+- **Mon fil = traitement** — l'utilisateur attaque le travail : feed plein écran, filtres Priorité/Chronologique/Résolus, actions ✕/✓ et boutons violets, drawer chat ouvert. C'est ici qu'il passe l'essentiel du temps de session.
+
+Les fiches `sujet.html`, `dossier.html`, `contact.html` sont des fiches détail accessibles depuis leurs listes respectives.
+
+L'icône de l'entrée « Accueil » est une **maison** classique. Le **robot 🤖** est réservé au bouton flottant qui ouvre le drawer chatbot, présent sur toutes les pages — chaque icône a un rôle visuel distinct (la maison signale le brief lu, le robot signale le dialogue actif).
 
 La page active est identifiée par la classe `.active` sur le `nav-item` correspondant.
 
@@ -183,19 +194,28 @@ Les utilisateurs cibles sont issus de secteurs **food** et **bâtiment**. Ils ne
 
 La posture produit assumée : **« l'UI sert à accéder à l'info, Relvo sert à agir »**. Les clients ont indiqué qu'ils feraient l'essentiel de leurs actions via le chatbot plutôt que via les écrans. Cette posture oriente toutes les décisions de scope.
 
-### Pages V1 (7 entrées de navigation)
+### Pages V1 — 4 entrées de nav + 3 pages hors-nav
+
+**Sidebar (4 entrées)** :
 
 | # | Page | Rôle |
 |---|---|---|
-| 1 | **Accueil** (🤖) | Brief Relvo : bandeau KPIs + calendrier semaine + sujets prioritaires du jour. **Pas de chat ici** — pour dialoguer, on ouvre le drawer. |
-| 2 | **Sujets** | Liste plate des Sujets + fiche détail. Statuts UI fidèles au modèle (7 valeurs) + drapeau urgent binaire (priority=critical uniquement) avec marque-page latéral rouge. |
-| 3 | **Planning** | Calendrier vue mois + drag-and-drop. Tâches avec date riche. |
-| 4 | **Messages** | Conversations par contact, filtres « non lus » et « sans sujet » mis en avant, URLs filtrables (`?filter=orphan`). |
-| 5 | **Dossiers** | Folders contenant Sujets + Connaissances (PDFs + notes Markdown). |
-| 6 | **Contacts** | Liste + fiche détail. |
-| 7 | **Paramètres** | Compte, canaux connectés. |
+| 1 | **Accueil** (🏠) | Guide matinal en 30 s : bandeau KPIs + calendrier semaine en pleine largeur + 3 sujets prioritaires en aperçu (3 colonnes pour économiser le scroll). Réponse à la question « qu'est-ce qui m'attend dans ma journée et les 2-3 jours à venir ? ». **Pas de chat ici** — drawer accessible mais le corps de page reste lecture pure. |
+| 2 | **Mon fil** (✉️) | Workspace de traitement : feed plein écran avec toutes les cartes enrichies, filtres Priorité/Chronologique/Résolus, paire ✕/✓ sur chaque carte, boutons d'action violets de Relvo, drawer chat. C'est ici que l'utilisateur passe l'essentiel du temps de session. |
+| 3 | **Mes dossiers** | Espaces métier que l'utilisateur crée et organise. Chaque dossier contient à la fois ses sujets actifs **et** la mémoire documentaire de Relvo (PDFs uploadés + notes Markdown rédigées). C'est la fenêtre sur le « cerveau » de Relvo pour ce périmètre — l'utilisateur peut vérifier ce que Relvo a retenu. Le dossier **Général** existe par défaut et est purement documentaire (connaissances transversales : organigramme, charte ton, signature) — il ne contient jamais de sujets. |
+| 4 | **Paramètres** | Compte, canaux connectés, gestion contacts (sous-section). |
 
-Le **drawer chatbot 🤖** est accessible sur les 7 pages via un bouton flottant en bas-droite.
+**Hors-nav (accessibles via liens contextuels)** :
+
+| Page | Entrée |
+|---|---|
+| **Planning** (`planning.html`) | Lien « Vue mois complète → » dans le widget calendrier semaine de l'Accueil. Calendrier vue mois + drag-and-drop. Tâches avec date riche. |
+| **Messages** (`messages.html`) | Lien « Voir tous les messages bruts » du `feed-strip` violet de Mon fil. Conversations par contact, filtres « non lus » et « sans sujet », URLs filtrables (`?filter=orphan`). |
+| **Contacts / Contact** (`contacts.html`, `contact.html`) | Annuaire et fiche contact. Accessible via la recherche topbar, le clic sur un nom de contact dans une carte, ou une sous-section future de Paramètres. Justification du retrait de la nav : le geste « ajouter un contact » est rare en pratique car les contacts se créent par effet de bord (réception d'un message, import du répertoire). |
+
+Note : la page `sujets.html` a été supprimée — son rôle est repris par `feed.html` (Mon fil) avec une UI plus riche.
+
+Le **drawer chatbot 🤖** est accessible sur toutes les pages via un bouton flottant en bas-droite.
 
 ### Inclus en V1 (MUST)
 
